@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebar">
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+<!--       <li class="nav-item"> -->
+<!--         <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#"> -->
+<!--           <i class="bi bi-journal-text"></i><span>유저 관리</span><i class="bi bi-chevron-down ms-auto"></i> -->
+<!--         </a> -->
+<!--         <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav"> -->
+<!--           <li> -->
+<!--             <a th:href="@{/memberXdmList}" id="btnMember"> -->
+<!--               <i class="bi bi-circle"></i><span>회원 관리</span> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--         </ul> -->
+<!--       </li>End Forms Nav -->
+<!--       <li class="nav-item"> -->
+<!--         <a class="nav-link collapsed" data-bs-target="#mc-nav" data-bs-toggle="collapse" href="#"> -->
+<!--           <i class="bi bi-journal-text"></i><span>서비스 관리</span><i class="bi bi-chevron-down ms-auto"></i> -->
+<!--         </a> -->
+<!--         <ul id="mc-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav"> -->
+<!--           <li> -->
+<!--             <a  th:href="@{/companyXdmList}" id="btnCompany"> -->
+<!--               <i class="bi bi-circle"></i><span>이사업체 관리</span> -->
+<!--             </a> -->
+<!--           </li> -->
+<!--         </ul> -->
+<!--       </li> -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed"   data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>시스템 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a th:href="@{/sodam/xdm/CodeGroupXdmList}" id="btnCodegroup">
+              <i class="bi bi-circle"></i><span>코드그룹 관리</span>
+            </a>
+          </li>
+          <li>
+          	<a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
+              <i class="bi bi-circle"></i><span>코드 관리</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/loginXdm">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Login</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/loginXdm">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>로그아웃</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+
+    
+
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+</th:block>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="script">
+  <!-- Vendor JS Files -->
+  <script src="/xdm/template/niceadmin/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/xdm/template/niceadmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/xdm/template/niceadmin/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="/xdm/template/niceadmin/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="/xdm/template/niceadmin/assets/vendor/quill/quill.js"></script>
+  <script src="/xdm/template/niceadmin/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/xdm/template/niceadmin/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/xdm/template/niceadmin/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/xdm/template/niceadmin/assets/js/main.js"></script>
+  <!-- jquery -->
+  <script src="/xdm/template/niceadmin/assets/jquery/jquery-3.7.1.min.js"></script>
+  <script src="/xdm/template/niceadmin/assets/jquery/jquery.datetimepicker.full.min.js"></script>
+
+  
+
+  
+  <script type="text/javascript">
+  
+//   document.addEventListener("DOMContentLoaded", function () {
+	
+// 	 let pathName = window.location.pathname;
+// 	 if(pathName.startsWith("/code")){
+// 		 document.getElementById("tables-nav").className="nav-content collapse show"
+// 		 if(pathName.includes("group")){
+// 			 document.getElementById("btnCodegroup").className="active"			 
+// 		 }else{
+// 		 document.getElementById("btnCode").className="active" 
+// 		 } 
+// 	 } else if(pathName.startsWith("/member")){
+// 		 document.getElementById("user-nav").className="nav-content collapse show"
+// 			 document.getElementById("btnMember").className="active"
+// 	 } else if(pathName.startsWith("/company")){
+// 		 document.getElementById("mc-nav").className="nav-content collapse show"
+// 			 document.getElementById("btnCompany").className="active"
+// 	 }
+// 	  });
+  
+  
+// 	$("#btnSignout").on("click", function(){
+// 		$.ajax({
+// 			async: true 
+// 			,cache: false
+// 			,type: "post"
+// 			,url: "/signoutXdmProc"
+// 			,data: {}
+// 			,success: function(response) {
+// 				if(response.rt == "success") {
+// 					location.href="/loginXdm"
+// 				} else {
+// 					// by pass
+// 				}
+// 			}
+			
+// 		});
+// 	});
+// 	$.datetimepicker.setLocale('ko');
+// 	jQuery(function(){
+// 		 jQuery('#shDateStart').datetimepicker({
+			 
+// 		  timepicker:false,
+// 		  format:'Y-m-d'
+// 		 });
+// 		 jQuery('#shDateEnd').datetimepicker({
+// 			 timepicker:false,
+// 			  format:'Y-m-d'
+
+// 		 });
+// 		});
+  	
+  </script>
+</th:block>
+ 
+ 
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div>
+<body>
+
+  <div th:replace="~{xdm/include/header :: header}"></div>
+  <div th:replace="~{xdm/include/sidebar :: sidebar}"></div>
+  
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Code Group</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">Code Group</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+     <form  id="form" method="post">
+     <input type="hidden" name="ifcgSeq" th:value="${ifcgSeq}">
+<!--      <input type="hidden" name="shUseNy" th:value="${vo.shUseNy}"> -->
+
+      <div class="card">
+        <div class="card-header">
+          <h4 style="color: black;"><strong>기본정보</strong></h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="ifcgSeq" class="form-label">코드그룹 코드<span style="color: crimson;">*</span></label>
+                  <input class="form-control" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}"  type="text" placeholder="자동생성" aria-label="Disabled input example" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="ifcgName" class="form-label">코드그룹 이름<span style="color: crimson;">*</span></label>
+                  <input class="form-control" type="text" name="ifcgName" id="ifcgName" th:value="${item?.ifcgName}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">등록일<span style="color: crimson;">*</span></label>
+                  <input class="form-control" type="text" placeholder="자동생성"  disabled>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">수정일<span style="color: crimson;">*</span></label>
+                  <input class="form-control" type="text" placeholder="자동생성" aria-label="Disabled input example" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">사용여부<span style="color: crimson;">*</span></label>
+                  <input class="form-control" type="text" placeholder="자동생성" aria-label="Disabled input example" disabled>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">삭제여부<span style="color: crimson;">*</span></label>
+                  <input class="form-control" type="text" placeholder="자동생성" aria-label="Disabled input example" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 2%;">
+              <div class="col">
+                <a href="/sodam/xdm/CodeGroupXdmList" type="button" class="btn btn-light btn btn-outline-dark"><i class="fa-solid fa-list"></i></a>
+              </div>
+              <div class="col" style="text-align: right;">
+                <button type="button" class="btn btn-primary" id="btnSave"><i class="fa-solid fa-file-import"></i></button>
+                 <button type="button" class="btn btn-danger" id="btnUlete"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+     	 </div>
+    	</form>
+    	<!-- Basic Modal -->
+              <div class="modal" tabindex="-1" id="basicModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">알림창</h5>
+                      <button type="button" class="btn-close" id="a" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    코드이름을 입력해주세요.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" id="closeModal">닫기</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Basic Modal-->
+    	
+    </section>
+
+  </main><!-- End #main -->
+
+  <div th:replace="~{xdm/include/footer :: footer}"></div>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+  <div th:replace="~{xdm/include/script :: script}"></div>
+  
+ 
+  <script type="text/javascript">
+  		
+  	document.getElementById("btnSave").onclick = function(){
+  		let form=document.getElementById("form");
+		let name=document.getElementById("ifcgName");
+  		let seq = document.querySelector("input[name=ifcgSeq]");
+  		
+		if(seq.value == "0" || seq.value == "") {
+			//insert
+			if(name.value =="0" || name.value ==""){
+	 			document.getElementById("basicModal").style.display='block';
+	 			return false;
+			}else{
+				form.action ="/sodam/xdm/CodeGroupXdmInst";
+				form.submit();
+	 		}
+		} else{
+			//update
+			if(name.value =="0" || name.value ==""){
+	 			document.getElementById("basicModal").style.display='block';
+	 			return false;
+			}else{
+				form.action ="/codeGroupXdmUpdt";
+				form.submit();
+	 		}
+		}
+  	}	
+  
+	document.getElementById("closeModal").onclick=function(){
+		let name=document.getElementById("ifcgName");
+		document.getElementById("basicModal").style.display='none';
+		name.focus();	
+	}
+	document.getElementById("a").onclick=function(){
+		let name=document.getElementById("ifcgName");
+		document.getElementById("basicModal").style.display='none';
+		name.focus();	
+	}
+	document.getElementById("btnUlete").onclick = function(){
+		document.getElementById("form").action="/codeGroupXdmUlete";
+		document.getElementById("form").submit();
+		
+	}
+	
+  </script>
+</body>
+
+</html>
