@@ -1,0 +1,178 @@
+
+
+	<th:block th:fragment="head">
+
+<head>
+   <!-- Required meta tags -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta content="Codescandy" name="author">
+   <title>Sodam Stay</title>
+   <link href="/user/template/assets/libs/tiny-slider/dist/tiny-slider.css" rel="stylesheet" />
+   <link href="/user/template/assets/libs/slick-carousel/slick/slick.css" rel="stylesheet" />
+   <link href="/user/template/assets/libs/slick-carousel/slick/slick-theme.css" rel="stylesheet" />
+   <!-- Favicon icon-->
+   <link rel="shortcut icon" type="image/x-icon" href="/user/template/assets/images/logo/buddhist-temple-sticker-design-element-vector.png">
+
+
+   <!-- Libs CSS -->
+   <link href="/user/template/assets/libs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+   <link href="/user/template/assets/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
+   <link href="/user/template/assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
+
+
+   <!-- Theme CSS -->
+   <link rel="stylesheet" href="/user/template/assets/css/theme.min.css">
+
+</head>
+<style>
+   body {
+     margin: 0;
+     height: 100vh;
+     background-image: url('/user/template/assets/images/png/hand-painted-watercolor-background-with-sky-clouds-shape\ \(1\).jpg');
+     
+     background-position: center;
+     background-repeat: no-repeat;
+     font-family: sans-serif;
+   }
+ </style>
+
+<body>
+   <!-- navigation -->
+   <header>
+      <div class="container">
+         <!-- 로고  -->
+         <div class="row align-items-center pt-6 pb-4 mt-4 mt-lg-0">
+            <div class="col-xl-2 col-md-3 mb-4 mb-md-0 col-12 text-center text-md-start">
+               
+                     <a class="navbar-brand" href="index.html">
+                        <img src="/user/template/assets/images/logo/ChatGPT Image 2025년 4월 23일 오후 03_59_55.png" width="130" alt="" class="d-inline-block align-text-top">
+                      </a>
+            </div>
+
+            <div class="col-xxl-6 col-xl-5 col-lg-6 col-md-9">
+               <form action="#">
+                  <div class="input-group">
+                     <input class="form-control" type="search" placeholder="숙박지역 검색"
+                        aria-label="Recipient's username" aria-describedby="button-addon2" />
+                     <button class="btn btn-dark" type="button" id="button-addon2">검색</button>
+                  </div>
+               </form>
+            </div>
+            <div class="col-xxl-4 col-xl-5 col-lg-3 d-none d-lg-block">
+               <div class="d-flex align-items-center justify-content-between ms-4">
+                  <div class="text-center">
+                     <div class="dropdown">
+        
+                        
+                     </div>
+                  </div>
+                  <div class="ms-6 text-center">
+                     <a href="로그인.html" class="text-reset"  >
+                        <div class="lh-1">
+                           <div class="mb-2">
+                              <i class="bi bi-person-circle fs-4"></i>
+                           </div>
+                           <p class="mb-0 d-none d-xl-block small">로그인</p>
+                        </div>
+                     </a>
+                  </div>
+                  <div class="ms-6 text-center">
+                     <a href="회원가입사용호스선택.html" class="text-reset"  >
+                        <div class="lh-1">
+                           <div class="mb-2">
+                              <i class="bi bi-person-circle fs-4"></i>
+                           </div>
+                           <p class="mb-0 d-none d-xl-block small">회원 가입</p>
+                        </div>
+                     </a>
+                  </div>
+                  <div class="ms-6 text-center">
+                     <a href="/user/template/assets/pages/MY페이지-숙박예약리스트.html" class="text-reset">
+                        <div class="lh-1">
+                           <div class="mb-2">
+                              <i class="bi bi-archive fs-4"></i>
+                           </div>
+                           <p class="mb-0 d-none d-xl-block small">My 페이지</p>
+                        </div>
+                     </a>
+                  </div>
+                  <div class="text-center ms-6">
+                     <div class="ms-6 text-center">
+                        <a href="로그인.html" class="text-reset" >
+                           <div class="lh-1">
+                              <div class="mb-2">
+                                 <i class="bi bi-person-circle fs-4"></i>
+                              </div>
+                              <p class="mb-0 d-none d-xl-block small">로그아웃</p>
+                           </div>
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <nav class="navbar navbar-expand-lg navbar-light navbar-default p-0 p-sm-0 navbar-offcanvas-color"
+      aria-label="Offcanvas navbar large">
+      <div class="container">
+         <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default" aria-labelledby="navbar-defaultLabel">
+            <div class="offcanvas-header pb-1">
+               <a href="./index.html"><img src="/user/template/assets/images/logo/freshcart-logo.svg"
+                     alt="eCommerce HTML Template" /></a>
+               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+               <div>
+                  <ul class="navbar-nav align-items-center">
+                     
+                     <li class="nav-item dropdown">
+                        <a class="nav-link " href="인덱스.html" role="button" 
+                           aria-expanded="false">Home</a>
+                
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link " href="/user/template/assets/pages/숙박 예약.html" role="button" 
+                           aria-expanded="false">숙박 예약</a>
+                
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link " href="#" role="button" 
+                           aria-expanded="false">지역 관광지</a>
+                
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link " href="#" role="button" 
+                           aria-expanded="false">지역별 맛집</a>
+                
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link " href="#" role="button" 
+                           aria-expanded="false">지역 날씨</a>
+                
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">소담하게 공간 공유하기 </a>
+                        <ul class="dropdown-menu">
+                           <li><a class="dropdown-item" href="스테이리스트.html">스테이 관리</a></li>
+                          
+                           
+                           <li><a class="dropdown-item" href="스테이예약리스트.html">스테이 예약 리스트</a></li>
+                 
+              
+                        </ul>
+                     </li>
+                     
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </nav>
+
+
+
+</th:block>

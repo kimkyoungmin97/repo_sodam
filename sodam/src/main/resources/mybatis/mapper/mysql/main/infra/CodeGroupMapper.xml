@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.a5a5lab.module.codegroup.CodeGroupDao">
-	<resultMap id="resultMapObj" type="com.a5a5lab.module.codegroup.CodeGroupDto"></resultMap>
+<mapper namespace="com.a5a5lab.module.xdm.codegroup.CodeGroupDao">
+	<resultMap id="resultMapObj" type="com.a5a5lab.module.xdm.codegroup.CodeGroupDto"></resultMap>
 	
 	
 <sql id="selectCommon">
