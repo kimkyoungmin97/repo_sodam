@@ -34,5 +34,12 @@ public class StayController {
 	}
 	
 	
+	// 호스트 로그인했을때 스테이 등록 폼
+	@RequestMapping(value="StayUserFrom")
+	public String StayUserFrom() {
+		
+		return "/user/stayfrom/StayUserFrom";
+	}
+	
 	
 }
