@@ -25,6 +25,12 @@ public class StayController {
 	}
 	
 	
+	//사용자 숙박예약 리스트
+	@RequestMapping(value="/ReservationUserList")
+	public String ReservationUserList() {
+		
+		return "/user/reservation/ReservationUserList";
+	}
 	
 	
 	
