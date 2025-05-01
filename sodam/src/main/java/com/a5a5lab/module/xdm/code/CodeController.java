@@ -22,15 +22,21 @@ public class CodeController {
 	}
 	
 	@RequestMapping(value="/sodam/xdm/CodeXdmForm")
-	public String CodeGroupXdmForm(Model model,@ModelAttribute("vo")CodeDto Dto) {
-		if (Dto.getIfcgSeq().equals("0") || Dto.getIfcgSeq().equals("")) {
+	public String CodeXdmForm(Model model,@ModelAttribute("vo")CodeDto Dto) {
+		if (Dto.getIfcdSeq().equals("0") || Dto.getIfcdSeq().equals("")) {
 //			insert mode
+			model.addAttribute("codegroupList", codeService.codeGroupList(Dto));
 		} else {
 //			update mode
 			model.addAttribute("item", codeService.selectOne(Dto));
 //			model.addAttribute("list", codeService.selectList(cvo));
 		}
-		return "xdm/codegroup/CodeXdmForm";
+		return "xdm/code/CodeXdmForm";
+	}
+	@RequestMapping(value="/sodam/xdm/CodeXdmInst")
+	public String CodeXdmInst(CodeDto Dto) {
+		codeService.insert(Dto);
+		return "redirect:/sodam/xdm/CodeXdmList";
 	}
 
 }

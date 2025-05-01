@@ -19,15 +19,29 @@
 	
 <select id="selectList" resultMap="resultMapObj">
 	SELECT 
-		*
+		a.ifcdSeq,
+		a.ifcdName,
+		a.regDate,
+		a.modDate,
+		a.ifcdUseNy,
+		b.ifcgSeq,
+		b.ifcgName
 	FROM
-		code
+		code AS a
+	left join codegroup AS b ON b.ifcgSeq = a.codegroup_ifcgSeq
 </select>
 <select id="selectOneCount" resultType="Integer">
 	SELECT
 		count(*)
 	FROM
 		code
+</select>
+<select id="codeGroupList">
+	select
+		ifcgSeq,
+	    ifcgName
+	from
+		codegroup
 </select>
 <select id="selectOne">
 		select
@@ -41,5 +55,23 @@
 			1=1
 		AND ifcdSeq = #{ifcdSeq}
 	</select>
+<insert id="insert">
+	INSERT code(
+		ifcdName,
+		regDate,
+		modDate,
+		ifcdDelNy,
+		ifcdUseNy,
+		codegroup_ifcgSeq
+	)VALUES(
+		#{ifcdName},
+		now(),
+		now(),
+		0,
+		1,
+		#{ifcgSeq}
+	)
+	
+</insert>
 	  
 </mapper>

@@ -24,6 +24,12 @@ public class CodeService {
 	public CodeDto selectOne(CodeDto Dto) {
 		return codeDao.selectOne(Dto);
 	}
+	public List<CodeDto> codeGroupList(CodeDto Dto){
+		return codeDao.codeGroupList(Dto);
+	}
+	public int insert(CodeDto Dto) {
+		return codeDao.insert(Dto);
+	}
 	
 
 //	---cashe---

@@ -1,6 +1,7 @@
 package com.a5a5lab.module.xdm.code;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.a5a5lab.module.common.BaseVo;
@@ -10,14 +11,15 @@ public class CodeDto extends BaseVo {
 	private String ifcdSeq;
 	private String ifcdName;
 	private String codeGroup_ifcgSeq;
-	private String modDate;
-	private String regDate;
+	private Date modDate;
+	private Date regDate;
 	private Integer ifcdUseNy;
 	private Integer ifcdDelNy;
 	
 //	codegroup
 	private String ifcgSeq;
 	private String ifcgName;
+	
 	
 	public String getIfcgSeq() {
 		return ifcgSeq;
@@ -61,20 +63,22 @@ public class CodeDto extends BaseVo {
 	public void setCodeGroup_ifcgSeq(String codeGroup_ifcgSeq) {
 		this.codeGroup_ifcgSeq = codeGroup_ifcgSeq;
 	}
-	public String getregDate() {
-		return regDate;
-	}
-	public void setIfcdRegistrationDate(String regDate) {
-		this.regDate = regDate;
-	}
-	public String getmodDate() {
+	
+public Date getModDate() {
 		return modDate;
 	}
-	public void setmodDate(String modDate) {
+	public void setModDate(Date modDate) {
 		this.modDate = modDate;
 	}
-	
-//	for cache
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+
+
+	//	for cache
 	public static List<CodeDto> cachedCodeArrayList = new ArrayList<CodeDto>();
 	public static List<CodeDto> getCachedCodeArrayList() {
 		return cachedCodeArrayList;

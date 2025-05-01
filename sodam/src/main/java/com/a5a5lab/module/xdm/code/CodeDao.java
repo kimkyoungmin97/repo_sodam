@@ -11,5 +11,7 @@ public interface CodeDao {
 	public int selectOneCount(CodeDto Dto);
 	public CodeDto selectOne(CodeDto Dto);
 	public List<CodeDto> selectListCachedCodeArrayList();
+	public List<CodeDto> codeGroupList(CodeDto Dto);
+	public int insert(CodeDto Dto);
 
 }
