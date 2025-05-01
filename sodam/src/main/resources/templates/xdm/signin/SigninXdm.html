@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div>
+
+<body>
+
+  <main>
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a th:href="@{/indexXdm}" class="logo d-flex align-items-center w-auto">
+                  <img src="assets/img/logo.png" alt="">
+                  <span class="d-none d-lg-block">NiceAdmin</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                    <p class="text-center small">Enter your username & password to login</p>
+                  </div>
+
+                  <form class="row g-3" novalidate>
+
+                    <div class="col-12">
+                      <label for="memId" class="form-label">아이디</label>
+<!--                         <span class="input-group-text" id="inputGroupPrepend">@</span> -->
+                        <input type="text"  class="form-control" id="memId" name="memId" value="rr1hhh1fff1"   >
+                        <div class="invalid-feedback" id="memIdError"></div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="memPw" class="form-label">비밀번호</label>
+                      <input type="password"  class="form-control" id="memPw" name="memPw" value="1324" >
+                      <div class="invalid-feedback" id="memPwError"></div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="rememberMe" value="true" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="button" id="buttonSignIn">Login</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+
+              <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Basic Modal -->
+              <div class="modal" tabindex="-1" id="basicModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">알림창</h5>
+                      <button type="button" class="btn-close" id="a" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    일치하는 회원이 없습니다.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" id="closeModal">닫기</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Basic Modal-->
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div th:replace="~{xdm/include/script :: script}"></div>
+
+<script type="text/javascript">
+
+document.getElementById("buttonSignIn").onclick=function(){
+	loginLogic();
+	
+}
+
+
+function loginLogic (){
+	
+	if(validation() == false) return false;
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		/* ,dataType:"json" */
+		,url: "/sodam/xdm/SigninXdmProc"
+		/* ,data : $("#formLogin").serialize() */
+		,data : { "memId" : $("#memId").val(), "memPw" : $("#memPw").val()}
+		,success: function(response) {
+			if(response.rt =="success"){
+
+			location.href="/sodam/xdm/CodeGroupXdmList";
+			
+			} else{
+				
+				modal();
+			}
+		}
+	});
+}
+function validation(){
+	if(document.getElementById("memId").value ==""){
+		document.getElementById("memId").className='form-control is-invalid';
+		document.getElementById("memIdError").innerText="아이디를 입력해주세요.";
+		document.getElementById("memId").focus();
+		return false;
+	} else {
+		document.getElementById("memId").className='form-control';
+		if(document.getElementById("memPw").value ==""){
+			document.getElementById("memPw").className='form-control is-invalid';
+			document.getElementById("memPwError").innerText="비밀번호를 입력해주세요.";
+			document.getElementById("memPw").focus();
+			return false;
+		} else{
+			document.getElementById("memPw").className='form-control';
+		}
+	}
+}
+function modal(){
+	document.getElementById("basicModal").style.display='block';
+}
+document.getElementById("closeModal").onclick=function(){
+	document.getElementById("basicModal").style.display='none';
+}
+document.getElementById("a").onclick=function(){
+	document.getElementById("basicModal").style.display='none';
+
+}
+</script>
+
+</body>
+
+</html>
