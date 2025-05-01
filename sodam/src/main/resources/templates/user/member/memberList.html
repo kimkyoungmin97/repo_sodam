@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div>
+
+
+<body>
+
+<div th:replace="~{xdm/include/header :: header}"></div>
+<div th:replace="~{xdm/include/sidebar :: sidebar}"></div>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>회원 관리</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">회원 관리</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><strong>사용자</strong></h5>
+
+              <form name="formList"  id="formList" method="post" autocomplete="OFF">
+              		<input type="hidden" id="thisPage" name="thisPage"  th:value="${vo.thisPage}" default="1"/>
+					<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}" />
+					<input type="hidden" name="memSeq">
+					
+                <div class="row my-3">
+                  <div class="col-2">
+                    <select class="form-select" aria-label="Default select example">
+                      <option value="" >탈퇴구분</option>
+                      <option value="1" >Y</option>
+                      <option value="0" >N</option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-2">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>날짜</option>
+                      <option value="1">등록일</option>
+                      <option value="2">수정일</option>
+                      
+                      
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <div class="form-floating-2">
+                      <input type="text" class="form-control" id="floatingDate" placeholder="날짜">
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div class="form-floating-2">
+                      <input type="text" class="form-control" id="floatingDate" placeholder="날짜">
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="col text-start">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" value="" name="gender" checked>
+                    <label class="form-check-label">
+                     남자
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" value="" name="gender">
+                    <label class="form-check-label">
+                     여자
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" value="" name="gender">
+                    <label class="form-check-label">
+                     기타
+                    </label>
+                  </div>
+                  
+                  
+                <div class="row">
+                  <div class="col-2 my-2">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>검색구분</option>
+                      <option value="1">회원유형</option>
+                      <option value="2">ID</option>
+                      <option value="3">이름</option>
+                      <option value="4">전화번호</option>
+                      <option value="5">email</option>
+                    </select>
+                  </div>
+                  <div class="col-2 my-2">
+                    <div class="form-floating-2">
+                      <input type="search" class="form-control" id="floatingSearch" placeholder="검색어">
+                    </div>
+                  </div>
+                  <div class="col my-2">
+                    <button type="button" class="btn btn-light btn btn-outline-dark"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button type="button" class="btn btn-light btn btn-outline-dark"><i class="fa-solid fa-rotate-right"></i></button>
+                  </div>
+                </div>
+              </form>
+                
+
+              <!-- Table with stripped rows -->
+                <div>
+                  <div class="row" style="margin-top: 2%;">
+                   <div class="col">
+                     <strong>Total:6</strong>
+                   </div>
+                   <div class="col-2">
+                     <select class="form-select" aria-label="Default select example">
+                       <option selected>5</option>
+                       <option value="1">10</option>
+                       <option value="2">15</option>
+                     </select>
+                   </div>
+                 </div>
+                 <div class="row">
+                   <div class="col">
+                     <table class="table" style="text-align: center;">
+                      <thead>
+                        <tr>
+                          <th><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></th>
+                          <th>#</th>
+                          <th>이름</th>
+                          <th>성별</th>
+                          <th>회원유형</th>
+                          <th>통신사</th>
+                          <th>전화번호</th>
+                          <th>email</th>
+                          <th>ID</th>
+                          <th>Password</th>
+                          <th>등록일</th>
+                          <th>수정일</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	<tr th:if="${#lists.isEmpty(list)}" >
+                      		<td colspan="7" style="text-align:center;">
+                      		<p>There is no data!</p>
+                      		
+                      		</td>
+                      	</tr>
+                        <tr  th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}" >
+                          <td><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></td>
+                          <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+                          <td th:text="${list.memName}"></td>
+                          <td th:text="${@codeService.selectOneCachedCode(list.genderCd)}"></td>
+<!--                           <td><a href="javascript:void(0);" th:text="${list.ifcgName}" th:attr="onclick=|goForm('${list.ifcgSeq}')|" ></a></td> -->
+                          <td th:text="${@codeService.selectOneCachedCode(list.memTypeCd)}"></td>
+                          <td th:text="${@codeService.selectOneCachedCode(list.agencyCd)}"></td>
+                          <td th:text="${list.memTel}"></td>
+                          <td th:text="${list.memEmail}"></td>
+                          <td th:text="${list.memId}"></td>
+                          <td th:text="${list.memPw}"></td>
+                          <td th:text="${list.regDate}"></td>
+                          <td th:text="${list.modDate}"></td>
+                        </tr>
+                      </tbody>
+                      </table>
+                   </div>
+                 </div>
+                 <div class="row">
+                   <div class="col">
+                     <nav aria-label="Page navigation example">
+                       <ul class="pagination justify-content-center">
+                         <li class="page-item">
+                           <a class="page-link" href="#" aria-label="Previous">
+                             <span aria-hidden="true">&laquo;</span>
+                           </a>
+                         </li>
+                         <li class="page-item"><a class="page-link" href="#">1</a></li>
+                         <li class="page-item"><a class="page-link" href="#">2</a></li>
+                         <li class="page-item"><a class="page-link" href="#">3</a></li>
+                         <li class="page-item">
+                           <a class="page-link" href="#" aria-label="Next">
+                             <span aria-hidden="true">&raquo;</span>
+                           </a>
+                         </li>
+                       </ul>
+                     </nav>
+                   </div>
+                 </div>
+                 <div class="row">
+                   <div class="col" style="text-align: right;">
+                     <div>
+                       <a href="./tables-customer-form.html" type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+                       <button type="button" class="btn btn-success"><i class="fa-solid fa-wrench"></i></button>
+                       <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                       <button type="button" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></button>
+                    </div>
+                   </div>
+                 </div>
+              </div>
+              <!-- End Table with stripped rows -->
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+<div th:replace="~{xdm/include/footer :: footer}"></div>
+ 
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+ <div th:replace="~{xdm/include/script :: script}"></div>
+ 
+ 
+  
+  <script type="text/javascript">
+  	
+  let formList = document.getElementById("formList");
+  let seq = document.querySelector("input[name=ifcgSeq]");	
+  
+   function goList(thisPage){ 
+	   formList.action ="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("thisPage").value=thisPage;
+	   document.getElementById("formList").submit(); 
+   }
+   function showList(value){
+	   document.getElementById("rowNumToShow").value=value;
+	   formList.action ="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("formList").submit(); 
+	   
+   }
+   document.getElementById("btnSearch").onclick=function() {
+	   formList.action="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("formList").submit(); 
+	   
+   }
+   document.getElementById("btnReload").onclick=function() {
+	   formList.action="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("shOption").value="";
+	   document.getElementById("shValue").value="";
+	   document.getElementById("shOptionDate").value="";
+	   document.getElementById("shDateStart").value="";
+	   document.getElementById("shDateEnd").value="";
+	   document.getElementById("formList").submit(); 
+	   
+   }
+   document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	}
+	goForm = function (keyValue) {
+	    seq.value = keyValue;
+	    formList.action ="/sodam/xdm/CodeGroupXdmForm";
+	    formList.submit();
+	}
+  </script>
+
+</body>
+
+
+ 
+</html>
+  

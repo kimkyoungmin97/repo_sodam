@@ -5,6 +5,43 @@
 <mapper namespace="com.a5a5lab.module.user.member.MemberDao">
 	<resultMap id="resultMapObj" type="com.a5a5lab.module.user.member.MemberDto"></resultMap>
 	
+	<sql id="selectCommon">
+		FROM member
+		WHERE 1=1
+			
+<!-- 		 <if test="shUseNy != null and !shUseNy.equals('')">AND memDelNy = #{shUseNy}</if> -->
+        
+	
+<!-- 				<choose> -->
+<!-- 					<when test="shOptionDate == 1">AND regDate BETWEEN #{shDateStart} AND #{shDateEnd}</when> -->
+<!-- 					<when test="shOptionDate == 2">AND modDate BETWEEN #{shDateStart} AND #{shDateEnd}</when> -->
+<!-- 				</choose> -->
+
+<!--         <choose> -->
+<!--             <when test="shOption == 1">AND memSeq = #{shValue}</when> -->
+<!--             <when test="shOption == 2">AND memTypeCd LIKE CONCAT('%',#{shValue},'%')</when> -->
+<!--             <when test="shOption == 3">AND memId LIKE CONCAT('%',#{shValue},'%')</when> -->
+<!--             <when test="shOption == 4">AND memName LIKE CONCAT('%',#{shValue},'%')</when> -->
+<!--             <when test="shOption == 5">AND memTel LIKE CONCAT('%',#{shValue},'%')</when> -->
+<!--             <when test="shOption == 6">AND memEmail LIKE CONCAT('%',#{shValue},'%')</when> -->
+<!--         </choose> -->
+	</sql>
+	
+	<select id="selectList" resultMap="resultMapObj">
+	SELECT 
+		*
+	<include refid="selectCommon"/>
+</select>
+
+<select id="selectOneCount" resultType="Integer">
+	SELECT
+		COUNT(*)
+	<include refid="selectCommon"/>
+		
+</select>
+
+
+	
 	
 	
 	

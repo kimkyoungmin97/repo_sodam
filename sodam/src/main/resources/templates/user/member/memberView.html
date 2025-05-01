@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div>
+
+
+<body>
+
+<div th:replace="~{xdm/include/header :: header}"></div>
+<div th:replace="~{xdm/include/sidebar :: sidebar}"></div>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>사용자</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active">사용자</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="card">
+        <div class="card-header">
+          <h4 style="color: black;"><strong>사용자 정보</strong></h4>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">순서(#)<span style="color: crimson;"></span></label>
+                  <input class="form-control" type="text" placeholder="42" aria-label="Disabled input example" disabled>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="codeGroupCode" class="form-label">이름</label>
+                  <input type="text" class="form-control" id="codeGroupCode" placeholder="안세찬">
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="codeGroupName" class="form-label">성별<span style="color: crimson;"></span></label>
+                  <input type="text" class="form-control" id="codeGroupName" placeholder="남자">
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="codeGroupEngName" class="form-label">회원 유형</label>
+                  <input type="text" class="form-control" id="codeGroupEngName" placeholder="내국인">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="codeGroupEngName" class="form-label">통신사</label>
+                  <input type="text" class="form-control" id="codeGroupEngName" placeholder="SKT">
+                </div>
+              </div>
+              <div class="col-3">
+                <label for="order" class="form-label">전화번호<span style="color: crimson;"></span></label>
+                <input type="text" class="form-control" id="order" placeholder="010-000-0000">
+              </div>
+              <div class="col-3">
+                <label for="order" class="form-label">email<span style="color: crimson;"></span></label>
+                <input type="text" class="form-control" id="order" placeholder="ahn@gmail.com">
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <div class="mb-3">
+                  <label for="codeGroupEngName" class="form-label">ID</label>
+                  <input type="text" class="form-control" id="codeGroupEngName" placeholder="ahn">
+                </div>
+              </div>
+              <div class="col-3">
+                <label for="order" class="form-label">Password<span style="color: crimson;"></span></label>
+                <input type="text" class="form-control" id="order" placeholder="12345698">
+              </div>
+              <div class="col-3">
+                <label for="order" class="form-label">등록일<span style="color: crimson;"></span></label>
+                <input type="text" class="form-control" id="order" placeholder="2025-04-29">
+              </div>
+              <div class="col-3">
+                <label for="order" class="form-label">수정일<span style="color: crimson;"></span></label>
+                <input type="text" class="form-control" id="order" placeholder="2025-04-29">
+              </div>
+            </div>
+            <div class="row">
+              <!-- <div class="col-6">
+                <label for="codeGroupExplanation" class="form-label">메모</label>
+                <textarea class="form-control" placeholder="" id="codeGroupExplanation" style="height: 100px"></textarea>
+              </div> -->
+            </div>
+            <div class="row" style="margin-top: 2%;">
+              <div class="col">
+                <a href="./tables-사용자.html" type="button" class="btn btn-light btn btn-outline-dark"><i class="fa-solid fa-list"></i></a>
+              </div>
+              <!-- <div class="col" style="text-align: right;">
+                <button type="button" class="btn btn-primary"><i class="fa-solid fa-file-import"></i></button>
+              </div> -->
+            </div>
+          </div>
+          </form>
+       
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <div th:replace="~{xdm/include/footer :: footer}"></div>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+  <div th:replace="~{xdm/include/script :: script}"></div>
+  
+ 
+  <script type="text/javascript">
+  		
+//   	document.getElementById("btnSave").onclick = function(){
+//   		let form=document.getElementById("form");
+// 		let name=document.getElementById("ifcgName");
+//   		let seq = document.querySelector("input[name=ifcgSeq]");
+  		
+// 		if(seq.value == "0" || seq.value == "") {
+// 			//insert
+// 			if(name.value =="0" || name.value ==""){
+// 	 			document.getElementById("basicModal").style.display='block';
+// 	 			return false;
+// 			}else{
+// 				form.action ="/sodam/xdm/CodeGroupXdmInst";
+// 				form.submit();
+// 	 		}
+// 		} else{
+// 			//update
+// 			if(name.value =="0" || name.value ==""){
+// 	 			document.getElementById("basicModal").style.display='block';
+// 	 			return false;
+// 			}else{
+// 				form.action ="/codeGroupXdmUpdt";
+// 				form.submit();
+// 	 		}
+// 		}
+//   	}	
+  
+// 	document.getElementById("closeModal").onclick=function(){
+// 		let name=document.getElementById("ifcgName");
+// 		document.getElementById("basicModal").style.display='none';
+// 		name.focus();	
+// 	}
+// 	document.getElementById("a").onclick=function(){
+// 		let name=document.getElementById("ifcgName");
+// 		document.getElementById("basicModal").style.display='none';
+// 		name.focus();	
+// 	}
+// 	document.getElementById("btnUlete").onclick = function(){
+// 		document.getElementById("form").action="/codeGroupXdmUlete";
+// 		document.getElementById("form").submit();
+		
+// 	}
+	
+  </script>
+</body>
+
+</html>
