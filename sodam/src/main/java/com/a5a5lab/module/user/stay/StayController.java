@@ -10,13 +10,6 @@ public class StayController {
 
 	@Autowired
 	StayService stayService;
-	
-	
-	
-	
-	
-	
-	
 	//사용자 인덱스 화면 보여주기
 	@RequestMapping(value="/indexUser")
 	public String indexUser() {

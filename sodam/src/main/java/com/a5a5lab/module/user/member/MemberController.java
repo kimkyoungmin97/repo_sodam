@@ -9,6 +9,8 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
+
+	
 	
 	
 	
