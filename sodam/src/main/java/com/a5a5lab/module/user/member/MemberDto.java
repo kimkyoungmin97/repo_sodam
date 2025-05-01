@@ -18,6 +18,7 @@ public class MemberDto {
 	private String modDate; //수정일
 //	----
 	
+	
 	public String getMemSeq() {
 		return memSeq;
 	}
