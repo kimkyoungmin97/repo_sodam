@@ -33,6 +33,13 @@ public class StayController {
 	}
 	
 	
+	// 호스트 로그인했을때  스테이 리스트 보여주기
+	@RequestMapping(value="/StayUserList")
+	public String StayUserList() {
+		
+		return "/user/staylist/StayUserList";
+	}
+	
 	
 	
 }

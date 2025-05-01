@@ -32,6 +32,26 @@ public class MemberController {
 		return "/user/signup/SignupUserForm";
 	}
 		
+	// MY페이지 계정설정 폼 화면
+	@RequestMapping(value="/MySettingUserForm")
+	public String MYSettingUserForm() {
+		
+		return "/user/mysetting/MySettingUserForm";
+	}
+	
+	//My페이지 비밀번호 변경
+	@RequestMapping(value="/MyPasswordUserForm")
+	public String MyPasswordUserForm() {
+		
+		return "/user/mypassword/MyPasswordUserForm";
+	}
+	
+	//My페이지 회원 탈퇴 페이지
+	@RequestMapping(value="MySecessionUser")
+	public String MySecessionUser() {
+		return"/user/mysecession/MySecessionUser";
+	}
+	
 	
 	
 }
