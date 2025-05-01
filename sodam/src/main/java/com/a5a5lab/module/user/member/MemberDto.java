@@ -13,7 +13,12 @@ public class MemberDto {
 	private String memEmail; //이메일
 	private String memId; // ID
 	private String memPw; // 비밀번호
+	private String memDelNy; //삭제 여부
+	private String regDate;// 등록일
+	private String modDate; //수정일
 //	----
+	
+	
 	public String getMemSeq() {
 		return memSeq;
 	}
@@ -73,6 +78,24 @@ public class MemberDto {
 	}
 	public void setMemPw(String memPw) {
 		this.memPw = memPw;
+	}
+	public String getMemDelNy() {
+		return memDelNy;
+	}
+	public void setMemDelNy(String memDelNy) {
+		this.memDelNy = memDelNy;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	public String getModDate() {
+		return modDate;
+	}
+	public void setModDate(String modDate) {
+		this.modDate = modDate;
 	}
 	
 }

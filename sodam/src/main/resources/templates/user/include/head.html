@@ -45,7 +45,7 @@
          <div class="row align-items-center pt-6 pb-4 mt-4 mt-lg-0">
             <div class="col-xl-2 col-md-3 mb-4 mb-md-0 col-12 text-center text-md-start">
                
-                     <a class="navbar-brand" href="index.html">
+                     <a class="navbar-brand" th:href="@{indexUser}">
                         <img src="/user/template/assets/images/logo/ChatGPT Image 2025년 4월 23일 오후 03_59_55.png" width="130" alt="" class="d-inline-block align-text-top">
                       </a>
             </div>
@@ -68,7 +68,7 @@
                      </div>
                   </div>
                   <div class="ms-6 text-center">
-                     <a href="로그인.html" class="text-reset"  >
+                     <a th:href="@{SigninUser}" class="text-reset"  >
                         <div class="lh-1">
                            <div class="mb-2">
                               <i class="bi bi-person-circle fs-4"></i>
@@ -78,7 +78,7 @@
                      </a>
                   </div>
                   <div class="ms-6 text-center">
-                     <a href="회원가입사용호스선택.html" class="text-reset"  >
+                     <a th:href="@{SignupUserSelect}" class="text-reset"  >
                         <div class="lh-1">
                            <div class="mb-2">
                               <i class="bi bi-person-circle fs-4"></i>
@@ -88,7 +88,7 @@
                      </a>
                   </div>
                   <div class="ms-6 text-center">
-                     <a href="/user/template/assets/pages/MY페이지-숙박예약리스트.html" class="text-reset">
+                     <a th:href="@{MyReservationsUser}" class="text-reset">
                         <div class="lh-1">
                            <div class="mb-2">
                               <i class="bi bi-archive fs-4"></i>
@@ -129,12 +129,12 @@
                   <ul class="navbar-nav align-items-center">
                      
                      <li class="nav-item dropdown">
-                        <a class="nav-link " href="인덱스.html" role="button" 
+                        <a class="nav-link " th:href="@{indexUser}" role="button" 
                            aria-expanded="false">Home</a>
                 
                      </li>
                      <li class="nav-item dropdown">
-                        <a class="nav-link " href="/user/template/assets/pages/숙박 예약.html" role="button" 
+                        <a class="nav-link " th:href="@{ReservationUserList}" role="button" 
                            aria-expanded="false">숙박 예약</a>
                 
                      </li>
