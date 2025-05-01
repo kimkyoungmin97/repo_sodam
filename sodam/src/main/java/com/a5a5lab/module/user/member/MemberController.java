@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -66,8 +67,8 @@ public class MemberController {
 	
 	//회원가입 폼 보여주기
 	@RequestMapping(value="/SignupUserForm")
-	public String SignupUserForm() {
-		
+	public String SignupUserForm(MemberDto Dto,Model model) {
+		model.addAttribute("item", Dto);
 		return "/user/signup/SignupUserForm";
 	}
 		

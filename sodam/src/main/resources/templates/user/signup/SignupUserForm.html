@@ -70,8 +70,10 @@
               <p>간단한 회원가입 절차로 소담스테이와 함께.</p>
             </div>
             <!-- form -->
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" method="get" novalidate>
+            	<input type="hidden" id="memTypeCd" name="memTypeCd">
               <div class="row g-3">
+              	<div th:text="${@codeService.selectOneCachedCode(item.memTypeCd)}"></div>
                 <!-- col -->
                 <div class="col-md-8 col-12">
                   <label for="formSignupfphonenum" class="form-label visually-hidden">
