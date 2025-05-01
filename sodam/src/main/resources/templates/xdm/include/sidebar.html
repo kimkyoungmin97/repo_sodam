@@ -30,65 +30,69 @@
 <!--         </ul> -->
 <!--       </li> -->
 		<!-- 호스트 등록 리스트 -->
-	  <li class="nav-item">
-        <a class="nav-link collapsed"   data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-house-door"></i><span>숙박 관리</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a th:href="@{/sodam/xdm/CodeGroupXdmList}" id="btnCodegroup">
-              <i class="bi bi-circle"></i><span>숙박 등록 요청 관리</span>
-            </a>
-          </li>
-          <li>
-          	<a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
-              <i class="bi bi-circle"></i><span>등록된 숙박 목록</span>
-            </a>
-          </li>
-          
-        </ul>
-      </li>
-	<!-- 가입자 관리 -->
-	  <li class="nav-item">
-        <a class="nav-link collapsed"   data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person"></i><span>가입자 관리</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a th:href="@{/sodam/xdm/CodeGroupXdmList}" id="btnCodegroup">
-              <i class="bi bi-circle"></i><span>사용자</span>
-            </a>
-          </li>
-          <li>
-          	<a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
-              <i class="bi bi-circle"></i><span>호스트</span>
-            </a>
-          </li>
-          <li>
-          	<a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
-              <i class="bi bi-circle"></i><span>관리자</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- 코드그룹 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed"   data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>시스템 관리</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a th:href="@{/sodam/xdm/CodeGroupXdmList}" id="btnCodegroup">
-              <i class="bi bi-circle"></i><span>코드그룹 관리</span>
-            </a>
-          </li>
-          <li>
-          	<a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
-              <i class="bi bi-circle"></i><span>코드 관리</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+<!-- 숙박 관리 -->
+<li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#nav-accommodation" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-house-door"></i><span>숙박 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="nav-accommodation" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li>
+      <a th:href="@{/sodam/xdm/CodeGroupXdmList}" id="btnCodegroup">
+        <i class="bi bi-circle"></i><span>숙박 등록 요청 관리</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
+        <i class="bi bi-circle"></i><span>등록된 숙박 목록</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- 가입자 관리 -->
+<li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#nav-user" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-person"></i><span>가입자 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="nav-user" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li>
+      <a th:href="@{/sodam/xdm/CodeGroupXdmList}" id="btnCodegroup">
+        <i class="bi bi-circle"></i><span>사용자</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
+        <i class="bi bi-circle"></i><span>호스트</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
+        <i class="bi bi-circle"></i><span>관리자</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<!-- 시스템 관리 -->
+<li class="nav-item">
+  <a class="nav-link collapsed" data-bs-target="#nav-system" data-bs-toggle="collapse" href="#">
+    <i class="bi bi-layout-text-window-reverse"></i><span>시스템 관리</span><i class="bi bi-chevron-down ms-auto"></i>
+  </a>
+  <ul id="nav-system" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li>
+      <a th:href="@{/sodam/xdm/CodeGroupXdmList}" id="btnCodegroup">
+        <i class="bi bi-circle"></i><span>코드그룹 관리</span>
+      </a>
+    </li>
+    <li>
+      <a th:href="@{/sodam/xdm/CodeXdmList}" id="btnCode">
+        <i class="bi bi-circle"></i><span>코드 관리</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+      
       <!-- End Tables Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="/loginXdm">
