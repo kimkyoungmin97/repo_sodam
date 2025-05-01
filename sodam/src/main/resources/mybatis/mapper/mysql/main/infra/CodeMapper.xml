@@ -29,6 +29,8 @@
 	FROM
 		code AS a
 	left join codegroup AS b ON b.ifcgSeq = a.codegroup_ifcgSeq
+	ORDER BY a.ifcdSeq DESC
+	LIMIT #{startRnumForMysql},#{rowNumToShow} 
 </select>
 <select id="selectOneCount" resultType="Integer">
 	SELECT
