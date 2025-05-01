@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.a5a5lab.module.common.BaseVo;
+import com.a5a5lab.module.xdm.code.CodeDto;
 
 @Controller
 public class CodeGroupController {
@@ -15,8 +16,8 @@ public class CodeGroupController {
 	CodeGroupService codeGroupService;
 	
 	@RequestMapping(value="/sodam/xdm/CodeGroupXdmList")
-	public String CodeGroupXdmList(Model model,CodeGroupDto Dto,@ModelAttribute("vo") BaseVo vo){
-		vo.setParamsPaging(codeGroupService.selectOneCount(Dto));
+	public String CodeGroupXdmList(Model model,@ModelAttribute("vo")CodeGroupDto Dto){
+		Dto.setParamsPaging(codeGroupService.selectOneCount(Dto));
 		model.addAttribute("list",codeGroupService.selectList(Dto));
 		return "xdm/codegroup/CodeGroupXdmList";
 	}

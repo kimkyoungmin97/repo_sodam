@@ -24,8 +24,16 @@
 	</sql>	
 <select id="selectList" resultMap="resultMapObj">
 	SELECT 
-		*
+		ifcgSeq,
+		ifcgDelNy,
+		ifcgUseNy,
+		ifcgName,
+		regDate,
+		modDate,
+		(select count(aa.ifcdSeq) from code aa where 1=1 and aa.ifcdDelNy = 0 and aa.codeGroup_ifcgSeq = ifcgSeq) as xifcdSeqCount
 	<include refid="selectCommon"/>
+	ORDER BY ifcgSeq DESC
+	LIMIT #{startRnumForMysql},#{rowNumToShow} 
 </select>
 <select id="selectOneCount" resultType="Integer">
 	SELECT

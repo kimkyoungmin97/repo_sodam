@@ -11,8 +11,8 @@ public class CodeDto extends BaseVo {
 	private String ifcdSeq;
 	private String ifcdName;
 	private String codeGroup_ifcgSeq;
-	private Date modDate;
-	private Date regDate;
+	private String modDate;
+	private String regDate;
 	private Integer ifcdUseNy;
 	private Integer ifcdDelNy;
 	
@@ -63,19 +63,20 @@ public class CodeDto extends BaseVo {
 	public void setCodeGroup_ifcgSeq(String codeGroup_ifcgSeq) {
 		this.codeGroup_ifcgSeq = codeGroup_ifcgSeq;
 	}
-	
-public Date getModDate() {
+	public String getModDate() {
 		return modDate;
 	}
-	public void setModDate(Date modDate) {
+	public void setModDate(String modDate) {
 		this.modDate = modDate;
 	}
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+
+
 
 
 	//	for cache

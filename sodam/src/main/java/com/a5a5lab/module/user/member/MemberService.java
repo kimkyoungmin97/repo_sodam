@@ -8,4 +8,8 @@ public class MemberService {
 	
 	@Autowired
 	MemberDao memberDao;
+	
+	public MemberDto selectOneLogin(MemberDto Dto) {
+		return memberDao.selectOneLogin(Dto);
+	}
 }

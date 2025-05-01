@@ -15,8 +15,8 @@ public class CodeController {
 	CodeService codeService;
 	
 	@RequestMapping(value="/sodam/xdm/CodeXdmList")
-	public String CodeXdmList(Model model,CodeDto Dto,@ModelAttribute("vo") BaseVo vo) {
-		vo.setParamsPaging(codeService.selectOneCount(Dto));
+	public String CodeXdmList(Model model,@ModelAttribute("vo")CodeDto Dto) {
+		Dto.setParamsPaging(codeService.selectOneCount(Dto));
 		model.addAttribute("list",codeService.selectList(Dto));
 		return "xdm/code/CodeXdmList";
 	}
