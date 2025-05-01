@@ -130,7 +130,7 @@
                          <tr th:if="${!#lists.isEmpty(list)}" th:each="list:${list}">
                            <td><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></td>
                            <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-                           <td th:text=${list.ifcdUseNy}></td>
+                           <td th:text="${list.ifcdUseNy == 1 ? 'Y' : 'N'}"></td>
                            <td th:text=${list.ifcgSeq}></td>
                            <td th:text=${list.ifcgName}></td>	
                            <td th:text=${list.ifcdSeq}></td>
