@@ -630,14 +630,14 @@
 									예약 공지
 								</button>
 							</li>
-							<li class="nav-item" role="presentation">
-								<!-- btn -->
-								<button class="nav-link" id="wleh-tab" data-bs-toggle="tab"
-									data-bs-target="#wleh-tab-pane" type="button" role="tab"
-									aria-controls="wleh-tab-pane" aria-selected="false">
-									지도
-								</button>
-							</li>
+<!-- 							<li class="nav-item" role="presentation"> -->
+<!-- 								btn -->
+<!-- 								<button class="nav-link" id="wleh-tab" data-bs-toggle="tab" -->
+<!-- 									data-bs-target="#wleh-tab-pane" type="button" role="tab" -->
+<!-- 									aria-controls="wleh-tab-pane" aria-selected="false"> -->
+<!-- 									지도 -->
+<!-- 								</button> -->
+<!-- 							</li> -->
 							<li class="nav-item" role="presentation">
 								<!-- btn -->
 								<button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
@@ -722,22 +722,30 @@
 							
 							</div>
 							<!-- tab pane -->
-							<div class="tab-pane fade" id="wleh-tab-pane" role="tabpanel"
-								aria-labelledby="wleh-tab-pane" tabindex="0">
-								<div class="my-8">
-									<div class="mb-5">
-										<!-- text -->
-										<h4 class="mb-1">지도</h4>
-										<p class="mb-0">
-											카카오지도 위도 경도 넣어서 넣을거임
-										</p>
-									</div>
-									
-									
-								</div>
-							
-							
-							</div>
+							<!-- 지도 탭 -->
+<!-- 								<div class="tab-pane fade" id="wleh-tab-pane" role="tabpanel" aria-labelledby="wleh-tab-pane" tabindex="0"> -->
+<!-- 								    <div class="my-8"> -->
+<!-- 								        <div class="mb-5"> -->
+<!-- 								            <h4 class="mb-1">지도</h4> -->
+								           
+								           
+								           
+								           
+								           
+<!-- 								        </div> -->
+								        
+<!-- 								    </div> -->
+								   
+<!-- 								</div> -->
+							<!-- 지도 컨테이너 -->
+
+
+<div id="map" 
+     th:attr="data-lat=${item.stayLatitude != null ? item.stayLatitude : 37.5665}, 
+              data-lng=${item.stayHardness != null ? item.stayHardness : 126.9780}" 
+     style="width:100%;height:400px;">
+</div>
+
 							<!-- tab pane -->
 							<div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel"
 								aria-labelledby="reviews-tab" tabindex="0">
@@ -1154,6 +1162,7 @@
 										<i class="bi bi-star-fill"></i>
 										<i class="bi bi-star-fill"></i>
 										<i class="bi bi-star-fill"></i>
+										
 										<i class="bi bi-star-fill"></i>
 										<i class="bi bi-star-half"></i></small><a href="#" class="ms-2">(30 reviews)</a>
 								</div>
@@ -1255,6 +1264,58 @@
 	<script src="/user/template/assets/js/vendors/tns-slider.js"></script>
 	<script src="/user/template/assets/js/vendors/zoom.js"></script>
 	<script src="/user/template/assets/js/vendors/dropzone.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e0e814070aaeeefafccf74fcf23c86"></script>
+
+	
+<script type="text/javascript">
+// 페이지가 로드되면 실행되는 함수
+window.onload = function() {
+  const mapContainer = document.getElementById('map');
+  
+  // data-lat와 data-lng에서 위도, 경도 값 가져오기
+  const lat = parseFloat(mapContainer.getAttribute('data-lat'));
+  const lng = parseFloat(mapContainer.getAttribute('data-lng'));
+
+  // 위도, 경도가 유효한지 확인
+  if (isNaN(lat) || isNaN(lng)) {
+    console.error("위도 또는 경도 값이 유효하지 않습니다.");
+    return;
+  }
+
+  // Kakao 지도 옵션 설정 (초기 위치, 지도 레벨 등)
+  const mapOption = {
+    center: new kakao.maps.LatLng(lat, lng), // 지도 중심 좌표 설정
+    level: 3 // 지도 레벨 (숫자가 작을수록 더 확대된 지도)
+  };
+
+  // 지도 생성
+  const map = new kakao.maps.Map(mapContainer, mapOption);
+
+  // 마커 위치 설정
+  const markerPosition = new kakao.maps.LatLng(lat, lng);
+
+  // 마커 생성
+  const marker = new kakao.maps.Marker({
+    position: markerPosition
+  });
+
+  // 마커 지도에 표시
+  marker.setMap(map);
+};
+</script>
+
+
+
+
+
+
+
+
+
+
+
+	
+	
 </body>
 
 </html>
