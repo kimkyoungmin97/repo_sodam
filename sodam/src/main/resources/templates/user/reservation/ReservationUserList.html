@@ -572,21 +572,21 @@
   
      
   <script type="text/javascript">
-    	// 페이지네이션 자바 스크립
-	    let form = document.querySelector("form[name=formList]");
-	 goList = function (thisPage) {
-	     document.querySelector("input[name=thisPage]").value = thisPage;
-	     form.action = "/ReservationUserList";
-	     form.submit();
-	 }  
-	
-	 	// Show : 숫자
-		document.getElementById("changeRowNum").onchange = function () {
-   		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-   		    form.action = "/ReservationUserList";
-   		    form.submit();
-   		}
-	 
+//외부 js에서는 이 변수들이 전역(global)으로 들어온다고 가정하고 사용
+  if (!isNaN(stayLatitude) && !isNaN(stayLongitude)) {
+      const mapContainer = document.getElementById('map');
+      const mapOption = {
+          center: new kakao.maps.LatLng(stayLatitude, stayLongitude),
+          level: 3
+      };
+      const map = new kakao.maps.Map(mapContainer, mapOption);
+
+      const markerPosition = new kakao.maps.LatLng(stayLatitude, stayLongitude);
+      const marker = new kakao.maps.Marker({ position: markerPosition });
+      marker.setMap(map);
+  } else {
+      console.error("위도/경도 값이 유효하지 않음");
+  }
     </script>
     
     

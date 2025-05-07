@@ -1,9 +1,14 @@
 package com.a5a5lab.module.user.stay;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class StayController {
@@ -38,10 +43,11 @@ public class StayController {
 		vo.setPageNumToShow(stayService.selectOneCount(vo)); // 페이지 네이션 // 리뷰 페이지네이션 할거임
 		model.addAttribute("vo", vo);
 		
+		
 		return "/user/detailedpage/DetailedPageUserForm";
 		
 	}
-	
+
 	
 	// 호스트 로그인했을때  스테이 리스트 보여주기
 	@RequestMapping(value="/StayUserList")
