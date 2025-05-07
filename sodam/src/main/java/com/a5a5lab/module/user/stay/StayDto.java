@@ -19,7 +19,15 @@ public class StayDto {
 	private Integer regionCd; // 지역 코드
 	private Integer activeCd; // 운영상태 (운영중 운영중지 운영대기)
 	private String member_memSeq; //멤버 Seq
+	private Integer stayPrice; //가격
+	private Integer stDeNy; // 삭제 여부
 //	----
+	private String memSeq; // 호스트 Seq
+	private String memName; // 호스트 이름
+	private String memTel; // 호스트 번호
+//	-----
+	
+	
 	public String getStaySeq() {
 		return staySeq;
 	}
@@ -109,6 +117,36 @@ public class StayDto {
 	}
 	public void setMember_memSeq(String member_memSeq) {
 		this.member_memSeq = member_memSeq;
+	}
+	public Integer getStayPrice() {
+		return stayPrice;
+	}
+	public void setStayPrice(Integer stayPrice) {
+		this.stayPrice = stayPrice;
+	}
+	public Integer getStDeNy() {
+		return stDeNy;
+	}
+	public void setStDeNy(Integer stDeNy) {
+		this.stDeNy = stDeNy;
+	}
+	public String getMemSeq() {
+		return memSeq;
+	}
+	public void setMemSeq(String memSeq) {
+		this.memSeq = memSeq;
+	}
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+	public String getMemTel() {
+		return memTel;
+	}
+	public void setMemTel(String memTel) {
+		this.memTel = memTel;
 	}
 	
 }
