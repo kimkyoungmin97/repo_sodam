@@ -12,4 +12,9 @@ public class MemberService {
 	public MemberDto selectOneLogin(MemberDto Dto) {
 		return memberDao.selectOneLogin(Dto);
 	}
+	
+	// 로그인 아작스 ID 
+	public MemberDto selectId(MemberDto memberDto){
+		return memberDao.selectId(memberDto);
+	} 
 }
