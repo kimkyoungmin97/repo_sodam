@@ -17,4 +17,8 @@ public class MemberService {
 	public MemberDto selectId(MemberDto memberDto){
 		return memberDao.selectId(memberDto);
 	} 
+	//회원가입
+	public int signup(MemberDto memberDto) {
+		return memberDao.signup(memberDto);
+	}
 }

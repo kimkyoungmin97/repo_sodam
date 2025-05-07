@@ -46,6 +46,37 @@
 		
 	</select>
 	
+<!-- 회원가입 -->
+	<insert id="signup">
+		INSERT into member(
+		memTypeCd,
+		memName,
+		genderCd,
+		foreignerCd,
+		agencyCd,
+		memTel,
+		memEmail,
+		memId,
+		memPw,
+		memDelNy,
+		regDate,
+		modDate
+		)VALUES(
+		#{memTypeCd},
+		#{memName},
+		#{genderCd},
+		#{foreignerCd},
+		#{agencyCd},
+		#{memTel},
+		#{memEmail},
+		#{memId},
+		#{memPw},
+		0,
+		now(),
+		now()
+		)
+	</insert>
+	
 	
 	
 	

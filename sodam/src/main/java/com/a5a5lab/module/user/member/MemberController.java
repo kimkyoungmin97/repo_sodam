@@ -42,11 +42,9 @@ public class MemberController {
 				httpSession.setAttribute("sessSeqUser", rtt.getMemSeq()); //사용자Seq
 				httpSession.setAttribute("sessIdUser", rtt.getMemId()); // ID
 				httpSession.setAttribute("sessNameUser", rtt.getMemName());   //이름
-				httpSession.setAttribute("sessBirthdayUser", rtt.getGenderCd()); //생일
-				httpSession.setAttribute("sessUserPassword", rtt.getMemPw()); //비밀번호
+				httpSession.setAttribute("sessMemTypeUser", rtt.getMemTypeCd());   //회원타입
 				
 				
-				httpSession.setAttribute("sessGenderUser", rtt.getGenderCd()); //성별 남자 여자 기타 코드
 				
 	
 //			} else {
@@ -66,6 +64,7 @@ public class MemberController {
 		httpSession.setAttribute("sessSeqUser", null);
 		httpSession.setAttribute("sessIdUser", null);
 		httpSession.setAttribute("sessNameUser", null);
+		httpSession.setAttribute("sessMemTypeUser", null);   
 		/* httpSession.invalidate(); */ //세션 전체 초기화
 		returnMap.put("rt", "success");
 			
@@ -155,6 +154,15 @@ public class MemberController {
 	public String MySecessionUser() {
 		return"/user/mysecession/MySecessionUser";
 	}
+	
+	//회원가입
+	@RequestMapping(value="/signupInst")
+	public String signupInst(MemberDto memberDto) {
+		memberService.signup(memberDto);
+		return"redirect:/SigninUser";
+	}
+	
+	
 	
 	
 
