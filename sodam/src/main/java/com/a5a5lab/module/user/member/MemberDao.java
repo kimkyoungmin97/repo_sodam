@@ -6,5 +6,8 @@ import org.springframework.stereotype.Repository;
 public interface MemberDao {
 	
 	public MemberDto selectOneLogin(MemberDto Dto);
-
+	
+	
+	//사용자 로그인 비교
+	public MemberDto selectId(MemberDto memberDto);
 }

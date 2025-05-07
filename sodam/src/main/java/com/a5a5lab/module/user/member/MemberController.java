@@ -25,6 +25,70 @@ public class MemberController {
 	public String SigninUser () {
 		return "/user/signin/SigninUser";
 	}
+	
+	
+	//사용자 로그인화면 구현
+	@ResponseBody
+	@RequestMapping(value = "/SigninUser1")
+	public Map<String, Object> SigninUser1(MemberDto memberDto, HttpSession httpSession) throws Exception {
+			
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+			
+		MemberDto rtt = memberService.selectId(memberDto);
+			
+//			if (matchesBcrypt(memberDto.getMemPw(), rtt.getMemPw(), 10)) {
+				
+				returnMap.put("rt", "success");
+				httpSession.setAttribute("sessSeqUser", rtt.getMemSeq()); //사용자Seq
+				httpSession.setAttribute("sessIdUser", rtt.getMemId()); // ID
+				httpSession.setAttribute("sessNameUser", rtt.getMemName());   //이름
+				httpSession.setAttribute("sessBirthdayUser", rtt.getGenderCd()); //생일
+				httpSession.setAttribute("sessUserPassword", rtt.getMemPw()); //비밀번호
+				
+				
+				httpSession.setAttribute("sessGenderUser", rtt.getGenderCd()); //성별 남자 여자 기타 코드
+				
+	
+//			} else {
+//				
+//				
+//			}
+			return returnMap;
+	}
+	
+	//사용자 로그아웃 구현
+	@ResponseBody
+	@RequestMapping(value = "/SignoutUser1")
+	public Map<String, Object> SignoutUser1(MemberDto memberDto,HttpSession httpSession) throws Exception {
+			
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+			
+		httpSession.setAttribute("sessSeqUser", null);
+		httpSession.setAttribute("sessIdUser", null);
+		httpSession.setAttribute("sessNameUser", null);
+		/* httpSession.invalidate(); */ //세션 전체 초기화
+		returnMap.put("rt", "success");
+			
+			
+		return returnMap;
+			
+	}
+	
+//	// 비밀번호 암포화
+//	// 회원가입시 암포화
+//	public String encodeBcrypt(String planeText, int strength) {
+//		  return new BCryptPasswordEncoder(strength).encode(planeText);
+//	}
+//
+//	// 로그인 했을때 암호화 비교 후 로그인		
+//	public boolean matchesBcrypt(String planeText, String hashValue, int strength) {
+//	  BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(strength);
+//	  return passwordEncoder.matches(planeText, hashValue);
+//	}
+//	
+	
+	
+	
 	//admin 로그인화면 보여주기
 	@RequestMapping(value="/sodam/xdm/SigninXdm")
 	public String SigininXdm() {
@@ -91,6 +155,9 @@ public class MemberController {
 	public String MySecessionUser() {
 		return"/user/mysecession/MySecessionUser";
 	}
+	
+	
+
 	
 	
 	
