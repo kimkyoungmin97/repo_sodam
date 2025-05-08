@@ -58,7 +58,63 @@
 </select>
 
 	
+		<!-- 로그인 화면 구현 -->
+	<select id="selectId" resultMap="resultMapObj">
+		SELECT 
+			memSeq,
+		    memTypeCd,
+		    memName,
+		    genderCd,
+		    foreignerCd,
+		    agencyCd,
+		    memTel,
+		    memEmail,
+		    memId,
+		    memPw,
+		    memDelNy
+		    
+		    
+		FROM
+			member
+			
+		WHERE 1=1
+			AND memId = #{memId}
+			<!-- AND userPassword = #{userPassword} -->
+			
+		ORDER BY memSeq DESC
+		
+	</select>
 	
+<!-- 회원가입 -->
+	<insert id="signup">
+		INSERT into member(
+		memTypeCd,
+		memName,
+		genderCd,
+		foreignerCd,
+		agencyCd,
+		memTel,
+		memEmail,
+		memId,
+		memPw,
+		memDelNy,
+		regDate,
+		modDate
+		)VALUES(
+		#{memTypeCd},
+		#{memName},
+		#{genderCd},
+		#{foreignerCd},
+		#{agencyCd},
+		#{memTel},
+		#{memEmail},
+		#{memId},
+		#{memPw},
+		0,
+		now(),
+		now()
+		)
+	</insert>
 	
 	
 	

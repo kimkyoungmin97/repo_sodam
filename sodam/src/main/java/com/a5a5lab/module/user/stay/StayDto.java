@@ -14,14 +14,29 @@ public class StayDto {
 	private String stayIntroMemo; // 숙소 소개
 	private String stayServiceMemo; //숙소 시설/서비스
 	private String stayNoticeMemo; // 숙소 예약 공지
-	private Date regDateTime; // 등록일
-	private Date modDateTime; // 수정일
+	private String regDateTime; // 등록일
+	private String modDateTime; // 수정일
 	private Integer regionCd; // 지역 코드
 	private Integer activeCd; // 운영상태 (운영중 운영중지 운영대기)
 	private String member_memSeq; //멤버 Seq
+	private Integer stayPrice; //가격
+	private Integer stayPersonnel; // 숙박정원
+	private Integer stDeNy; // 삭제 여부
 //	----
+	private String memSeq; // 호스트 Seq
+	private String memName; // 호스트 이름
+	private String memTel; // 호스트 번호
+//	-----
+	
+	
 	public String getStaySeq() {
 		return staySeq;
+	}
+	public Integer getStayPersonnel() {
+		return stayPersonnel;
+	}
+	public void setStayPersonnel(Integer stayPersonnel) {
+		this.stayPersonnel = stayPersonnel;
 	}
 	public void setStaySeq(String staySeq) {
 		this.staySeq = staySeq;
@@ -80,18 +95,7 @@ public class StayDto {
 	public void setStayNoticeMemo(String stayNoticeMemo) {
 		this.stayNoticeMemo = stayNoticeMemo;
 	}
-	public Date getRegDateTime() {
-		return regDateTime;
-	}
-	public void setRegDateTime(Date regDateTime) {
-		this.regDateTime = regDateTime;
-	}
-	public Date getModDateTime() {
-		return modDateTime;
-	}
-	public void setModDateTime(Date modDateTime) {
-		this.modDateTime = modDateTime;
-	}
+
 	public Integer getRegionCd() {
 		return regionCd;
 	}
@@ -109,6 +113,48 @@ public class StayDto {
 	}
 	public void setMember_memSeq(String member_memSeq) {
 		this.member_memSeq = member_memSeq;
+	}
+	public Integer getStayPrice() {
+		return stayPrice;
+	}
+	public void setStayPrice(Integer stayPrice) {
+		this.stayPrice = stayPrice;
+	}
+	public Integer getStDeNy() {
+		return stDeNy;
+	}
+	public void setStDeNy(Integer stDeNy) {
+		this.stDeNy = stDeNy;
+	}
+	public String getMemSeq() {
+		return memSeq;
+	}
+	public void setMemSeq(String memSeq) {
+		this.memSeq = memSeq;
+	}
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+	public String getMemTel() {
+		return memTel;
+	}
+	public void setMemTel(String memTel) {
+		this.memTel = memTel;
+	}
+	public String getRegDateTime() {
+		return regDateTime;
+	}
+	public void setRegDateTime(String regDateTime) {
+		this.regDateTime = regDateTime;
+	}
+	public String getModDateTime() {
+		return modDateTime;
+	}
+	public void setModDateTime(String modDateTime) {
+		this.modDateTime = modDateTime;
 	}
 	
 }

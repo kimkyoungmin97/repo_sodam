@@ -72,19 +72,19 @@
 
                 <div class="col-12">
                   <!-- input -->
-                  <label for="formSigninEmail" class="form-label visually-hidden">Email address</label>
-                  <input type="email" class="form-control" id="formSigninEmail" placeholder="ID" required />
-                  <div class="invalid-feedback">Please enter name.</div>
+                  <label for="formSigninEmail" class="form-label visually-hidden">아이디</label>
+                  <input type="email" class="form-control" id="memId" name="memId" placeholder="아이디" required value="park12"/>
+                  <span id="memIdError" style="color: red; font-size: 10px;"></span>
                 </div>
                 <div class="col-12">
                   <!-- input -->
                   <div class="password-field position-relative">
-                    <label for="formSigninPassword" class="form-label visually-hidden">Password</label>
+                    <label for="formSigninPassword" class="form-label visually-hidden">비밀번호</label>
                     <div class="password-field position-relative">
-                      <input type="password" class="form-control fakePassword" id="formSigninPassword"
+                      <input type="password" class="form-control fakePassword" id="memPw" name="memPw" value="1234"
                         placeholder="*****" required />
                       <span><i class="bi bi-eye-slash passwordToggler"></i></span>
-                      <div class="invalid-feedback">Please enter password.</div>
+                      <span id="memPwError" style="color: red; font-size: 10px;"></span>
                     </div>
                   </div>
                 </div>
@@ -101,7 +101,7 @@
                   </div>
                 </div>
                 <!-- btn -->
-                <div class="col-12 d-grid"><button type="submit" class="btn btn-dark">로그인</button></div>
+                <div class="col-12 d-grid"><button type="button" class="btn btn-dark" id="buttonSignIn">로그인</button></div>
                 <div class="col-12 d-grid"><button type="submit" class="btn btn-warning"> <img src="/user/template/assets/images/png/kakao-talk_2111496.png"  style="height: 20px; margin-right: 8px;">카카오 로그인</button></div>
                 <!-- link -->
                 <div>
@@ -194,18 +194,139 @@
 
       </div>
     </div>
+    <!-- 로그인 잘못 입력 모달 -->
+		<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+															<!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">??</button> -->
+					</div>
+						<div class="modal-body" id="modalConfirmBody"></div>
+							<div class="modal-footer">
+							<!-- <button type="button" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal"></button> -->
+							<!-- <button type="button" class="btn btn-danger btn-sm btn_custom" name="" id="btnModalDelete">영구삭제</button> -->
+							    <!--  <button type="button" class="btn btn-sm btn_custom" name="" id="" href="#">닫기</button> -->
+								 <button type="button" class="btn btn-danger btn-sm btn_custom" href="#" id="btnModal">확인</button> 
+							</div>
+				</div>
+			</div>
+		</div>
+											
+	<!-- 로그인  AND -->
+    
+    
+    
+    
   </footer>
-  <!-- Javascript-->
-  <!-- Libs JS -->
-  <!-- <script src="/user/template/assets/libs/jquery/dist/jquery.min.js"></script> -->
-  <script src="/user/template/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/user/template/assets/libs/simplebar/dist/simplebar.min.js"></script>
+  <div th:replace="~{user/include/script :: script}"></div>
+  
+  
+  <script type="text/javascript">
+	// 개별 벨리데이션 함수
+	function validateUserId() {
+		let memId = document.getElementById("memId");
+		let memIdError = document.getElementById("memIdError");
 
-  <!-- Theme JS -->
-  <script src="/user/template/assets/js/theme.min.js"></script>
+		if (memId.value.trim() === "") {
+			memIdError.innerText = "아이디를 입력해주세요";
+			memId.classList.add("is-invalid");
+			memId.classList.remove("is-valid");
+			return false;
+		} else {
+			memIdError.innerText = "";
+			memId.classList.remove("is-invalid");
+			memId.classList.add("is-valid");
+			return true;
+		}
+	}
 
-  <script src="/user/template/assets/js/vendors/password.js"></script>
-  <script src="/user/template/assets/js/vendors/validation.js"></script>
+	function validatePassword() {
+		let memPw = document.getElementById("memPw");
+		let memPwError = document.getElementById("memPwError");
+
+		if (memPw.value.trim() === "") {
+			memPwError.innerText = "비밀번호를 입력해주세요";
+			memPw.classList.add("is-invalid");
+			memPw.classList.remove("is-valid");
+			return false;
+		} else {
+			memPwError.innerText = "";
+			memPw.classList.remove("is-invalid");
+			memPw.classList.add("is-valid");
+			return true;
+		}
+	}
+
+	// 전체 벨리데이션
+	function validation() {
+		let isValid = true;
+		if (!validateUserId()) isValid = false;
+		if (!validatePassword()) isValid = false;
+		return isValid;
+	}
+
+	// Tab 키(또는 포커스 잃었을 때)에도 유효성 검사 되게
+	window.addEventListener("DOMContentLoaded", function () {
+		document.getElementById("memId").addEventListener("blur", validateUserId);
+		document.getElementById("memPw").addEventListener("blur", validatePassword);
+	});
+</script>
+
+<script type="text/javascript">
+	// 모달 관련
+	let buttonSignIn = document.getElementById("buttonSignIn");
+	let btnModal = document.getElementById("btnModal");
+
+	function showModal(title, message) {
+		$("#modalConfirmTitle").text(title);
+		$("#modalConfirmBody").text(message);
+		$("#btnModal").show();
+		$("#modalConfirm").modal("show");
+	}
+
+	$("#btnModal").on("click", function () {
+		$("#modalConfirm").modal("hide");
+	});
+</script>
+
+<script type="text/javascript">
+	// 로그인 버튼 클릭 시
+	$("#buttonSignIn").on("click", function (event) {
+		if (validation()) {
+			loginLogic();
+		}
+	});
+</script>
+
+<script type="text/javascript">
+	function loginLogic() {
+		if (!validation()) return false;
+
+		$.ajax({
+			async: true,
+			cache: false,
+			type: "post",
+			url: "/SigninUser1",
+			data: {
+				"memId": $("#memId").val(),
+				"memPw": $("#memPw").val()
+			},
+			success: function (response) {
+				if (response.rt === "success") {
+					window.location.href = "/indexUser"; // 성공 시 이동 인덱스 화면 이동
+				} else {
+					showModal("경 고", "로그인 실패: 아이디 또는 비밀번호가 틀립니다");
+				}
+			},
+			error: function () {
+				showModal("오 류", "서버 이상함 다시 시도해주세요");
+			}
+		});
+	}
+</script>
+  
+  
 </body>
 
 </html>

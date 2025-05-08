@@ -2,7 +2,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 
-
+<form name="formList" id="formList" method="post" autocomplete="off">
+		<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+		<input type="hidden" name=ifcdSeq>
 <div th:replace="~{user/include/head :: head}"></div>
    
 
@@ -31,43 +34,43 @@
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="eGrocery" checked />
+                              <input class="form-check-input region-filter" type="checkbox" value="서울" id="eGrocery" checked />
                               <label class="form-check-label" for="eGrocery">서울</label>
                            </div>
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="DealShare" />
+                              <input class="form-check-input region-filter" type="checkbox" value="인천" id="DealShare" />
                               <label class="form-check-label" for="DealShare">인천</label>
                            </div>
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="Dmart" />
+                              <input class="form-check-input region-filter" type="checkbox" value="대전" id="Dmart" />
                               <label class="form-check-label" for="Dmart">대전</label>
                            </div>
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="Blinkit" />
+                              <input class="form-check-input region-filter" type="checkbox" value="대구" id="Blinkit" />
                               <label class="form-check-label" for="Blinkit">대구</label>
                            </div>
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="BigBasket" />
+                              <input class="form-check-input region-filter" type="checkbox" value="광주" id="BigBasket" />
                               <label class="form-check-label" for="BigBasket">광주</label>
                            </div>
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="StoreFront" />
+                              <input class="form-check-input region-filter" type="checkbox" value="울산" id="StoreFront" />
                               <label class="form-check-label" for="StoreFront">울산</label>
                            </div>
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="Spencers" />
+                              <input class="form-check-input region-filter" type="checkbox" value="부산" id="Spencers" />
                               <label class="form-check-label" for="Spencers">부산</label>
                            </div>
                 
@@ -221,7 +224,7 @@
                      <div class="mb-3 mb-lg-0">
                         <p class="mb-0">
                            숙박시설 갯수 :
-                           <span class="text-dark">24</span>
+                           <span class="text-dark" th:text="${vo.totalRows}">24</span>
                           
                         </p>
                      </div>
@@ -235,11 +238,11 @@
 
                            <div class="me-2 flex-grow-1">
                               <!-- select option -->
-                              <select class="form-select">
-                                 <option selected>Show: 5</option>
-                                 <option value="5">5</option>
-                                 <option value="10">10</option>
-                                 <option value="20">20</option>
+                              <select class="form-select" id="changeRowNum" name="changeRowNum">
+                                 <option value="3" th:selected="${vo.rowNumToShow eq 3}">Show: 3</option>
+                                 <option value="5" th:selected="${vo.rowNumToShow eq 5}">Show: 5</option>
+                                 <option value="10" th:selected="${vo.rowNumToShow eq 10}">Show: 10</option>
+                                 
                               </select>
                            </div>
                         
@@ -248,7 +251,7 @@
                   </div>
                   <!-- row -->
                   <div class="row g-4 row-cols-1 mt-2">
-                     <div class="col">
+                     <div class="col" th:each="list : ${list}">
                         <!-- card -->
                         <div class="card card-product">
                            <div class="position-absolute top-0 end-0 m-2">
@@ -280,7 +283,7 @@
                                        <a href="#!" class="text-decoration-none text-muted"><small>Snack &
                                              Munchies</small></a>
                                     </div> -->
-                                    <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">한옥 게스트 하우스</a></h2>
+                                    <h2 class="fs-6"><a href="#" class="text-inherit text-decoration-none" th:text="${list.stayName}">한옥 게스트 하우스</a></h2>
                                     <div>
                                        <!-- rating -->
                                        <small class="text-warning">
@@ -296,11 +299,11 @@
                                         <!-- price -->
                                         <div>
                                           <span class="text-dark">주소 : </span>&nbsp;
-                                          <span class="text-dark">서울특별시 종로구 어딘가어딘가</span><span>원</span>
+                                          <span class="text-dark" th:text="${list.stayAddress}">서울특별시 종로구 어딘가어딘가</span>
                                           
                                        </div>
                                        <div>
-                                          <span class="text-decoration-none text-muted"><small>종로 어딘가 골목 길</small></span>
+                                          <span class="text-decoration-none text-muted" th:text="${list.stayAddressDetail}"><small>종로 어딘가 골목 길</small></span>
                                        </div>
 
                                     </div>
@@ -308,12 +311,14 @@
                                        <!-- price -->
                                        <div>
                                           
-                                          <span class="text-dark"><h3>60,000<span>원</span></h3></span>
+                                          <h3 class="text-dark">
+										  <span th:text="${#numbers.formatInteger(list.stayPrice, 3, 'COMMA')}"></span> 원
+										</h3>
                                        </div>
                               
                                         <br>
                                        <div class="mt-2">
-                                          <a href="숙박예약상세.html" class="btn btn-dark">
+                                          <a th:href="@{/DetailedPageUserForm(staySeq=${list.staySeq})}" class="btn btn-dark">
                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -331,89 +336,7 @@
                            </div>
                         </div>
                      </div>
-                     <div class="col">
-                        <!-- card -->
-                        <div class="card card-product">
-                           <div class="position-absolute top-0 end-0 m-2">
-                              <button class="btn btn-light btn-sm rounded-circle shadow" title="즐겨찾기">
-                                 <i class="bi bi-star-fill" style="color: green;"></i> <!-- 빈 별: bi-star / 꽉 찬 별: bi-star-fill -->
-                              </button>
-                           </div>
-                           <!-- card body -->
-                           <div class="card-body">
-                              <div class="row align-items-center">
-                                 <!-- col -->
-                                 <div class="col-md-4 col-12">
-                                    <div class="text-center position-relative">
-                                       <div class="position-absolute top-0">
-                                          <!-- badge -->
-                                          
-                                          <span class="badge bg-success">★게스트 선호(별점 평균 4.5이상일때 표시되게)</span>
-                                       </div>
-                                       <a href="shop-single.html">
-                                          <!-- img -->
-                                          <img src="/user/template/assets/images/products/한옥집매인.avif"
-                                             alt="Grocery Ecommerce Template" class="mb-3 img-fluid" />
-                                       </a>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-8 col-12 flex-grow-1">
-                                    <!-- heading -->
-                                    <!-- <div class="text-small mb-1">
-                                       <a href="#!" class="text-decoration-none text-muted"><small>Snack &
-                                             Munchies</small></a>
-                                    </div> -->
-                                    <h2 class="fs-6"><a href="shop-single.html" class="text-inherit text-decoration-none">한옥 게스트 하우스</a></h2>
-                                    <div>
-                                       <!-- rating -->
-                                       <small class="text-warning">
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-half"></i>
-                                       </small>
-                                       <span class="text-muted small">4.5(149)</span>
-                                    </div>
-                                    <div class="mt-6">
-                                        <!-- price -->
-                                        <div>
-                                          <span class="text-dark">주소 : </span>&nbsp;
-                                          <span class="text-dark">서울특별시 종로구 어딘가어딘가</span><span>원</span>
-                                          
-                                       </div>
-                                       <div>
-                                          <span class="text-decoration-none text-muted"><small>종로 어딘가 골목 길</small></span>
-                                       </div>
-
-                                    </div>
-                                    <div class="mt-6 text-end">
-                                       <!-- price -->
-                                       <div>
-                                          
-                                          <span class="text-dark"><h3>60,000<span>원</span></h3></span>
-                                       </div>
-                              
-                                        <br>
-                                       <div class="mt-2">
-                                          <a href="숙박예약상세.html" class="btn btn-dark">
-                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-shopping-bag me-2">
-                                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                                <line x1="3" y1="6" x2="21" y2="6"></line>
-                                                <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                             </svg>
-                                             예약하기
-                                          </a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                    
                      
                  
                  
@@ -498,31 +421,57 @@
                      </div>  -->
                      
                   <!-- row -->
-                  <div class="row mt-8">
-                     <div class="col text-center">
-                        <!-- nav -->
-                        <nav>
-                           <ul class="pagination justify-content-center">
-                              <li class="page-item disabled">
-                                 <a class="page-link mx-1" href="#" aria-label="Previous">
-                                    <i class="feather-icon icon-chevron-left"></i>
-                                 </a>
-                              </li>
-                              <li class="page-item"><a class="page-link mx-1 active" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link mx-1" href="#">2</a></li>
-
-                              <li class="page-item"><a class="page-link mx-1" href="#">3</a></li>
-                              <li class="page-item"><a class="page-link mx-1" href="#">4</a></li>
-                              <li class="page-item"><a class="page-link mx-1" href="#">5</a></li>
-                              <li class="page-item">
-                                 <a class="page-link mx-1" href="#" aria-label="Next">
-                                    <i class="feather-icon icon-chevron-right"></i>
-                                 </a>
-                              </li>
-                           </ul>
-                        </nav>
-                     </div>
+<!--                   <div class="row mt-8"> -->
+<!--                      <div class="col text-center"> -->
+<!--                         nav -->
+<!--                         <nav> -->
+<!--                            <ul class="pagination justify-content-center" > -->
+<!--                               <li class="page-item disabled" th:if="${vo.startPage gt vo.pageNumToShow}"> -->
+<!--                                  <a class="page-link mx-1"  href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|"> -->
+<!--                                     <i class="feather-icon icon-chevron-left"></i> -->
+<!--                                  </a> -->
+<!--                               </li> -->
+<!--                               <li class="page-item" th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''"> -->
+<!--                               	<a class="page-link mx-1 " th:attr="onclick=|goList('${num}')|" th:text="${num}"></a> -->
+<!--                               </li> -->
+                             
+<!--                               <li class="page-item" th:if="${vo.endPage ne vo.totalPages}"> -->
+<!--                                  <a class="page-link mx-1" th:attr="onclick=|goList('${vo.endPage + 1}')|" aria-label="Next"> -->
+<!--                                     <i class="feather-icon icon-chevron-right"></i> -->
+<!--                                  </a> -->
+<!--                               </li> -->
+<!--                            </ul> -->
+<!--                         </nav> -->
+<!--                      </div> -->
+<!--                   </div> -->
+                  
+                  
+                   <div class="row mt-12">
+                  <div class="col d-flex justify-content-center">
+                    
+                      <div style="text-align: center;">
+								  <ul class="pagination" >
+								  	  
+									
+									<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item">
+										<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|">
+											<i class="feather-icon icon-chevron-left">이전</i>
+										</a>
+									</li>
+									<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item">
+										<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+									</li>
+									<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" >
+										<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+											<i class="feather-icon icon-chevron-right">다음</i>
+										</a>
+									</li>
+								  
+								  </ul>
+								    
+								</div>
                   </div>
+              </div>
 
                </section>
             </div>
@@ -617,20 +566,42 @@
          </div>
       </div>
    </footer>
-   <!-- Javascript-->
-   <script src="/user/template/assets/libs/nouislider/dist/nouislider.min.js"></script>
-   <script src="/user/template/assets/libs/wnumb/wNumb.min.js"></script>
-   <!-- Libs JS -->
-   <!-- <script src="/user/template/assets/libs/jquery/dist/jquery.min.js"></script> -->
-   <script src="/user/template/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="/user/template/assets/libs/simplebar/dist/simplebar.min.js"></script>
+    </form>
 
-   <!-- Theme JS -->
-   <script src="/user/template/assets/js/theme.min.js"></script>
+  <div th:replace="~{user/include/script :: script}"></div>
+        <script type="text/javascript">
+    	// 페이지네이션 자바 스크립
+	    let form = document.querySelector("form[name=formList]");
+	 goList = function (thisPage) {
+	     document.querySelector("input[name=thisPage]").value = thisPage;
+	     form.action = "/ReservationUserList";
+	     form.submit();
+	 }  
 
-   <script src="/user/template/assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
-   <script src="/user/template/assets/js/vendors/tns-slider.js"></script>
-   <script src="/user/template/assets/js/vendors/zoom.js"></script>
+    </script>
+     
+  <script type="text/javascript">
+//외부 js에서는 이 변수들이 전역(global)으로 들어온다고 가정하고 사용
+  if (!isNaN(stayLatitude) && !isNaN(stayLongitude)) {
+      const mapContainer = document.getElementById('map');
+      const mapOption = {
+          center: new kakao.maps.LatLng(stayLatitude, stayLongitude),
+          level: 3
+      };
+      const map = new kakao.maps.Map(mapContainer, mapOption);
+
+      const markerPosition = new kakao.maps.LatLng(stayLatitude, stayLongitude);
+      const marker = new kakao.maps.Marker({ position: markerPosition });
+      marker.setMap(map);
+  } else {
+      console.error("위도/경도 값이 유효하지 않음");
+  }
+    </script>
+    
+    
+    
+    
+    
 </body>
 
 </html>

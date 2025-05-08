@@ -23,6 +23,10 @@
 
    <!-- Theme CSS -->
    <link rel="stylesheet" href="/user/template/assets/css/theme.min.css">
+   
+      <!-- Theme CSS -->
+   
+   <link href="/user/template/assets/libs/dropzone/dist/min/dropzone.min.css" rel="stylesheet" />
 
 </head>
 <style>
@@ -67,6 +71,8 @@
                         
                      </div>
                   </div>
+                  <!-- 로그인하지 않은 상태 -->
+				 <th:block th:if="${session.sessIdUser == null}">
                   <div class="ms-6 text-center">
                      <a th:href="@{SigninUser}" class="text-reset"  >
                         <div class="lh-1">
@@ -87,6 +93,24 @@
                         </div>
                      </a>
                   </div>
+                  </th:block>
+                  <th:block th:if="${session.sessIdUser != null}">
+                  <div class="text-center ms-6">
+                     <div class="ms-6 text-center">
+                        <a id="btnSignout" onclick="logoutUser(); return false;" class="text-reset" >
+                           <div class="lh-1">
+                              <div class="mb-2">
+                                 <i class="bi bi-person-circle fs-4"></i>
+                              </div>
+                              <p class="mb-0 d-none d-xl-block small">로그아웃</p>
+                           </div>
+                        </a>
+                     </div>
+                  </div>
+                  </th:block>
+                
+                       <!-- 로그인한 상태 -->
+				<th:block th:if="${session.sessIdUser != null}">
                   <div class="ms-6 text-center">
                      <a th:href="@{MyReservationsUser}" class="text-reset">
                         <div class="lh-1">
@@ -97,18 +121,16 @@
                         </div>
                      </a>
                   </div>
-                  <div class="text-center ms-6">
-                     <div class="ms-6 text-center">
-                        <a href="로그인.html" class="text-reset" >
-                           <div class="lh-1">
-                              <div class="mb-2">
-                                 <i class="bi bi-person-circle fs-4"></i>
-                              </div>
-                              <p class="mb-0 d-none d-xl-block small">로그아웃</p>
-                           </div>
-                        </a>
-                     </div>
-                  </div>
+                   </th:block>
+                   
+                   <div class="list-inline-item me-5">
+					 <th:block th:if="${session.sessIdUser != null}">
+						<h6 class="mt-2 text-black">([[${session.sessNameUser}]]) [[${session.sessIdUser}]]</h6>
+						</th:block>
+					</div>
+                
+                  
+               
                </div>
             </div>
          </div>
@@ -158,16 +180,12 @@
                            aria-expanded="false">공지 사항</a>
                 
                      </li>
-                     <li class="nav-item dropdown">
+                     <li class="nav-item dropdown"  th:if="${session.sessMemTypeUser == 13 || session.sessMemTypeUser == 12}">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">소담하게 공간 공유하기 </a>
                         <ul class="dropdown-menu">
                            <li><a class="dropdown-item" th:href="@{/StayUserList}">스테이 관리</a></li>
-                          
-                           
                            <li><a class="dropdown-item" href="스테이예약리스트.html">스테이 예약 리스트</a></li>
-                 
-              
                         </ul>
                      </li>
                      
@@ -178,6 +196,34 @@
       </div>
    </nav>
 
+  <div th:replace="~{user/include/script :: script}"></div>
+<script type="text/javascript">
+    const URL_SIGNIN_FORM_XDM = "/SigninUser"; // 로그인 주소
+    const URL_SIGNOUT_PROC_XDM = "/SignoutUser1"; // 로그아웃 컨트롤러 주소
+    const URL_INDEX_VIEW_XDM = "/indexUser"; // 로그아웃 후 이동할 페이지
 
+    $(document).ready(function () {
+        $(document).on("click", "#btnSignout", function () {
+            $.ajax({
+                type: "POST",
+                url: URL_SIGNOUT_PROC_XDM,
+                data: {},
+               /*  dataType: "json", // 응답 데이터를 JSON으로 처리 */
+                success: function (response) {
+                    if (response.rt === "success") {
+                       
+                        window.location.href = URL_INDEX_VIEW_XDM; // 로그아웃 후 이동
+                    } else {
+                       
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX 요청 실패:", textStatus, errorThrown);
+                    alert("서버 오류 발생. 다시 시도해주세요.");
+                }
+            });
+        });
+    });
+</script>
 
 </th:block>

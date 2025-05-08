@@ -25,4 +25,13 @@ public class MemberService {
 		return memberDao.selectOneLogin(Dto);
 
 	}
+	
+	// 로그인 아작스 ID 
+	public MemberDto selectId(MemberDto memberDto){
+		return memberDao.selectId(memberDto);
+	} 
+	//회원가입
+	public int signup(MemberDto memberDto) {
+		return memberDao.signup(memberDto);
+	}
 }

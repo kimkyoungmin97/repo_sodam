@@ -38,7 +38,7 @@
   <div class="border-bottom shadow-sm">
     <nav class="navbar navbar-light py-2">
       <div class="container justify-content-center justify-content-lg-between">
-        <a class="navbar-brand" href="/user/template/pages/인덱스.html">
+        <a class="navbar-brand" th:href="@{indexUser}">
           <img src="/user/template/assets/images/logo/ChatGPT Image 2025년 4월 23일 오후 03_59_55.png" width="70" alt="" class="d-inline-block align-text-top">
         </a>
         <span class="navbar-text">
@@ -60,8 +60,8 @@
             <div class="card" style="max-width: 390px;">
               <div class="card-body p-6">
                 <div class="form-check mb-4">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="homeRadio" checked />
-                  <label class="form-check-label text-dark fw-semibold" for="homeRadio">사용자</label>
+                  <input class="form-check-input" type="radio"  id="userRadio" name="memTypeCd" value=11 />
+                  <label class="form-check-label text-dark fw-semibold" for="userRadio">사용자</label>
                 </div>
                 <p class="mb-6">
                   간단한 회원가입으로 <br />
@@ -80,8 +80,8 @@
             <div class="card" style="max-width: 390px;">
               <div class="card-body p-6">
                 <div class="form-check mb-4">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="officeRadio" />
-                  <label class="form-check-label text-dark fw-semibold" for="officeRadio">호스트</label>
+                  <input class="form-check-input" type="radio"  id="hostRadio" name="memTypeCd" value=12 />
+                  <label class="form-check-label text-dark fw-semibold" for="hostRadio">호스트</label>
                 </div>
                 <p class="mb-6">
                   숙소 경영을 안해보았어어도<br />
@@ -104,24 +104,30 @@
 
     <div class="d-grid gap-2 col-2 mx-auto">
             
-      <a class="btn btn-dark" href="회원가입.html" type="button">회원가입</a>
+      <a class="btn btn-dark"  id="signupBtn" type="button">회원가입</a>
     </div>
   </main>
   <br> <br> <br> <br> <br> <br> <br> <br> <br>
   <!-- Footer -->
   <!-- footer -->
   
-  <!-- Javascript-->
-  <!-- Libs JS -->
-  <!-- <script src="/user/template/assets/libs/jquery/dist/jquery.min.js"></script> -->
-  <script src="/user/template/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/user/template/assets/libs/simplebar/dist/simplebar.min.js"></script>
 
-  <!-- Theme JS -->
-  <script src="/user/template/assets/js/theme.min.js"></script>
 
-  <script src="/user/template/assets/js/vendors/password.js"></script>
-  <script src="/user/template/assets/js/vendors/validation.js"></script>
+ 
+  
+  <div th:replace="~{user/include/script :: script}"></div>
+  <script type="text/javascript">
+  document.getElementById('signupBtn').onclick=function(){
+	  const selected = document.querySelector('input[name="memTypeCd"]:checked');
+	    if (!selected) {
+	      alert('회원 유형을 선택해주세요.');
+	      return;
+	    }
+	    const memTypeCd = selected.value;
+	    window.location.href = `/SignupUserForm?memTypeCd=${memTypeCd}`;
+	  
+  }
+  </script>
 </body>
 
 </html>
