@@ -569,7 +569,16 @@
     </form>
 
   <div th:replace="~{user/include/script :: script}"></div>
-  
+        <script type="text/javascript">
+    	// 페이지네이션 자바 스크립
+	    let form = document.querySelector("form[name=formList]");
+	 goList = function (thisPage) {
+	     document.querySelector("input[name=thisPage]").value = thisPage;
+	     form.action = "/ReservationUserList";
+	     form.submit();
+	 }  
+
+    </script>
      
   <script type="text/javascript">
 //외부 js에서는 이 변수들이 전역(global)으로 들어온다고 가정하고 사용

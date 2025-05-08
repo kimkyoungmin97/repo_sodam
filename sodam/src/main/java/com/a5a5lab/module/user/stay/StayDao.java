@@ -16,4 +16,7 @@ public interface StayDao {
 	
 	// 사용자 숙소 정보 리스트 상세 1개씩 뽑기
 	public StayDto stayOne(StayDto stayDto);
+	
+	//호스트가 숙소 등로 리스트
+	public List<StayDto> stayRegistrationList(int memSeq);
 }

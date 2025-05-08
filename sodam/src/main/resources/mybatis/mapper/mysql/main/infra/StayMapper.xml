@@ -5,6 +5,7 @@
 <mapper namespace="com.a5a5lab.module.user.stay.StayDao">
 	<resultMap id="resultMapObj" type="com.a5a5lab.module.user.stay.StayDto"></resultMap>
 	
+	<!-- 숙바 리스트 -->
 	<select id="stayList" resultMap="resultMapObj">
 	
 		SELECT 
@@ -39,6 +40,48 @@
 			AND a.stDeNy = 0
 	
 		LIMIT #{startRnumForMysql},#{rowNumToShow}
+	
+	</select>
+	
+	<!-- 호스트가 숙박 등록 했을떄 리스트 -->
+	<select id="stayRegistrationList" resultMap="resultMapObj">
+	
+		SELECT 
+			a.staySeq, <!-- 숙박 Seq -->
+			a.stayName, <!-- 숙박이름 -->
+			a.stayZipCode, <!-- 우편번호 -->
+			a.stayAddress, <!-- 주소 -->
+			a.stayAddressDetail, <!-- 상세 주소 -->
+			a.stayLatitude, <!-- 위도 -->
+			a.stayHardness, <!-- 경도 -->
+			a.stayIntroMemo, <!-- 소개 메모 -->
+			a.stayServiceMemo, <!-- 서비스 메모 -->
+			a.stayNoticeMemo, <!-- 공지 메모 -->
+			a.regDateTime, <!-- 등록일 -->
+			a.modDateTime, <!-- 수정일 -->
+			a.regionCd, <!-- 지역CD -->
+			a.activeCd, <!-- 활성 CD -->
+			a.member_memSeq, <!-- 등록한 멤버 Seq -->
+			a.stDeNy, <!-- 삭제여부 -->
+			a.stayPrice,<!-- 숙박 가격 -->
+			region.ifcdSeq AS regionCd,
+		    region.ifcdName AS regionName,
+		    active.ifcdSeq AS activeCd,
+            active.ifcdName AS activeName,
+            b.memSeq
+		FROM
+			stay a
+			
+		LEFT JOIN code region ON a.regionCd = region.ifcdSeq
+        LEFT JOIN code active ON a.activeCd = active.ifcdSeq
+        LEFT JOIN member b ON a.member_memSeq = b.memSeq
+		
+		WHERE 1=1 
+			AND a.stDeNy = 0
+			AND a.member_memSeq = #{memSeq}
+			
+	
+<!-- 		LIMIT #{startRnumForMysql},#{rowNumToShow} -->
 	
 	</select>
 	

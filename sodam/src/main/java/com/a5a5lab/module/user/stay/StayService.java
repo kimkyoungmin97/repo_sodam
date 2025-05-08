@@ -26,4 +26,9 @@ public class StayService {
 		
 		return stayDao.stayOne(stayDto);
 	}
+	
+	//사용자 스테이등록 했을때 리스트 상세
+	public List<StayDto> stayRegistrationList(int memSeq){
+		return stayDao.stayRegistrationList(memSeq);
+	}
 }

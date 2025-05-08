@@ -1,14 +1,15 @@
 package com.a5a5lab.module.user.stay;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.a5a5lab.module.common.util.UtilDateTiem;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class StayController {
@@ -49,11 +50,22 @@ public class StayController {
 	}
 
 	
-	// 호스트 로그인했을때  스테이 리스트 보여주기
+//	// 호스트 로그인했을때  스테이 리스트 보여주기
 	@RequestMapping(value="/StayUserList")
-	public String StayUserList() {
+	public String StayUserList(StayVo vo, Model model, HttpSession httpSession) {
 		
-		return "/user/staylist/StayUserList";
+		
+	    Object obj = httpSession.getAttribute("sessSeqUser");
+	    
+	    int memSeq = Integer.parseInt(obj.toString()); 
+
+	    List<StayDto> registrationList = stayService.stayRegistrationList(memSeq);
+	    model.addAttribute("list", registrationList);
+
+	    vo.setParamsPaging(stayService.selectOneCount(vo));
+	    model.addAttribute("vo", vo);
+
+	    return "/user/staylist/StayUserList";
 	}
 	
 	
