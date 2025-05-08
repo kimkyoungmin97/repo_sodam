@@ -61,6 +61,7 @@ public class StayController {
 	@RequestMapping(value="StayUserFrom")
 	public String StayUserFrom() {
 		
+		
 		return "/user/stayfrom/StayUserFrom";
 	}
 	

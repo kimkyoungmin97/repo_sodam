@@ -20,6 +20,7 @@ public class StayDto {
 	private Integer activeCd; // 운영상태 (운영중 운영중지 운영대기)
 	private String member_memSeq; //멤버 Seq
 	private Integer stayPrice; //가격
+	private Integer stayPersonnel; // 숙박정원
 	private Integer stDeNy; // 삭제 여부
 //	----
 	private String memSeq; // 호스트 Seq
@@ -30,6 +31,12 @@ public class StayDto {
 	
 	public String getStaySeq() {
 		return staySeq;
+	}
+	public Integer getStayPersonnel() {
+		return stayPersonnel;
+	}
+	public void setStayPersonnel(Integer stayPersonnel) {
+		this.stayPersonnel = stayPersonnel;
 	}
 	public void setStaySeq(String staySeq) {
 		this.staySeq = staySeq;
