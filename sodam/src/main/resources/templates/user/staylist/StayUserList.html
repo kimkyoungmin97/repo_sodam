@@ -2,7 +2,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace="~{user/include/head :: head}"></div>
-
+<form name="formList" id="formList" method="post" autocomplete="off">
+		<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+		<input type="hidden" name=ifcdSeq>
 
 
    <br>
@@ -142,26 +145,26 @@
                               </tr>
                           </thead>
   
-                          <tbody>
+                          <tbody >
                           <!-- <tr th:if="${#lists.isEmpty(list)}"  class="hover-artions-trigger btn-reveal-trigger position-static">    	
                                  <td colspan="10">
                                    <p class="fs-0" style="padding-top: 12px">데이터가 없습니다</p>
                                 </td> 
                              </tr> -->
-                              <tr >
+                              <tr th:each="list : ${list}">
                                   <th>
                                     <input class="form-check-input row-checkbox" type="checkbox" >
                                     <label class="form-check-label" ></label>
 
                                  </th> 
-                                 <td >1</td>
-                                 <td><a href="#">한옥 스테이</a></td>
-                                  <td>종로구 어딘가</td>
-                                  <td>80,000<samp>원</samp></td>
-                                  
-                                  <td>2025-04-01</td>
-                                  <td>2025-04-26</td>
-                                  <td >운영중</td>
+                                 <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}">1</td>
+                                 <td><a href="#" th:text="${list.stayName}"></a></td>
+                                  <td th:text="${list.stayAddress}"></td>
+                                  <td ><span th:text="${#numbers.formatInteger(list.stayPrice, 3, 'COMMA')}"></span> 원</td>
+                                   
+                                  <td th:text="${list.regDateTime}"></td>
+                                  <td th:text="${list.modDateTime}"></td>
+                                  <td th:text="${@codeService.selectOneCachedCode(list.activeCd)}"></td>
                               </tr>
                               
                               
@@ -170,19 +173,19 @@
                       <!-- 페이지 네이션 -->
                       <div class="d-flex justify-content-center">
                         <ul class="pagination">
-                            <li  class="page-item">
-                                <a class="page-link" 
+                            <li  class="page-item" th:if="${vo.startPage gt vo.pageNumToShow}">
+                                <a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|"
                                    >
                                     <i>&laquo;</i>
                                 </a>
                             </li>
-                            <li 
+                            <li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''"
                                 
                                 class="page-item">
-                                <a class="page-link"  >1</a>
+                                <a class="page-link"  th:attr="onclick=|goList('${num}')|" th:text="${num}">1</a>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" >
+                            <li class="page-item" th:if="${vo.endPage ne vo.totalPages}">
+                                <a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
                                     <i>&raquo;</i>
                                 </a>
                             </li>
@@ -305,8 +308,22 @@
          </div>
       </div>
    </footer>
-
+</form>
   <div th:replace="~{user/include/script :: script}"></div>
+  
+      <script type="text/javascript">
+    	// 페이지네이션 자바 스크립
+	    let form = document.querySelector("form[name=formList]");
+	 goList = function (thisPage) {
+	     document.querySelector("input[name=thisPage]").value = thisPage;
+	     form.action = "/StayUserList";
+	     form.submit();
+	 }  
+
+    </script>
+  
+  
+  
 </body>
 
 </html>

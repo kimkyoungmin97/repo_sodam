@@ -180,14 +180,19 @@
                            aria-expanded="false">공지 사항</a>
                 
                      </li>
-                     <li class="nav-item dropdown" th:if="${session.sessMemTypeUser == 13 || session.sessMemTypeUser == 12}">
+                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">소담하게 공간 공유하기 </a>
                         <ul class="dropdown-menu">
                            <li><a class="dropdown-item" th:href="@{/StayUserList}">스테이 관리</a></li>
+                          
+                           
                            <li><a class="dropdown-item" href="스테이예약리스트.html">스테이 예약 리스트</a></li>
+                 
+              
                         </ul>
                      </li>
+                     
                   </ul>
                </div>
             </div>
@@ -223,8 +228,6 @@
             });
         });
     });
-    
-  
 </script>
 
 </th:block>

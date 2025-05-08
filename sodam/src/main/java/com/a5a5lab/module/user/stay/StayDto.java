@@ -14,8 +14,8 @@ public class StayDto {
 	private String stayIntroMemo; // 숙소 소개
 	private String stayServiceMemo; //숙소 시설/서비스
 	private String stayNoticeMemo; // 숙소 예약 공지
-	private Date regDateTime; // 등록일
-	private Date modDateTime; // 수정일
+	private String regDateTime; // 등록일
+	private String modDateTime; // 수정일
 	private Integer regionCd; // 지역 코드
 	private Integer activeCd; // 운영상태 (운영중 운영중지 운영대기)
 	private String member_memSeq; //멤버 Seq
@@ -95,18 +95,7 @@ public class StayDto {
 	public void setStayNoticeMemo(String stayNoticeMemo) {
 		this.stayNoticeMemo = stayNoticeMemo;
 	}
-	public Date getRegDateTime() {
-		return regDateTime;
-	}
-	public void setRegDateTime(Date regDateTime) {
-		this.regDateTime = regDateTime;
-	}
-	public Date getModDateTime() {
-		return modDateTime;
-	}
-	public void setModDateTime(Date modDateTime) {
-		this.modDateTime = modDateTime;
-	}
+
 	public Integer getRegionCd() {
 		return regionCd;
 	}
@@ -154,6 +143,18 @@ public class StayDto {
 	}
 	public void setMemTel(String memTel) {
 		this.memTel = memTel;
+	}
+	public String getRegDateTime() {
+		return regDateTime;
+	}
+	public void setRegDateTime(String regDateTime) {
+		this.regDateTime = regDateTime;
+	}
+	public String getModDateTime() {
+		return modDateTime;
+	}
+	public void setModDateTime(String modDateTime) {
+		this.modDateTime = modDateTime;
 	}
 	
 }
