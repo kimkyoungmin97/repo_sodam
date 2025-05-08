@@ -10,4 +10,6 @@ public interface MemberDao {
 	
 	//사용자 로그인 비교
 	public MemberDto selectId(MemberDto memberDto);
+	//회원가입
+	public int signup(MemberDto memberDto);
 }

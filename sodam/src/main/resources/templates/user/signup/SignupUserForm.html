@@ -70,26 +70,24 @@
               <p>간단한 회원가입 절차로 소담스테이와 함께.</p>
             </div>
             <!-- form -->
-            <form class="needs-validation" method="post" novalidate>
-            	<input type="hidden" id="memTypeCd" name="memTypeCd">
+            <form class="needs-validation" id="signupForm" method="post" novalidate>
+            	<input type="hidden" id="memTypeCd" name="memTypeCd" th:value="${item.memTypeCd}">
               <div class="row g-3">
               	<div th:text="${@codeService.selectOneCachedCode(item.memTypeCd)}"></div>
                 <!-- col -->
                 <div class="col-md-8 col-12">
                   <label for="formSignupfphonenum" class="form-label visually-hidden">
                     </label>
-                  <input type="text" id="userPhoneNum" name="userPhoneNum" class="form-control" 
+                  <input type="text" id="memName" name="memName" class="form-control" 
                     placeholder="이름" />
-                  <div class="invalid-feedback">전화번호를 입력해주세요.</div>
+                  <div class="invalid-feedback">이름을 입력해주세요.</div>
                 </div>
                 <div class="col-md-4 col-12">
-                  <select class="form-select">
+                  <select class="form-select" id="genderCd" name="genderCd">
                       <option selected value="">성별</option>
-                      <option >남자</option>
-                      <option >여자</option>
-                      <option >기타</option>
+                      <option th:each="genderList : ${@codeService.selectListCachedCode(1)}" th:text="${genderList.ifcdName}" th:value="${genderList.ifcdSeq}"></option>
                   </select>
-                  <div class="invalid-feedback">통신사를 선택해 주세요</div>
+                  <div class="invalid-feedback">성별을 선택해 주세요</div>
                 </div>
                 
                 <div class="col-md-4 col-12">
@@ -97,52 +95,50 @@
                   <div class="col-12">
                     <!-- input -->
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" value="" name="Foreigner" checked>
+                      <input class="form-check-input" type="radio" value=15 name="foreignerCd">
                       <label class="form-check-label">
                        내국인
                       </label>
                     </div>
                     
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" value="" name="Foreigner">
+                      <input class="form-check-input" type="radio" value=14 name="foreignerCd">
                       <label class="form-check-label">
                         외국인
                       </label>
                     </div>
                     </div>
                 <div class="col-md-4 col-12">
-                  <select class="form-select">
+                  <select class="form-select" id="agencyCd" name="agencyCd">
                       <option selected value="">통신사</option>
-                      <option >SKT</option>
-                      <option >LGU+</option>
-                      <option >KT</option>
+                      <option  th:each="agencyList : ${@codeService.selectListCachedCode(2)}" th:text="${agencyList.ifcdName}" th:value="${agencyList.ifcdSeq}"></option>
                   </select>
                   <div class="invalid-feedback">통신사를 선택해 주세요</div>
                 </div>
               <div class="col-md-8 col-12">
                 <label for="formSignupfphonenum" class="form-label visually-hidden">
                   </label>
-                <input type="text" id="userPhoneNum" name="userPhoneNum" class="form-control" 
+                <input type="text" id="memTel" name="memTel" class="form-control" 
                   placeholder="전화번호" />
                 <div class="invalid-feedback">전화번호를 입력해주세요.</div>
               </div>
                 <div class="col-12">
-                  <label for="formSignupEmail" class="form-label visually-hidden">Email address</label>
-                  <input type="email" class="form-control" id="formSignupEmail" placeholder="email" required />
+                  <label for="formSignupEmail" class="form-label visually-hidden"></label>
+                  <input type="email" class="form-control" id="memEmail" name="memEmail" placeholder="email" required />
                   <div class="invalid-feedback">email을 입력해 주세요</div>
                 </div>
                 <div class="col-12">
                   <!-- input -->
-                  <label for="formSignupEmail" class="form-label visually-hidden">Email address</label>
-                  <input type="email" class="form-control" id="formSignupId" placeholder="ID" required />
+                  <label for="formSignupEmail" class="form-label visually-hidden"></label>
+                  <input type="email" class="form-control" id="memId" name="memId" placeholder="ID" required />
                   <div class="invalid-feedback">Id를 입력해 주세요</div>
                 </div>
                 <div class="col-12">
                   <!-- input -->
                   <div class="password-field position-relative">
-                    <label for="formSignupPassword" class="form-label visually-hidden">Password</label>
+                    <label for="formSignupPassword" class="form-label visually-hidden"></label>
                     <div class="password-field position-relative">
-                      <input type="password" class="form-control fakePassword" id="formSignupPassword"
+                      <input type="password" class="form-control fakePassword" id="memPw" name="memPw"
                         placeholder="비밀번호" required />
                       <span><i class="bi bi-eye-slash passwordToggler"></i></span>
                       <div class="invalid-feedback">비밀번호를 입력해 주세요.</div>
@@ -153,7 +149,7 @@
                   <div class="password-field position-relative">
                     <label for="formSignupPassword" class="form-label visually-hidden">Password</label>
                     <div class="password-field position-relative">
-                      <input type="password" class="form-control fakePassword" id="formSignupPassword"
+                      <input type="password" class="form-control fakePassword" id="pwCheck"
                         placeholder="비밀번호 확인" required />
                       <span><i class="bi bi-eye-slash passwordToggler"></i></span>
                       <div class="invalid-feedback">비밀번호를 입력해 주세요.</div>
@@ -161,7 +157,7 @@
                   </div>
                 </div>
                 <!-- btn -->
-                <div class="col-12 d-grid"><button type="submit" class="btn btn-dark" >회원가입</button></div>
+                <div class="col-12 d-grid"><button type="button" class="btn btn-dark" id="btnSignup" >회원가입</button></div>
 
                 <!-- text -->
                 <p>
@@ -256,6 +252,14 @@
     </div>
   </footer>
 <div th:replace="~{user/include/script :: script}"></div>
+<script type="text/javascript">
+document.getElementById("btnSignup").onclick=function(){
+	let form = document.getElementById("signupForm");
+	form.action ="/signupInst";
+	form.submit();
+}
+</script>
+
 </body>
 
 </html>
