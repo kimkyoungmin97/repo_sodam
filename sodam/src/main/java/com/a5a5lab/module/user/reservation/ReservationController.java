@@ -8,9 +8,17 @@ public class ReservationController {
 	
 	
 	//MY 페이지 예약완료 리스트
-	@RequestMapping(value="MyReservationsUser")
+	@RequestMapping(value="/MyReservationsUser")
 	public String MyReservationsUser() {
 		
 		return "/user/myreservations/MyReservationsUser";
+	}
+	
+	
+	//호스트 스테이 예약 리스트
+	@RequestMapping(value="/StayReservationUserList")
+	public String StayReservationUserList() {
+		
+		return "/user/stayreservation/StayReservationUserList";
 	}
 }

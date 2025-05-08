@@ -58,7 +58,7 @@
 								</li>
 								<!-- nav item -->
 								<li class="nav-item">
-									<a class="nav-link" href="/user/template/pages/인덱스.html">
+									<a class="nav-link" id="btnSignout" onclick="logoutUser(); return false;">
 										<i class="feather-icon icon-log-out me-2"></i>
 										로그 아웃
 									</a>
@@ -71,3 +71,31 @@
 
 
 </th:block>
+<script type="text/javascript">
+    const URL_SIGNIN_FORM_XDM = "/SigninUser"; // 로그인 주소
+    const URL_SIGNOUT_PROC_XDM = "/SignoutUser1"; // 로그아웃 컨트롤러 주소
+    const URL_INDEX_VIEW_XDM = "/indexUser"; // 로그아웃 후 이동할 페이지
+
+    $(document).ready(function () {
+        $(document).on("click", "#btnSignout", function () {
+            $.ajax({
+                type: "POST",
+                url: URL_SIGNOUT_PROC_XDM,
+                data: {},
+               /*  dataType: "json", // 응답 데이터를 JSON으로 처리 */
+                success: function (response) {
+                    if (response.rt === "success") {
+                       
+                        window.location.href = URL_INDEX_VIEW_XDM; // 로그아웃 후 이동
+                    } else {
+                       
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX 요청 실패:", textStatus, errorThrown);
+                    alert("서버 오류 발생. 다시 시도해주세요.");
+                }
+            });
+        });
+    });
+</script>
