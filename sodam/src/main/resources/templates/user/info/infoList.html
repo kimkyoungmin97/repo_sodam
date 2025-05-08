@@ -30,7 +30,8 @@
             <div class="card-body">
               <h5 class="card-title"><strong>공지사항 관리</strong></h5>
 
-              <form>
+              <form name="formList" id="formList" method="post" autocomplete="OFF">
+              <input type="hidden" name="infoSeq">
                 <div class="row my-3">
                   <div class="col-2">
                     <select class="form-select" aria-label="Default select example">
@@ -87,7 +88,7 @@
                 <div>
                   <div class="row" style="margin-top: 2%;">
                    <div class="col">
-                     <strong>Total:6</strong>
+                     <strong>Total:<span th:text="${vo.totalRows}"></span></strong>
                    </div>
                    <div class="col-2">
                      <select class="form-select" aria-label="Default select example">
@@ -112,16 +113,18 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                      <tr th:if="${#lists.isEmpty(list)}">
+                      		<td colspan="7" style="text-align:center;">
+                      		<p> There is no data!</p>
+                      		</td>
+                      	</tr>
+                        <tr th:if="${!#lists.isEmpty(list)}" th:each="list:${list}">
                           <td><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></td>
-                          <td>1</td>
-                          <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;">[소담스테이에 오신 것을 진심으로 환영합니다]</td>
-                          <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;"><a href="../NiceAdmin/tables-공지 내용.html" style="color: blue;">
-                            안녕하세요.
-                            문화와 자연이 함께하는 소담스테이에 방문해주셔서 감사합니다.
-                          </a></td>
-                          <td>2005-04-29</td>
-                          <td>2005-04-29</td>
+                          <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+                          <td th:text="${list.infoTitle}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;"></td>
+                          <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;"><a href="javascript:void(0);" th:text=${list.infoText} th:attr="onclick=|goForm('${list.infoSeq}')|"></a></td>
+                          <td th:text=${list.regDate}></td>
+                          <td th:text=${list.modDate}></td>
                         </tr>
                         
                         
@@ -153,7 +156,7 @@
                  <div class="row">
                    <div class="col" style="text-align: right;">
                      <div>
-                       <a href="./tables-customer-form.html" type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+                       <button type="button" id="btnForm" class="btn btn-primary"><i class="fa-solid fa-plus"></i></button>
                        <button type="button" class="btn btn-success"><i class="fa-solid fa-wrench"></i></button>
                        <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                        <button type="button" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></button>
@@ -182,8 +185,8 @@
   
   <script type="text/javascript">
   	
-//   let formList = document.getElementById("formList");
-//   let seq = document.querySelector("input[name=ifcgSeq]");	
+  let formList = document.getElementById("formList");
+  let seq = document.querySelector("input[name=infoSeq]");	
   
 //    function goList(thisPage){ 
 // 	   formList.action ="/sodam/xdm/CodeGroupXdmList";
@@ -211,14 +214,14 @@
 // 	   document.getElementById("formList").submit(); 
 	   
 //    }
-//    document.getElementById("btnForm").onclick = function () {
-// 	    goForm(0);
-// 	}
-// 	goForm = function (keyValue) {
-// 	    seq.value = keyValue;
-// 	    formList.action ="/sodam/xdm/CodeGroupXdmForm";
-// 	    formList.submit();
-// 	}
+   document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	}
+	goForm = function (keyValue) {
+	    seq.value = keyValue;
+	    formList.action ="/user/info/infoView";
+	    formList.submit();
+	}
   </script>
 
 </body>

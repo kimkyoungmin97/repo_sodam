@@ -10,13 +10,6 @@ public class StayController {
 
 	@Autowired
 	StayService stayService;
-	
-	
-	
-	
-	
-	
-	
 	//사용자 인덱스 화면 보여주기
 	@RequestMapping(value="/indexUser")
 	public String indexUser() {
@@ -32,6 +25,13 @@ public class StayController {
 		return "/user/reservation/ReservationUserList";
 	}
 	
+	
+	// 호스트 로그인했을때  스테이 리스트 보여주기
+	@RequestMapping(value="/StayUserList")
+	public String StayUserList() {
+		
+		return "/user/staylist/StayUserList";
+	}
 	
 	
 	

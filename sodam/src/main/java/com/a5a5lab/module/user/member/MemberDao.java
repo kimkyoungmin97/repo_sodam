@@ -9,7 +9,11 @@ import com.a5a5lab.module.xdm.codegroup.CodeGroupDto;
 @Repository
 public interface MemberDao {
 	
+
 	public List<MemberDto> selectList(MemberDto Dto);
 	public int selectOneCount(MemberDto Dto);
+
+	public MemberDto selectOneLogin(MemberDto Dto);
+
 
 }

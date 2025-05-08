@@ -4,6 +4,25 @@
 <mapper namespace="com.a5a5lab.module.xdm.code.CodeDao">
 	<resultMap id="resultMapObj" type="com.a5a5lab.module.xdm.code.CodeDto"></resultMap>
 	
+<sql id="selectCommon">
+		FROM code AS a 
+		left join codegroup AS b ON b.ifcgSeq = a.codeGroup_ifcgSeq
+		WHERE 1=1
+		 <if test="shUseNy != null and !shUseNy.equals('')">AND a.ifcdUseNy = #{shUseNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.ifcdDelNy = #{shDelNy}</if>
+				
+				<choose>
+					<when test="shOptionDate == 1">AND ifcdRegistrationDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND ifcdModificationDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+
+        <choose>
+            <when test="shOption == 1">AND b.ifcgSeq = #{shValue}</when>
+            <when test="shOption == 2">AND b.ifcgName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND a.ifcdName LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+		
+</sql>	
 <select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
 		SELECT 
 			ifcdSeq,
@@ -26,17 +45,14 @@
 		a.ifcdUseNy,
 		b.ifcgSeq,
 		b.ifcgName
-	FROM
-		code AS a
-	left join codegroup AS b ON b.ifcgSeq = a.codegroup_ifcgSeq
+	<include refid="selectCommon"/>
 	ORDER BY a.ifcdSeq DESC
 	LIMIT #{startRnumForMysql},#{rowNumToShow} 
 </select>
 <select id="selectOneCount" resultType="Integer">
 	SELECT
 		count(*)
-	FROM
-		code
+	<include refid="selectCommon"/>
 </select>
 <select id="codeGroupList">
 	select

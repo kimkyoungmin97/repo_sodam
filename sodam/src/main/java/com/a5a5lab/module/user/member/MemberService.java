@@ -13,11 +13,16 @@ public class MemberService {
 	@Autowired
 	MemberDao memberDao;
 	
+
 	public List<MemberDto> selectList(MemberDto Dto){
 		return memberDao.selectList(Dto);
 	}
 	
 	public int selectOneCount(MemberDto Dto) {
 		return memberDao.selectOneCount(Dto);
+	}	
+	public MemberDto selectOneLogin(MemberDto Dto) {
+		return memberDao.selectOneLogin(Dto);
+
 	}
 }

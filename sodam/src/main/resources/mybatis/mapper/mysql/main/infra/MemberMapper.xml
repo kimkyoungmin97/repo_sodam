@@ -5,6 +5,7 @@
 <mapper namespace="com.a5a5lab.module.user.member.MemberDao">
 	<resultMap id="resultMapObj" type="com.a5a5lab.module.user.member.MemberDto"></resultMap>
 	
+
 	<sql id="selectCommon">
 		FROM member
 		WHERE 1=1
@@ -40,6 +41,21 @@
 		
 </select>
 
+
+
+<select id="selectOneLogin">
+	SELECT
+		memSeq,
+		memId,
+		memPw
+	FROM
+		member
+	WHERE 1=1
+	AND	memId=#{memId}
+	AND memPw=#{memPw}
+	AND memDelNy = 0
+		
+</select>
 
 	
 	
