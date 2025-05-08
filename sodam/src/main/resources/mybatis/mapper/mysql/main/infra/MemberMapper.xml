@@ -116,6 +116,17 @@
 		)
 	</insert>
 	
+	<update id="userUpdate">
+	UPDATE member SET
+		memName = #{memName},
+	    genderCd = #{genderCd},
+		memId = #{memId},
+        memEmail = #{memEmail},
+        agencyCd = #{agencyCd},
+        memTel= #{memTel},
+	WHERE seq = #{seq}
+	</update>
+	
 	
 	
 	
