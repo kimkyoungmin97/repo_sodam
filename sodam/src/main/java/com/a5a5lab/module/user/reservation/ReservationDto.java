@@ -5,8 +5,8 @@ import java.util.Date;
 public class ReservationDto {
 	
 	private String resSeq; //예약 Seq
-	private Date checkInDate; // 체크인 날짜
-	private Date checkOutDate; // 체크아웃 날짜
+	private String checkInDate; // 체크인 날짜
+	private String checkOutDate; // 체크아웃 날짜
 	private String checkInName; //체크인 하는 사람 이름
 	private String checkInTel;//체크인 하는사람 번호
 	private String checkInPeoNum; // 체크인 인원수
@@ -14,22 +14,28 @@ public class ReservationDto {
 	private String member_memSeq; //멤버 Seq
 	private String stay_staySeq; //숙소 Seq
 //	----
+	private String staySeq; // 스테이 Seq
+	private String stayName;  // 숙박 이름
+	private String stayAddress; //숙박 주소
+	private String stayPrice; // 숙박 가격
+//	----
+	
 	public String getResSeq() {
 		return resSeq;
 	}
 	public void setResSeq(String resSeq) {
 		this.resSeq = resSeq;
 	}
-	public Date getCheckInDate() {
+	public String getCheckInDate() {
 		return checkInDate;
 	}
-	public void setCheckInDate(Date checkInDate) {
+	public void setCheckInDate(String checkInDate) {
 		this.checkInDate = checkInDate;
 	}
-	public Date getCheckOutDate() {
+	public String getCheckOutDate() {
 		return checkOutDate;
 	}
-	public void setCheckOutDate(Date checkOutDate) {
+	public void setCheckOutDate(String checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 	public String getCheckInName() {
@@ -67,6 +73,30 @@ public class ReservationDto {
 	}
 	public void setStay_staySeq(String stay_staySeq) {
 		this.stay_staySeq = stay_staySeq;
+	}
+	public String getStaySeq() {
+		return staySeq;
+	}
+	public void setStaySeq(String staySeq) {
+		this.staySeq = staySeq;
+	}
+	public String getStayName() {
+		return stayName;
+	}
+	public void setStayName(String stayName) {
+		this.stayName = stayName;
+	}
+	public String getStayAddress() {
+		return stayAddress;
+	}
+	public void setStayAddress(String stayAddress) {
+		this.stayAddress = stayAddress;
+	}
+	public String getStayPrice() {
+		return stayPrice;
+	}
+	public void setStayPrice(String stayPrice) {
+		this.stayPrice = stayPrice;
 	}
 	
 }
