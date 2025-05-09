@@ -1,7 +1,11 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace="~{user/include/head :: head}"></div>
+
+<input type="hidden" id="staySeq" name="staySeq" value="${item?.staySeq}" />
+<!-- 	<input type="hidden" id="stay_staySeq" name="stay_staySeq" th:value="${item.staySeq}"> -->
+
 
 
 
@@ -486,10 +490,20 @@
 							<hr class="my-6" />
 							<div class="mb-5">
 								<div class="col-lg-10 col-12">
-									<small>날짜<span style="color: red;">*</span></small>
+									<small>체크인 날짜<span style="color: red;">*</span></small>
 									
-								<input type="text" class="form-control"  placeholder="날짜를 선택하세요" required id="reservationDate" name="reservationDate"/> 
-								<div style="color: red;" id="reservationDateError"></div>
+								<input type="text" class="form-control"  placeholder="날짜를 선택하세요" required id="checkInDate" name="checkInDate"/> 
+								<div style="color: red;" id="checkInDateError"></div>
+									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
+									
+								</div>
+							</div>
+							<div class="mb-5">
+								<div class="col-lg-10 col-12">
+									<small>체크아웃 날짜<span style="color: red;">*</span></small>
+									
+								<input type="text" class="form-control"  placeholder="날짜를 선택하세요" required id="checkOutDate" name="checkOutDate"/> 
+								<div style="color: red;" id="checkOutDateError"></div>
 									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
 									
 								</div>
@@ -498,8 +512,8 @@
 								<div class="col-lg-10 col-12">
 									<small>체크인 고객 성명<span style="color: red;">*</span></small>
 									
-								<input type="text" class="form-control"  placeholder="성명을 입력해주세요" required id="reservationDate" name="reservationDate"/> 
-								<div style="color: red;" id="reservationDateError"></div>
+								<input type="text" class="form-control"  placeholder="성명을 입력해주세요" required id="checkInName" name="checkInName"/> 
+								<div style="color: red;" id="checkInNameError"></div>
 									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
 									
 								</div>
@@ -508,9 +522,9 @@
 								<div class="col-lg-10 col-12">
 									<small>체크인 고객 연락처<span style="color: red;">*</span></small>
 									
-								<input type="text" class="form-control"  placeholder="번호를 입력하세요" required id="reservationDate" name="reservationDate"/> 
-								<div style="color: red;" id="reservationDateError"></div>
-									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
+								<input type="text" class="form-control"  placeholder="번호를 입력하세요" required id="checkInTel" name="checkInTel"/> 
+								<div style="color: red;" id="checkInTelError"></div>
+									
 									
 								</div>
 							</div>
@@ -520,42 +534,34 @@
 								  <!-- 인원수 선택 -->
 								  <small>인원수<span style="color: red;">*</span></small>
 								  <div class="input-group input-spinner mb-3">
-									<input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity" />
-									<input type="number" step="1" max="10" value="1" name="quantity"
+									<input type="button" value="-" class="button-minus btn btn-sm" data-field="checkInPeoNum" />
+									<input type="number" step="1" max="10" value="1" name="checkInPeoNum" id="checkInPeoNum"
 										   class="quantity-field form-control-sm form-input" />
-									<input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity" />
+									<input type="button" value="+" class="button-plus btn btn-sm" data-field="checkInPeoNum" />
+									
 								  </div>
 							  
-								  <!-- 방문 수단 선택 -->
-								  <small>방문 수단<span style="color: red;">*</span></small>
-								  <div class="mt-2">
-									<div class="form-check form-check-inline">
-									  <input class="form-check-input" type="radio" name="transport" id="public" value="대중교통">
-									  <label class="form-check-label" for="public">대중교통</label>
-									</div>
-									<div class="form-check form-check-inline">
-									  <input class="form-check-input" type="radio" name="transport" id="car" value="차량">
-									  <label class="form-check-label" for="car">차량</label>
-									</div>
-								  </div>
+								  
 								</div>
 							  </div>
-							<div class="fs-4 ">
-								<!-- price -->
-								<span class="fw-bold text-dark">60,000</span>
-								<span>원</span>
-								<!-- <span class="text-decoration-line-through text-muted">60,000</span>
-								<span><small class="fs-6 ms-2 text-danger">26% Off</small></span> -->
-							</div>
+<!-- 							<div class="fs-4 "> -->
+<!-- 								<span>1인 1박 숙소 가격</span><br> -->
+<!-- 								price -->
+<!-- 								<span class="fw-bold text-dark" th:text="${item.stayPrice}"></span> -->
+								
+<!-- 								<span>원</span> -->
+<!-- 								<span class="text-decoration-line-through text-muted">60,000</span>
+<!-- 								<span><small class="fs-6 ms-2 text-danger">26% Off</small></span> --> 
+<!-- 							</div> -->
 							
 							<div class="mt-3 row justify-content-start g-2 align-items ">
 								<div class="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid">
 									<!-- button -->
 									<!-- btn -->
-									<a href="숙소결제상세.html" type="button" class="btn btn-dark ">
+									<button  type="button" class="btn btn-dark " id ="reservationSave" name="reservationSave">
 										<i class="feather-icon icon-shopping-bag me-2"></i>
 										예약하기
-									</a>
+									</button>
 								</div>
 								
 							</div>
@@ -1304,10 +1310,100 @@ window.onload = function() {
 };
 </script>
 
+<!-- 방문인원 자바스트립 -->
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+	  const buttonsMinus = document.querySelectorAll('.button-minus');
+	  const buttonsPlus = document.querySelectorAll('.button-plus');
+
+	  buttonsMinus.forEach(btn => {
+	    btn.addEventListener('click', function () {
+	      const input = document.querySelector(`input[name="${this.dataset.field}"]`);
+	      let value = parseInt(input.value) || 1;
+	      if (value > 1) input.value = value - 1;
+	    });
+	  });
+
+	  buttonsPlus.forEach(btn => {
+	    btn.addEventListener('click', function () {
+	      const input = document.querySelector(`input[name="${this.dataset.field}"]`);
+	      let value = parseInt(input.value) || 1;
+	      const max = parseInt(input.getAttribute('max')) || 10;
+	      if (value < max) input.value = value + 1;
+	    });
+	  });
+	});
+</script>
 
 
+<script type="text/javascript">
+$(document).ready(function () {
 
+    // 공통 벨리데이션 함수
+    function validateField(field, errorField, message) {
+        if (field.value.trim() === "") {
+            errorField.innerText = message;
+            field.classList.add("is-invalid");
+            field.classList.remove("is-valid");
+            return false;
+        } else {
+            errorField.innerText = "";
+            field.classList.remove("is-invalid");
+            field.classList.add("is-valid");
+            return true;
+        }
+    }
 
+    // 예약 버튼 클릭 시
+    $("#reservationSave").on("click", function () {
+
+        let checkInDate = document.getElementById("checkInDate");
+        let checkOutDate = document.getElementById("checkOutDate");
+        let checkInName = document.getElementById("checkInName");
+        let checkInTel = document.getElementById("checkInTel");
+        let checkInPeoNum = document.getElementById("checkInPeoNum");
+
+        let isCheckInDateValid = validateField(checkInDate, document.getElementById("checkInDateError"), "체크인 날짜를 선택하세요");
+        let isCheckOutDateValid = validateField(checkOutDate, document.getElementById("checkOutDateError"), "체크아웃 날짜를 선택하세요");
+        let isNameValid = validateField(checkInName, document.getElementById("checkInNameError"), "성명을 입력하세요");
+        let isTelValid = validateField(checkInTel, document.getElementById("checkInTelError"), "연락처를 입력하세요");
+
+        // 인원 수 1 이상인지 확인
+        let isPeopleValid = true;
+        if (checkInPeoNum.value <= 0) {
+            alert("인원 수는 1명 이상이어야 합니다.");
+            isPeopleValid = false;
+        }
+
+        if (!isCheckInDateValid || !isCheckOutDateValid || !isNameValid || !isTelValid || !isPeopleValid) {
+            return false;
+        }
+       
+        // 모든 유효성 검사 통과하면 AJAX 전송
+        $.ajax({
+            async: true,
+            cache: false,
+            type: "post",
+            url: "/DetailedPageUser",
+            data: {
+                "staySeq": $("#staySeq").val(),
+                "checkInDate": $("#checkInDate").val(),
+                "checkOutDate": $("#checkOutDate").val(),
+                "checkInName": $("#checkInName").val(),
+                "checkInTel": $("#checkInTel").val(),
+                "checkInPeoNum": $("#checkInPeoNum").val()
+            },
+            success: function (response) {
+               
+                window.location.href = '/PayUserForm?staySeq=' + response.result;
+            },
+           
+        });
+    });
+
+});
+
+</script>
 
 
 
