@@ -59,40 +59,16 @@
            
         </div>
         <br>
-        <div>
-          
+        <div class="row">
          <h4 class="mb-3 h5">주소 지역 선택</h4>
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-2 gap-4" th:each="regionList :${@codeService.selectListCachedCode(6)}">
             <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" />
-              <span>서울</span>
+              <input type="checkbox" class="accent-blue-500" id="regionCd" name="regionCd"/>
+              <span th:text="${regionList.ifcdName}"></span>
             </label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" />
-              <span>인천</span>
-            </label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" />
-              <span>대전</span>
-            </label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" />
-              <span>대구</span>
-            </label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" />
-              <span>광주</span>
-            </label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" />
-              <span>울산</span>
-            </label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" />
-              <span>부산</span>
-            </label>
           </div>
         </div>
+	
          
          <!-- 숙박 이미지 4개 삽입 -->
          <div>
@@ -118,39 +94,20 @@
          
          <br>
          <!-- 호스트 언어 -->
-         <div>
-          
+         <div class="row">
           <h4 class="mb-3 h5">호스트가 가능한 언어</h4>
-           <div class="grid grid-cols-2 gap-4">
-             <label class="flex items-center space-x-2">
+          <div class="row" style="display: inline-flex; ">
+           <div class="col">
+             <label class="flex items-center space-x-2"></label>
                <input type="checkbox" class="accent-blue-500" />
                <span>한국어</span>
-             </label>&nbsp;&nbsp;&nbsp;&nbsp;
-             <label class="flex items-center space-x-2">
-               <input type="checkbox" class="accent-blue-500" />
-               <span>영어</span>
-             </label>&nbsp;&nbsp;&nbsp;&nbsp;
-             <label class="flex items-center space-x-2">
-               <input type="checkbox" class="accent-blue-500" />
-               <span>일본어</span>
-             </label>&nbsp;&nbsp;&nbsp;&nbsp;
-             <label class="flex items-center space-x-2">
-               <input type="checkbox" class="accent-blue-500" />
-               <span>중국어</span>
-             </label>&nbsp;&nbsp;&nbsp;&nbsp;
-             <label class="flex items-center space-x-2">
-               <input type="checkbox" class="accent-blue-500" />
-               <span>프랑스어</span>
-             </label>&nbsp;&nbsp;&nbsp;&nbsp;
-             <label class="flex items-center space-x-2">
-               <input type="checkbox" class="accent-blue-500" />
-               <span>아랍어</span>
-             </label>&nbsp;&nbsp;&nbsp;&nbsp;
-             <label class="flex items-center space-x-2">
-               <input type="checkbox" class="accent-blue-500" />
-               <span>인도네시아어</span>
-             </label>
            </div>
+           <div class="col">
+             <label class="flex items-center space-x-2"></label>
+               <input type="checkbox" class="accent-blue-500" />
+               <span>한국어</span>
+           </div>
+          </div>
          </div>
          <br>
          <div>
@@ -292,6 +249,35 @@
    <div th:replace="~{user/include/script :: script}"></div>
  <script src="/user/template/assets/libs/dropzone/dist/min/dropzone.min.js"></script>
  <script src="/user/template/assets/js/vendors/dropzone.js"></script>
+ <script type="text/javascript">
+ 
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+               
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+  				document.getElementById("stayZipCode").value = data.zonecode;
+                document.getElementById("stayAddress").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("stayAddressDetail").focus();
+            }
+        }).open();
+    }
+</script>
    
 </body>
 
