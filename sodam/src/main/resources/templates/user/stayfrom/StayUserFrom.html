@@ -63,7 +63,7 @@
          <h4 class="mb-3 h5">주소 지역 선택</h4>
           <div class="grid grid-cols-2 gap-4" th:each="regionList :${@codeService.selectListCachedCode(6)}">
             <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" id="regionCd" name="regionCd"/>
+              <input type="checkbox" class="accent-blue-500" id="regionCd" name="regionCd" th:value="${regionList.ifcdSeq}"/>
               <span th:text="${regionList.ifcdName}"></span>
             </label>&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
@@ -95,27 +95,18 @@
          <br>
          <!-- 호스트 언어 -->
          <div class="row">
-          <h4 class="mb-3 h5">호스트가 가능한 언어</h4>
-          <div class="row" style="display: inline-flex; ">
-           <div class="col">
-             <label class="flex items-center space-x-2"></label>
-               <input type="checkbox" class="accent-blue-500" />
-               <span>한국어</span>
-           </div>
-           <div class="col">
-             <label class="flex items-center space-x-2"></label>
-               <input type="checkbox" class="accent-blue-500" />
-               <span>한국어</span>
-           </div>
+         <h4 class="mb-3 h5">호스트가 가능한 언어</h4>
+          <div class="grid grid-cols-2 gap-4" th:each="languageList :${@codeService.selectListCachedCode(7)}">
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" class="accent-blue-500" id="langCd" name="langCd" th:value="${languageList.ifcdSeq}"/>
+              <span th:text="${languageList.ifcdName}"></span>
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
-         </div>
+        </div>
          <br>
          <div>
-            
             <h4 class="mb-3 h5">숙소 소개</h4>
-            <textarea rows="4" class="form-control no-resize" placeholder="시설 및 이용 규칙"  ></textarea>
-                  
-                   
+            <textarea rows="4" class="form-control no-resize" id="stayIntroMemo" name="stayIntroMemo" placeholder="시설 및 이용 규칙"  ></textarea>
          </div>
          <br>
          <!-- 숙박 이미지 4개 삽입 -->
@@ -124,7 +115,7 @@
          <div>
           
           <h4 class="mb-3 h5">시설 / 서비스</h4>
-          <textarea rows="4" class="form-control no-resize" placeholder="시설 및 이용 규칙"  ></textarea>
+          <textarea rows="4" class="form-control no-resize" id="stayServiceMemo" name="stayServiceMemo" placeholder="시설 및 이용 규칙"  ></textarea>
                 
                  
          </div>
@@ -133,7 +124,7 @@
          <div>
           
           <h4 class="mb-3 h5">예약 공지</h4>
-          <textarea rows="4" class="form-control no-resize" placeholder="시설 및 이용 규칙"  ></textarea>
+          <textarea rows="4" class="form-control no-resize" id="stayNoticeMemo" name="stayNoticeMemo" placeholder="시설 및 이용 규칙"  ></textarea>
                 
                  
          </div>

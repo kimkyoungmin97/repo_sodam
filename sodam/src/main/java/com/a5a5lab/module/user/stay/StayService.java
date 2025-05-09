@@ -31,4 +31,8 @@ public class StayService {
 	public List<StayDto> stayRegistrationList(int memSeq){
 		return stayDao.stayRegistrationList(memSeq);
 	}
+	//숙소등록
+	public int insert(StayDto stayDto) {
+		return stayDao.insert(stayDto);
+	}
 }

@@ -138,7 +138,49 @@
 			
 			AND staySeq = #{staySeq}
 			
+			
 	</select>	
+	
+	<!--숙소등록 -->
+	<insert id="Insert">
+		INSERT INTO stay(
+		stayName,
+		stayZipCode,
+		stayAddress,
+		stayAddressDetail,
+		stayLatitude,
+		stayHardness,
+		stayIntroMemo,
+		stayServiceMemo,
+		stayNoticeMemo,
+		regDateTime,
+		modDateTime,
+		regionCd,
+		activeCd,
+		member_memSeq,
+		stayPrice,
+		stayPersonnel,
+		stDeNy
+		)VALUES(
+		#{stayName},
+		#{stayZipCode},
+		#{stayAddress},
+		#{stayAddressDetail},
+		#{stayLatitude},
+		#{stayHardness},
+		#{stayIntroMemo},
+		#{stayServiceMemo},
+		#{stayNoticeMemo},
+		now(),
+		now(),
+		#{regionCd},
+		9,
+		#{memSeq},
+		stayPrice,
+		stayPersonnel,
+		0
+		)
+	</insert>
 	
 	
 	
