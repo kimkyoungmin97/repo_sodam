@@ -21,5 +21,6 @@ public interface MemberDao {
 	public MemberDto selectId(MemberDto memberDto);
 	//회원가입
 	public int signup(MemberDto memberDto);
-
+	//계정설정 정보수정
+	public int userUpdate(MemberDto memberDto);
 }

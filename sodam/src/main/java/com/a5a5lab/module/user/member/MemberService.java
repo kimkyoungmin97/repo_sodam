@@ -34,4 +34,9 @@ public class MemberService {
 	public int signup(MemberDto memberDto) {
 		return memberDao.signup(memberDto);
 	}
+	//계정설정 정보수정
+	public int userUpdate(MemberDto memberDto) {
+		return memberDao.userUpdate(memberDto);
+	}
+	
 }

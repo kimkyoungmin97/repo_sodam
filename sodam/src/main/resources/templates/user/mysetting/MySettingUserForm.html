@@ -52,32 +52,34 @@
 								<div class="row">
 									<div class="col-lg-6">
 										<!-- form -->
-										<form>
+										<form method="post" id="form">
+										
+										<input type="hidden" name="memSeq" th:value="${vo.memSeq}">
 											<!-- input -->
 											<div class="row mb-4">
 												<div class="col-7">
 												  <label class="form-label">이름</label>
-												  <input type="text" class="form-control" value="배성태" disabled />
+												  <input type="text" class="form-control" id="memName" name ="memName" th:value="${item.memName}"  />
 												</div>
 											  
 												<div class="col-5">
 												  <label class="form-label">성별</label>
-												  <input type="text" class="form-control" value="남자" disabled />
+												  <input type="text" class="form-control" id="genderCd" name="genderCd" th:value="${item.genderCd}"  />
 												</div>
 											  </div>
 											<div class="mb-4">
 												<label class="form-label">생년월일</label>
-												<input type="text" class="form-control" value="1999-06-15" disabled />
+												<input type="text" class="form-control" value="1999-06-15"  />
 											</div>
 											<div class="mb-4">
 												<label class="form-label">ID</label>
-												<input type="text" class="form-control" value="kk1hhh1fff1" disabled />
+												<input type="text" class="form-control" id="memId" name ="memId" th:value="${item.memId}"  />
 											</div>
 											<!-- input -->
 											<div class="mb-4">
 												<label class="form-label">이메일</label>
 												<input type="email" class="form-control"
-													value="kk1hhh1fff1@naver.com" />
+													id="memEmail" name ="memEmail" th:value="${item.memEmail}" />
 											</div>
 											<!-- input -->
 											<div class="row mb-4">
@@ -94,7 +96,7 @@
 												
 												<div class="col-7">
 												  <label class="form-label">휴대폰</label>
-												  <input type="text" class="form-control" value="010-1111-1111" />
+												  <input type="text" class="form-control" id="memTel" name ="memTel" th:value="${item.memTel}" />
 												</div>
 											</div>
 											<!-- <div class="mb-4">

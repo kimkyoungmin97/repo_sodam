@@ -14,20 +14,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.a5a5lab.module.xdm.code.CodeController;
 import jakarta.servlet.http.HttpSession;
 
 import com.a5a5lab.module.common.BaseVo;
 
 
-
-
-
 @Controller
 public class MemberController {
+
+    private final CodeController codeController;
 	
 	@Autowired
 	MemberService memberService;
+
+
+    MemberController(CodeController codeController) {
+        this.codeController = codeController;
+    }
 	
 
 	@RequestMapping(value="/user/member/memberList")
@@ -164,8 +168,21 @@ public class MemberController {
 
 	// MY페이지 계정설정 폼 화면
 	@RequestMapping(value="/MySettingUserForm")
-	public String MYSettingUserForm() {
+	public String MYSettingUserForm(Model model,@ModelAttribute("vo") MemberDto Dto, HttpSession httpSession ) {
 		
+		
+	    String loginId = (String) httpSession.getAttribute("sessIdUser");
+
+	    
+//	    if (loginId == null) {
+//	        return "redirect:/login"; 
+//	    }
+
+	    
+	    Dto.setMemId(loginId);
+
+	    
+	    model.addAttribute("item", memberService.selectId(Dto));
 		return "/user/mysetting/MySettingUserForm";
 	}
 	
@@ -189,6 +206,15 @@ public class MemberController {
 		memberService.signup(memberDto);
 		return"redirect:/SigninUser";
 	}
+	
+	//계정설정 정보수정
+	@RequestMapping(value="/userUpdt")
+	public String userUpdt(MemberDto memberDto) {
+		memberService.userUpdate(memberDto);
+		return"redirect:/MySettingUserForm";
+		
+	}
+	
 	
 	
 	
