@@ -19,4 +19,7 @@ public interface StayDao {
 	
 	//호스트가 숙소 등로 리스트
 	public List<StayDto> stayRegistrationList(int memSeq);
+	
+	//숙소등록
+	public int insert(StayDto stayDto);
 }
