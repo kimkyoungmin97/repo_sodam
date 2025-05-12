@@ -3,9 +3,9 @@
 
 <div th:replace="~{user/include/head :: head}"></div>
 
-<input type="hidden" id="staySeq" name="staySeq" value="${item?.staySeq}" />
+<input type="hidden" id="staySeq" name="staySeq" th:value="${item?.staySeq}" />
 <!-- 	<input type="hidden" id="stay_staySeq" name="stay_staySeq" th:value="${item.staySeq}"> -->
-
+<input type="hidden" id="stayPrice" name="stayPrice"th:value="${item?.stayPrice}"/> 
 
 
 
@@ -1271,6 +1271,42 @@
 	<script src="/user/template/assets/js/vendors/zoom.js"></script>
 	<script src="/user/template/assets/js/vendors/dropzone.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e0e814070aaeeefafccf74fcf23c86"></script>
+	
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<!-- jQuery UI 한국어 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/i18n/datepicker-ko.min.js"></script>
+
+	
+<script type="text/javascript">
+$(function () {
+    // 기본 설정
+    $.datepicker.setDefaults($.datepicker.regional["ko"]); // 한국어 설정
+
+    // 체크인
+    $("#checkInDate").datepicker({
+        dateFormat: "yy-mm-dd",  // 날짜 형식
+        minDate: 0,              // 오늘 이후만 선택 가능
+        onClose: function (selectedDate) {
+            $("#checkOutDate").datepicker("option", "minDate", selectedDate);
+        }
+    });
+
+    // 체크아웃
+    $("#checkOutDate").datepicker({
+        dateFormat: "yy-mm-dd",
+        minDate: 0,
+        onClose: function (selectedDate) {
+            $("#checkInDate").datepicker("option", "maxDate", selectedDate);
+        }
+    });
+});
+</script>
 
 	
 <script type="text/javascript">
@@ -1337,6 +1373,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script type="text/javascript">
+
 $(document).ready(function () {
 
     // 공통 벨리데이션 함수
@@ -1391,7 +1428,8 @@ $(document).ready(function () {
                 "checkOutDate": $("#checkOutDate").val(),
                 "checkInName": $("#checkInName").val(),
                 "checkInTel": $("#checkInTel").val(),
-                "checkInPeoNum": $("#checkInPeoNum").val()
+                "checkInPeoNum": $("#checkInPeoNum").val(),
+                "stayPrice": $('#stayPrice').val()
             },
             success: function (response) {
                
