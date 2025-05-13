@@ -49,7 +49,7 @@ public class StayService extends FileUploadedService {
     			, stayDto
     			, "stayUploaded"
     			, 1
-    			, 0
+    			, stayDto.getRepresentativeIndex()
     			, 4
     			, stayDto.getStaySeq()
     			, fileUploadedDao
