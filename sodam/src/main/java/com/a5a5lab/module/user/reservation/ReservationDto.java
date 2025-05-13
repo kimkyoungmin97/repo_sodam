@@ -2,17 +2,22 @@ package com.a5a5lab.module.user.reservation;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class ReservationDto {
 	
 	private String resSeq; //예약 Seq
-	private String checkInDate; // 체크인 날짜
-	private String checkOutDate; // 체크아웃 날짜
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date checkInDate; // 체크인 날짜
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date checkOutDate; // 체크아웃 날짜
 	private String checkInName; //체크인 하는 사람 이름
 	private String checkInTel;//체크인 하는사람 번호
-	private String checkInPeoNum; // 체크인 인원수
+	private Integer checkInPeoNum; // 체크인 인원수
 	private Integer meansOfVisitingCd; // 차량 or 대중교통
 	private String member_memSeq; //멤버 Seq
 	private String stay_staySeq; //숙소 Seq
+	private Integer totalPrice; //숙소 예약 했을때 토탈 요금
 //	----
 	private String staySeq; // 스테이 Seq
 	private String stayName;  // 숙박 이름
@@ -26,16 +31,16 @@ public class ReservationDto {
 	public void setResSeq(String resSeq) {
 		this.resSeq = resSeq;
 	}
-	public String getCheckInDate() {
+	public Date getCheckInDate() {
 		return checkInDate;
 	}
-	public void setCheckInDate(String checkInDate) {
+	public void setCheckInDate(Date checkInDate) {
 		this.checkInDate = checkInDate;
 	}
-	public String getCheckOutDate() {
+	public Date getCheckOutDate() {
 		return checkOutDate;
 	}
-	public void setCheckOutDate(String checkOutDate) {
+	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 	public String getCheckInName() {
@@ -50,10 +55,10 @@ public class ReservationDto {
 	public void setCheckInTel(String checkInTel) {
 		this.checkInTel = checkInTel;
 	}
-	public String getCheckInPeoNum() {
+	public Integer getCheckInPeoNum() {
 		return checkInPeoNum;
 	}
-	public void setCheckInPeoNum(String checkInPeoNum) {
+	public void setCheckInPeoNum(Integer checkInPeoNum) {
 		this.checkInPeoNum = checkInPeoNum;
 	}
 	public Integer getMeansOfVisitingCd() {
@@ -97,6 +102,12 @@ public class ReservationDto {
 	}
 	public void setStayPrice(String stayPrice) {
 		this.stayPrice = stayPrice;
+	}
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 	
 }

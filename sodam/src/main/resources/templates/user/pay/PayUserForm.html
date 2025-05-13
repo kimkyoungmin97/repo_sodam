@@ -5,7 +5,7 @@
 
 
 <!-- 	<input type="hidden" id="staySeq" name="staySeq" > -->
-	<input type="hidden" id="staySeq" name="staySeq"  />
+	<input type="hidden" id="staySeq" name="staySeq" />
 	
 	
 	
@@ -474,26 +474,26 @@
 									  <!-- 성함 -->
 									  <div class="mb-2 d-flex">
 										<span class="fw-bold me-3" style="min-width: 100px; color: #000;">성함 :</span>
-										<span style="color: #000;">안세찬</span>
+										<span style="color: #000;" th:text="${reservationData.checkInName}">안세찬</span>
 									  </div>
 								  
 									  <!-- 연락처 -->
 									  <div class="mb-2 d-flex">
 										<span class="fw-bold me-3" style="min-width: 100px; color: #000;">연락처 :</span>
-										<span style="color: #000;">010-1111-1111</span>
+										<span style="color: #000;" th:text="${reservationData.checkInTel}">010-1111-1111</span>
 									  </div>
 
 									  <!-- 숙박이용 인원 -->
 									  <div class="mb-2 d-flex">
 										<span class="fw-bold me-3" style="min-width: 100px; color: #000;">숙박이용 인원 :</span>
-										<span style="color: #000;">5</span><span>명</span>
+										<span style="color: #000;" th:text="${reservationData.checkInPeoNum}">5</span><span>명</span>
 									  </div>
 								  
 									  <!-- 이동 수단 -->
-									  <div class="mb-2 d-flex">
-										<span class="fw-bold me-3" style="min-width: 100px; color: #000;">이동 수단 :</span>
-										<span style="color: #000;">대중교통</span>
-									  </div>
+<!-- 									  <div class="mb-2 d-flex"> -->
+<!-- 										<span class="fw-bold me-3" style="min-width: 100px; color: #000;">이동 수단 :</span> -->
+<!-- 										<span style="color: #000;">대중교통</span> -->
+<!-- 									  </div> -->
 								  
 									</div>
 								</div>
@@ -501,65 +501,64 @@
 								  
 								<br>
 								<div class="card shadow-sm">
-									<h5 class="px-6 py-4 bg-transparent mb-0">예약 상세</h5>
-									<ul class="list-group list-group-flush">
-										<!-- list group item -->
-										<li class="list-group-item px-4 py-3">
-											<div class="row align-items-center">
-												<div class="col-2 col-md-2">
-													<img src="/user/template/assets/images/category/seoul-cityscape-twilight-south-korea.jpg"
-														alt="Ecommerce" class="img-fluid" />
-												</div>
-												<div class="col-5 col-md-5">
-													<h6 class="mb-0" >하회마을 지산고택 사랑방</h6>
-													<span><small class="text-muted"></small></span>
-												</div>
-												<div class="col-2 col-md-2 text-center text-muted">
-													1인
-												</div>
-												<div class="col-3 text-lg-end text-start text-md-end col-md-3">
-													<span class="fw-bold">155,000</span><span>원</span>
-												</div>
-											</div>
-										</li>
-										
-										
-										<li class="list-group-item px-4 py-3">
-											<div class="d-flex align-items-center justify-content-between mb-2">
-												<span>스테이 주소 :</span>
-												<div class="fw-bold">종로구 어딘가 어딘가</div>
-												
-											</div>
-											<div class="d-flex align-items-center justify-content-between mb-2">
-												<span>스테이 상세 주소 :</span>
-												<div class="fw-bold">어딘가 골목 우측</div>
-												
-											</div>
-											<div class="d-flex align-items-center justify-content-between mb-2">
-												<span>스테이 연락처 :</span>
-												<div class="fw-bold">010-1111-1111</div>
-											</div>
-											
-										</li>
-										<li class="list-group-item px-4 py-3">
-											<div class="d-flex align-items-center justify-content-between mb-2">
-												<span>2025-04-29<span>~</span><span>2025-05-01</span></span>
-												<div class="fw-bold">2박 3일</div>
-											</div>
-											
-										</li>
-										<!-- list group item -->
-										<li class="list-group-item px-4 py-3">
-											<div class="d-flex align-items-center justify-content-between fw-bold">
-											  <span>총액(KRW)</span>
-											  <div class="d-flex align-items-baseline">
-												<span class="me-1">310,000</span>
-												<span>원</span>
-											  </div>
-											</div>
-										</li>
-									</ul>
-								</div>
+    <h5 class="px-6 py-4 bg-transparent mb-0">예약 상세</h5>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item px-4 py-3">
+            <div class="row align-items-center">
+                <div class="col-2 col-md-2">
+                    <img src="/user/template/assets/images/category/seoul-cityscape-twilight-south-korea.jpg"
+                         alt="Ecommerce" class="img-fluid" />
+                </div>
+                <div class="col-5 col-md-5">
+                    <h6 class="mb-0">하회마을 지산고택 사랑방</h6>
+                </div>
+                <div class="col-2 col-md-2 text-center text-muted">
+                    1인
+                </div>
+                <div class="col-3 text-lg-end text-start text-md-end col-md-3">
+                    <span class="fw-bold"  th:text="${#numbers.formatInteger(item.stayPrice, 3, 'COMMA')}">155,000</span><span>원</span>
+                </div>
+            </div>
+        </li>
+
+        <li class="list-group-item px-4 py-3">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <span>스테이 주소 :</span>
+                <div class="fw-bold" th:text="${item.stayAddress}">종로구 어딘가 어딘가</div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <span>스테이 상세 주소 :</span>
+                <div class="fw-bold" th:text="${item.stayAddressDetail}">어딘가 골목 우측</div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <span>스테이 연락처 :</span>
+                <div class="fw-bold" th:text="${item.memTel}">010-1111-1111</div>
+            </div>
+        </li>
+
+        <li class="list-group-item px-4 py-3">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <span id="stayDate">
+                    <span id="checkIn" th:text="${#dates.format(reservationData.checkInDate, 'yyyy-MM-dd')}">2025-04-29</span>
+                    ~
+                    <span id="checkOut"  th:text="${#dates.format(reservationData.checkOutDate, 'yyyy-MM-dd')}">2025-05-01</span>
+                </span>
+                <div class="fw-bold" id="stayInfoText">계산 중...</div>
+            </div>
+        </li>
+
+        <li class="list-group-item px-4 py-3">
+            <div class="d-flex align-items-center justify-content-between fw-bold">
+                <span>총액(KRW)</span>
+                <div class="d-flex align-items-baseline">
+                    <span class="me-1" th:text="${#numbers.formatInteger(reservationData.totalPrice, 3, 'COMMA')}"></span> 
+                    <span>원</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+								
 							</div>
 						</div>
 					</div>
@@ -776,6 +775,33 @@
 
 	<script src="/user/template/assets/libs/imask/dist/imask.min.js"></script>
 	<script src="/user/template/assets/js/vendors/inputmask.js"></script>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+    const checkInStr = document.getElementById("checkIn").textContent.trim();
+    const checkOutStr = document.getElementById("checkOut").textContent.trim();
+
+    // 날짜 문자열을 Date 객체로 변환
+    const checkInDate = new Date(Date.parse(checkInStr));
+    const checkOutDate = new Date(Date.parse(checkOutStr));
+
+    // 날짜 파싱 유효성 검사
+    if (isNaN(checkInDate.getTime()) || isNaN(checkOutDate.getTime())) {
+        document.getElementById("stayInfoText").textContent = "날짜 오류";
+        return;
+    }
+
+    // 날짜 차이 계산
+    const nights = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+    const days = nights + 1;
+
+    // 결과 출력
+    if (nights > 0) {
+        document.getElementById("stayInfoText").textContent = `${nights}박 ${days}일`;
+    } else {
+        document.getElementById("stayInfoText").textContent = "날짜 오류";
+    }
+});
+</script>
 </body>
 
 </html>
