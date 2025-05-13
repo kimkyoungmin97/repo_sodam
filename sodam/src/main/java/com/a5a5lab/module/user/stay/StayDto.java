@@ -1,8 +1,8 @@
 package com.a5a5lab.module.user.stay;
 
-import java.util.Date;
+import com.a5a5lab.module.common.fileuploaded.FileUploadedDto;
 
-public class StayDto {
+public class StayDto extends FileUploadedDto{
 	// Stay
 	private String staySeq; //숙박 Seq
 	private String stayName; // 숙박 이름

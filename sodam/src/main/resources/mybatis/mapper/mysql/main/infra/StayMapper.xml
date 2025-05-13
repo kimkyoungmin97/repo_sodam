@@ -142,7 +142,7 @@
 	</select>	
 	
 	<!--숙소등록 -->
-	<insert id="Insert">
+	<insert id="insert">
 		INSERT INTO stay(
 		stayName,
 		stayZipCode,
@@ -175,11 +175,14 @@
 		now(),
 		#{regionCd},
 		9,
-		#{memSeq},
-		stayPrice,
-		stayPersonnel,
+		#{member_memSeq},
+		#{stayPrice},
+		#{stayPersonnel},
 		0
 		)
+		<selectKey resultType="String" keyProperty="staySeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
 	</insert>
 	
 	
