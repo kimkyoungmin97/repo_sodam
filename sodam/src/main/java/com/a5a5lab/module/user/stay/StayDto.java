@@ -26,8 +26,18 @@ public class StayDto extends FileUploadedDto{
 	private String memSeq; // 호스트 Seq
 	private String memName; // 호스트 이름
 	private String memTel; // 호스트 번호
+
 //	--대표이미지 인덱스
 	private Integer representativeIndex;
+
+//	-----
+	private String reSeq; //리뷰 Seq
+	private Integer starScore; // 리뷰 별점
+	private String reTitle; // 리뷰 제목
+	private String reText; // 리뷰 내용
+	private String reDelNy; // 리뷰 업데이트 삭제
+	private String stay_staySeq; // 스테이 Seq
+//	----
 	
 	
 	public Integer getRepresentativeIndex() {
@@ -162,6 +172,42 @@ public class StayDto extends FileUploadedDto{
 	}
 	public void setModDateTime(String modDateTime) {
 		this.modDateTime = modDateTime;
+	}
+	public String getReSeq() {
+		return reSeq;
+	}
+	public void setReSeq(String reSeq) {
+		this.reSeq = reSeq;
+	}
+	public Integer getStarScore() {
+		return starScore;
+	}
+	public void setStarScore(Integer starScore) {
+		this.starScore = starScore;
+	}
+	public String getReTitle() {
+		return reTitle;
+	}
+	public void setReTitle(String reTitle) {
+		this.reTitle = reTitle;
+	}
+	public String getReText() {
+		return reText;
+	}
+	public void setReText(String reText) {
+		this.reText = reText;
+	}
+	public String getReDelNy() {
+		return reDelNy;
+	}
+	public void setReDelNy(String reDelNy) {
+		this.reDelNy = reDelNy;
+	}
+	public String getStay_staySeq() {
+		return stay_staySeq;
+	}
+	public void setStay_staySeq(String stay_staySeq) {
+		this.stay_staySeq = stay_staySeq;
 	}
 	
 }
