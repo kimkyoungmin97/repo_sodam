@@ -73,7 +73,9 @@ public class StayController {
 	        averageRating = totalRating / totalReviews; // 평균 별점 계산
 	    }
 		
-		
+	    model.addAttribute("averageRating", averageRating); // 평균 별점
+	    model.addAttribute("ratingPercentages", ratingPercentages); // 별점별 비율
+	    model.addAttribute("reviewList", reviewList); // 리뷰 목록
 		model.addAttribute("item", stayService.stayOne(stayDto));// 스테이 1개뽑아가기
 		vo.setPageNumToShow(stayService.selectOneCount(vo)); // 페이지 네이션 // 리뷰 페이지네이션 할거임
 		model.addAttribute("vo", vo);

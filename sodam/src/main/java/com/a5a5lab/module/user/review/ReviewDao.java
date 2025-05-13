@@ -15,4 +15,7 @@ public interface ReviewDao {
 	//리뷰 My 페이지 업데이트 삭제
 	public int uelete(List<Long> deleteIds);
 	
+	//리뷰 등록하기
+	public int insert(ReviewDto reviewDto);
+	
 }
