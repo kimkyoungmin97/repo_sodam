@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.a5a5lab.module.common.util.UtilDateTiem;
+import com.a5a5lab.module.common.fileuploaded.FileUploadedService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,6 +17,8 @@ public class StayController {
 
 	@Autowired
 	StayService stayService;
+	@Autowired
+	FileUploadedService fileUploadedService;
 	//사용자 인덱스 화면 보여주기
 	@RequestMapping(value="/indexUser")
 	public String indexUser() {
@@ -75,6 +77,15 @@ public class StayController {
 		
 		
 		return "/user/stayfrom/StayUserFrom";
+	}
+	
+	//숙소등록
+	@RequestMapping(value="/StayInst")
+	public String StayInst(StayDto stayDto,HttpSession httpSession) throws Exception {
+		
+		stayDto.setMember_memSeq((String) httpSession.getAttribute("sessSeqUser"));
+		stayService.insert(stayDto);
+		return "redirect:/StayUserList";
 	}
 	
 	

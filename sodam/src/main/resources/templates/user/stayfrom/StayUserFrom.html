@@ -13,7 +13,7 @@
  
        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">스테이 등록</h2>
  
-       <form class="space-y-6">
+       <form class="space-y-6" id="formList" method="post" enctype="multipart/form-data">
  
          <!-- 숙박 이름 -->
          <div >
@@ -73,11 +73,15 @@
          <!-- 숙박 이미지 4개 삽입 -->
          <div>
             <div class="mb-3 col-lg-12 mt-5">
-               <!-- heading -->
                <h4 class="mb-3 h5">숙소 이미지</h4>
                <h5 class="text-lg text-gray-600">파일을 선택 후 이미지 4장 업로드 하세요</h5>
-               <!-- input -->
-               <div id="my-dropzone" class="dropzone mt-4 border-dashed rounded-2 min-h-0"></div>
+<!--                input -->
+<!--                <div id="my-dropzone" class="dropzone mt-4 border-dashed rounded-2 min-h-0" > -->
+					<input type="file" id="fileInput" name="uploadImg1" multiple>
+				<div class="col" id="preview" style="width: 100%; min-height: 150px;  border: 2px dashed #ccc; padding: 12px;">
+            	<button type="button" class="btn btn-primary" id="imgPlus"  style="width: 150px; height: 150px;"><i class="fa-solid fa-plus"></i></button>
+			
+               </div>
             </div>
          </div>
          
@@ -137,7 +141,7 @@
             </a>
           
             <!-- 저장하기 버튼 -->
-            <button type="button" class="bg-blue-600 btn btn-dark px-8 py-3 rounded-lg hover:bg-blue-700 transition">
+            <button type="button" id="btnSave" class="bg-blue-600 btn btn-dark px-8 py-3 rounded-lg hover:bg-blue-700 transition">
               저장하기
             </button>
           </div>
@@ -267,6 +271,84 @@
                 document.getElementById("stayAddressDetail").focus();
             }
         }).open();
+    }
+    
+    const fileInput = document.getElementById('fileInput');
+	  const preview = document.getElementById('preview');
+	  const plusButton = document.getElementById('imgPlus');
+	  fileInput.addEventListener('change', () => {
+		    // 기존 이미지들 제거 (버튼 제외)
+//		    [...preview.querySelectorAll('img')].forEach(img => img.remove());
+
+		    const files = Array.from(fileInput.files);
+		    files.forEach(file => {
+		      if (!file.type.startsWith('image/')) return;
+
+		      const reader = new FileReader();
+		      reader.onload = e => {
+		    		// 이미지 컨테이너 생성
+					const imgContainer = document.createElement('div');
+					imgContainer.classList.add('img-container');
+					imgContainer.style.position = 'relative';
+					imgContainer.style.width = '150px';
+					imgContainer.style.height = '150px';
+					imgContainer.style.display = 'inline-block';
+					imgContainer.style.marginRight = '10px';
+		    		// 이미지 생성
+			        const img = document.createElement('img');
+			        img.src = e.target.result;
+			        img.style.width = '150px';
+			        img.style.height = '150px';
+			        img.style.objectFit = 'cover';
+			        img.style.border = '1px solid #aaa';
+			        preview.insertBefore(img, plusButton);
+			    	 // 체크박스 생성 (대표 이미지 선택)
+					const checkbox = document.createElement('input');
+					checkbox.type = 'checkbox';
+					checkbox.className = 'representative-checkbox';
+					checkbox.style.position = 'absolute';
+					checkbox.style.top = '5px';
+					checkbox.style.left = '5px';
+					checkbox.style.width = '20px';
+					checkbox.style.height = '20px';
+					checkbox.title = "대표 이미지 선택";
+					// 대표 이미지 라벨
+					const label = document.createElement('div');
+					label.className = 'representative-label';
+					label.textContent = '대표 이미지';
+					label.style.position = 'absolute';
+					label.style.bottom = '5px';
+					label.style.left = '5px';
+					label.style.padding = '2px 5px';
+					label.style.backgroundColor = 'rgba(0,0,0,0.6)';
+					label.style.color = '#fff';
+					label.style.fontSize = '12px';
+					label.style.borderRadius = '4px';
+					label.style.display = 'none'; // 기본적으로 숨김
+					
+					// 체크박스 클릭 시 다른 체크박스 해제 & 라벨 표시
+					checkbox.addEventListener('change', function() {
+						document.querySelectorAll('.representative-checkbox').forEach(cb => cb.checked = false);
+						document.querySelectorAll('.representative-label').forEach(lb => lb.style.display = 'none');
+						this.checked = true;
+						label.style.display = 'block';
+					});
+					
+					// 이미지 컨테이너에 이미지와 체크박스 추가
+					imgContainer.appendChild(img);
+					imgContainer.appendChild(checkbox);
+					imgContainer.appendChild(label);
+					preview.insertBefore(imgContainer, plusButton);
+		      };
+		      reader.readAsDataURL(file);
+		    });
+		  });
+    
+    document.getElementById("btnSave").onclick=function(){
+    	let form = document.getElementById("formList");
+    	form.action="/StayInst";
+    	form.submit();
+    	
     }
 </script>
    
