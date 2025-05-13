@@ -26,9 +26,16 @@ public class StayDto extends FileUploadedDto{
 	private String memSeq; // 호스트 Seq
 	private String memName; // 호스트 이름
 	private String memTel; // 호스트 번호
-//	-----
+//	--대표이미지 인덱스
+	private Integer representativeIndex;
 	
 	
+	public Integer getRepresentativeIndex() {
+		return representativeIndex;
+	}
+	public void setRepresentativeIndex(Integer representativeIndex) {
+		this.representativeIndex = representativeIndex;
+	}
 	public String getStaySeq() {
 		return staySeq;
 	}

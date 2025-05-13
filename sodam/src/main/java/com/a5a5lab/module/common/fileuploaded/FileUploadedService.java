@@ -22,7 +22,7 @@ public class FileUploadedService {
     private String bucket;
 // type: 1=스테이
 //		 
-public void uploadFilesToS3(MultipartFile[] multipartFiles, FileUploadedDto dto, String tableName, int type,int defaultNy,int maxnumber, String pSeq, FileUploadedDao dao, AmazonS3Client amazonS3Client) throws Exception {
+public void uploadFilesToS3(MultipartFile[] multipartFiles, FileUploadedDto dto, String tableName, int type,int representativeIndex,int maxnumber, String pSeq, FileUploadedDao dao, AmazonS3Client amazonS3Client) throws Exception {
 		
 		for(int i=0; i<multipartFiles.length; i++) {
 			
@@ -59,7 +59,7 @@ public void uploadFilesToS3(MultipartFile[] multipartFiles, FileUploadedDto dto,
 				
 				dto.setTableName(tableName);
 				dto.setType(type);
-				dto.setDefaultNy(defaultNy);
+				dto.setDefaultNy(i == representativeIndex ? 1 : 0);
 				dto.setSort(maxnumber + i);
 				dto.setPseq(pSeq);
 				
