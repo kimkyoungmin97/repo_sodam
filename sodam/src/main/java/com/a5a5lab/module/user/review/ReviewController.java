@@ -1,6 +1,8 @@
 package com.a5a5lab.module.user.review;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,6 +20,21 @@ public class ReviewController {
 	@Autowired
 	ReviewService reviewService;
 	
+	// 리뷰 업데이트
+	@ResponseBody
+	@RequestMapping(value = "/reviewUdate")
+	public Map<String, Object> reviewUdate(ReviewDto reviewDto, HttpSession httpSession) throws Exception {
+	    
+	    Map<String, Object> returnMap = new HashMap<>();
+	    
+	    // 리뷰 저장
+	    reviewService.insert(reviewDto);
+	    
+	    // 성공 메시지 추가
+	    returnMap.put("status", "success");
+	    
+	    return returnMap;
+	}
 	
 	//My페이지 리뷰 작성 리스트 보여주기
 	@RequestMapping(value="/WrittenReviewUser")

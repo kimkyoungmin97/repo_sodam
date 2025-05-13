@@ -22,4 +22,8 @@ public class ReviewService {
 		return reviewDao.uelete(deleteIds);
 	}
 	
+	// 리뷰 등록하기
+	public int insert (ReviewDto reviewDto) {
+		return reviewDao.insert(reviewDto);
+	}
 }

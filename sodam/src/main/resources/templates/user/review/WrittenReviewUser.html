@@ -66,14 +66,14 @@
 <!-- 									        <td><input type="checkbox" th:value="${list.rSeq}" class="form-check-input review-check"></td> -->
 									        
 									        <th>
-                                                <input class="form-check-input row-checkbox" type="checkbox" th:id="'chk_' + ${list.rSeq}" th:value="${list.rSeq}">
-                                                <label class="form-check-label" th:for="'chk_' + ${list.rSeq}"></label>
+                                                <input class="form-check-input row-checkbox" type="checkbox" th:id="'chk_' + ${list.reSeq}" th:value="${list.reSeq}">
+                                                <label class="form-check-label" th:for="'chk_' + ${list.reSeq}"></label>
                                             </th>
 
 									        <td th:text="${list.stayName}">숙박 이름</td>
 									        <td th:text="${list.reTitle}">제목</td>
 									        <td th:text="${list.reText}">내용</td>
-									        <td th:text="${list.regDateTime}">등록일</td>
+									       <td th:text="${#dates.format(list.regDateTime, 'yyyy년 MM월 dd일')}">등록일</td>
 									    </tr>
 									</tbody>
 									
