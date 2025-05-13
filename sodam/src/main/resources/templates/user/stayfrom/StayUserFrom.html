@@ -50,6 +50,8 @@
 
             <input class="form-control" type="text" id="stayAddress" name="stayAddress"  placeholder="주소"><br>
             <input class="form-control" type="text" id="stayAddressDetail" name="stayAddressDetail" placeholder="상세주소">
+            <input type="hidden" id="stayLatitude" name="stayLatitude">
+            <input type="hidden" id="stayHardness" name="stayHardness">
             <!-- <input class="form-control" type="text" id="latitude" name="latitude" placeholder="위도">
             <input class="form-control" type="text" id="hardness" name="hardness" placeholder="경도"> -->
 
@@ -247,6 +249,9 @@
  <script type="text/javascript">
  
     function sample6_execDaumPostcode() {
+    	
+    	// 주소-좌표 변환 객체를 생성합니다
+    	var geocoder = new kakao.maps.services.Geocoder();
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -260,7 +265,18 @@
                     addr = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
-                }
+                } 
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(addr, function(results, status) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+//                         // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 위도와 경도 값을 해당 필드에 넣는다
+                        document.getElementById("stayLatitude").value = result.y;
+                        document.getElementById("stayHardness").value = result.x;
+                });
 
                
 
@@ -363,7 +379,6 @@
         representativeInput.name = 'representativeIndex';
         representativeInput.value = representativeIndex;
         form.appendChild(representativeInput);
-        
     	form.action="/StayInst";
     	form.submit();
     	
