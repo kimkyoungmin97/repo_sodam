@@ -56,4 +56,12 @@ public class StayService extends FileUploadedService {
     			, amazonS3Client);
 		return 1;
 	}
+	
+	
+	//숙소 리뷰 리스트 가져오기
+	public List<StayDto>reviewList(StayDto stayDto){
+		return stayDao.reviewList(stayDto);
+	}
+	
+	
 }
