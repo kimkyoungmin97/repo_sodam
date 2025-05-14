@@ -278,7 +278,7 @@
                                           
                                           <span class="badge bg-success">★게스트 선호(별점 평균 4.5이상일때 표시되게)</span>
                                        </div>
-                                       <a href="shop-single.html">
+                                       <a th:href="@{/DetailedPageUserForm(staySeq=${list.staySeq})}">
                                           <!-- img -->
                                           <img th:src="${list.path}"
                                              alt="Grocery Ecommerce Template" class="mb-3 img-fluid" />
@@ -291,7 +291,7 @@
                                        <a href="#!" class="text-decoration-none text-muted"><small>Snack &
                                              Munchies</small></a>
                                     </div> -->
-                                    <h2 class="fs-6"><a href="#" class="text-inherit text-decoration-none" th:text="${list.stayName}">한옥 게스트 하우스</a></h2>
+                                    <h2 class="fs-6"><a th:href="@{/DetailedPageUserForm(staySeq=${list.staySeq})}" class="text-inherit text-decoration-none" th:text="${list.stayName}">한옥 게스트 하우스</a></h2>
                                     <div>
                                        <!-- rating -->
                                        <small class="text-warning">
