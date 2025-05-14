@@ -211,12 +211,12 @@ public class StayVo {
 		
 		
 //		
-//		  System.out.println("getThisPage():" + getThisPage());
-//		System.out.println("getTotalRows():" + getTotalRows());
-//		System.out.println("getRowNumToShow():" + getRowNumToShow());
-//		System.out.println("getTotalPages():" + getTotalPages());
-//	    System.out.println("getStartPage():" + getStartPage());
-//	    System.out.println("getEndPage():" + getEndPage());
+		  System.out.println("getThisPage():" + getThisPage());
+		System.out.println("getTotalRows():" + getTotalRows());
+		System.out.println("getRowNumToShow():" + getRowNumToShow());
+		System.out.println("getTotalPages():" + getTotalPages());
+	    System.out.println("getStartPage():" + getStartPage());
+	    System.out.println("getEndPage():" + getEndPage());
 //		
 //
 //		System.out.println("getStartRnumForMysql(): " + getStartRnumForMysql());

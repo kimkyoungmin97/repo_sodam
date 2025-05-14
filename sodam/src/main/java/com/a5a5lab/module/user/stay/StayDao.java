@@ -13,6 +13,8 @@ public interface StayDao {
 	
 	//페이지네이션
 	public int selectOneCount(StayVo vo);
+	//리뷰페이지네이션
+	public int reviewCount(StayVo vo);
 	
 	// 사용자 숙소 정보 리스트 상세 1개씩 뽑기
 	public StayDto stayOne(StayDto stayDto);
