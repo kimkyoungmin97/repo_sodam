@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">맛집 상세정보</title>
+</head>
+<body>
+    <h2 th:text="${title}">음식점 이름</h2>
+<p><strong>주소:</strong> <span th:text="${addr1}">주소 없음</span></p>
+<div>
+    <th:block th:if="${firstImage}">
+        <img th:src="${firstImage}" alt="음식점 이미지" width="300"/>
+    </th:block>
+    <th:block th:unless="${firstImage}">
+        <p>이미지가 없습니다.</p>
+    </th:block>
+</div>
+<div>
+    <h3>소개</h3>
+    <p th:utext="${overview}">소개 내용 없음</p>
+</div>
+
+    
+    
+</body>
+</html>
