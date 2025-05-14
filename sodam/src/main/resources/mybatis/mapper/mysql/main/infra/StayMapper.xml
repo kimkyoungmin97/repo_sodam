@@ -38,6 +38,13 @@
         LEFT JOIN code active ON a.activeCd = active.ifcdSeq
         LEFT JOIN uploaded AS b ON a.staySeq = b.pSeq AND b.defaultNy=1
 		WHERE 1=1 
+		
+		<if test="shValue != null and shValue != ''">
+		  AND (
+		    a.stayName LIKE CONCAT('%', #{shValue}, '%')
+		    OR a.stayAddress LIKE CONCAT('%', #{shValue}, '%')
+		  )
+		</if>
 			AND a.stDeNy = 0
 	
 		LIMIT #{startRnumForMysql},#{rowNumToShow}

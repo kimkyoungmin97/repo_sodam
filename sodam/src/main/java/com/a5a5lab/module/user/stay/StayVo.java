@@ -38,6 +38,11 @@ public class StayVo {
 	private Date shQptionDate;
 //	----
 	
+	
+	private String stayAddress;
+//	----
+	
+	
 	public int getThisPage() {
 		return thisPage;
 	}
@@ -228,6 +233,12 @@ public class StayVo {
 	}
 	public void setStayName(String stayName) {
 		this.stayName = stayName;
+	}
+	public String getStayAddress() {
+		return stayAddress;
+	}
+	public void setStayAddress(String stayAddress) {
+		this.stayAddress = stayAddress;
 	}
 
 }
