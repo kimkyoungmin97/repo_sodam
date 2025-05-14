@@ -62,6 +62,10 @@ public class StayService extends FileUploadedService {
 	public List<StayDto>reviewList(StayDto stayDto){
 		return stayDao.reviewList(stayDto);
 	}
+	//숙소 이미지 리스트 가져오기
+	public List<String> imgList(StayDto stayDto){
+		return stayDao.imgList(stayDto);
+	}
 	
 	
 }

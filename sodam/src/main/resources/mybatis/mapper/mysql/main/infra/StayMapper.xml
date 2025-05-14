@@ -29,13 +29,14 @@
 			region.ifcdSeq AS regionCd,
 		    region.ifcdName AS regionName,
 		    active.ifcdSeq AS activeCd,
-            active.ifcdName AS activeName
+            active.ifcdName AS activeName,
+            b.path
 		FROM
 			stay a
 			
 		LEFT JOIN code region ON a.regionCd = region.ifcdSeq
         LEFT JOIN code active ON a.activeCd = active.ifcdSeq
-		
+        LEFT JOIN uploaded AS b ON a.staySeq = b.pSeq AND b.defaultNy=1
 		WHERE 1=1 
 			AND a.stDeNy = 0
 	
@@ -126,7 +127,6 @@
             b.memSeq,
             b.memName,
             b.memTel
-           
 		FROM
 			stay a
 			
@@ -212,6 +212,16 @@
 		   AND stay_staySeq = #{staySeq}
 		   AND reDelNy = 0
 	
+	</select>
+	
+	<select id="imgList" resultMap="resultMapObj">
+		SELECT 
+			path
+		FROM
+			uploaded
+		WHERE
+			pSeq=#{staySeq}
+		ORDER BY seq DESC
 	</select>
 	
 	

@@ -38,8 +38,15 @@ public class StayDto extends FileUploadedDto{
 	private String reDelNy; // 리뷰 업데이트 삭제
 	private String stay_staySeq; // 스테이 Seq
 //	----
+	private String path; //파일경로
 	
 	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public Integer getRepresentativeIndex() {
 		return representativeIndex;
 	}
