@@ -1,8 +1,8 @@
 package com.a5a5lab.module.user.stay;
 
-import java.util.Date;
+import com.a5a5lab.module.common.fileuploaded.FileUploadedDto;
 
-public class StayDto {
+public class StayDto extends FileUploadedDto{
 	// Stay
 	private String staySeq; //숙박 Seq
 	private String stayName; // 숙박 이름
@@ -26,9 +26,33 @@ public class StayDto {
 	private String memSeq; // 호스트 Seq
 	private String memName; // 호스트 이름
 	private String memTel; // 호스트 번호
+
+//	--대표이미지 인덱스
+	private Integer representativeIndex;
+
 //	-----
+	private String reSeq; //리뷰 Seq
+	private Integer starScore; // 리뷰 별점
+	private String reTitle; // 리뷰 제목
+	private String reText; // 리뷰 내용
+	private String reDelNy; // 리뷰 업데이트 삭제
+	private String stay_staySeq; // 스테이 Seq
+//	----
+	private String path; //파일경로
 	
 	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public Integer getRepresentativeIndex() {
+		return representativeIndex;
+	}
+	public void setRepresentativeIndex(Integer representativeIndex) {
+		this.representativeIndex = representativeIndex;
+	}
 	public String getStaySeq() {
 		return staySeq;
 	}
@@ -155,6 +179,42 @@ public class StayDto {
 	}
 	public void setModDateTime(String modDateTime) {
 		this.modDateTime = modDateTime;
+	}
+	public String getReSeq() {
+		return reSeq;
+	}
+	public void setReSeq(String reSeq) {
+		this.reSeq = reSeq;
+	}
+	public Integer getStarScore() {
+		return starScore;
+	}
+	public void setStarScore(Integer starScore) {
+		this.starScore = starScore;
+	}
+	public String getReTitle() {
+		return reTitle;
+	}
+	public void setReTitle(String reTitle) {
+		this.reTitle = reTitle;
+	}
+	public String getReText() {
+		return reText;
+	}
+	public void setReText(String reText) {
+		this.reText = reText;
+	}
+	public String getReDelNy() {
+		return reDelNy;
+	}
+	public void setReDelNy(String reDelNy) {
+		this.reDelNy = reDelNy;
+	}
+	public String getStay_staySeq() {
+		return stay_staySeq;
+	}
+	public void setStay_staySeq(String stay_staySeq) {
+		this.stay_staySeq = stay_staySeq;
 	}
 	
 }

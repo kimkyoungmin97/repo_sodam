@@ -3,9 +3,11 @@
 
 <div th:replace="~{user/include/head :: head}"></div>
 
-<input type="hidden" id="staySeq" name="staySeq" value="${item?.staySeq}" />
+<input type="hidden" id="staySeq" name="staySeq" th:value="${item?.staySeq}" />
 <!-- 	<input type="hidden" id="stay_staySeq" name="stay_staySeq" th:value="${item.staySeq}"> -->
+<input type="hidden" id="stayPrice" name="stayPrice"th:value="${item?.stayPrice}"/> 
 
+	
 
 
 
@@ -409,59 +411,17 @@
 					<div class="col-md-5 col-xl-6">
 						<!-- img slide -->
 						<div class="product" id="product">
-							<div class="zoom" onmousemove="zoom(event)"
-								style="background-image: url(/user/template/assets/images/products/product-single-img-1.jpg)">
-								<!-- img -->
-								<!-- img -->
-								<img src="/user/template/assets/images/products/product-single-img-1.jpg" alt="" />
-							</div>
-							<div>
-								<div class="zoom" onmousemove="zoom(event)"
-									style="background-image: url(/user/template/assets/images/products/product-single-img-2.jpg)">
-									<!-- img -->
-									<img src="/user/template/assets/images/products/product-single-img-2.jpg" alt="" />
-								</div>
-							</div>
-							<div>
-								<div class="zoom" onmousemove="zoom(event)"
-									style="background-image: url(/user/template/assets/images/products/product-single-img-3.jpg)">
-									<!-- img -->
-									<img src="/user/template/assets/images/products/product-single-img-3.jpg" alt="" />
-								</div>
-							</div>
-							<div>
-								<div class="zoom" onmousemove="zoom(event)"
-									style="background-image: url(/user/template/assets/images/products/product-single-img-4.jpg)">
-									<!-- img -->
-									<img src="/user/template/assets/images/products/product-single-img-4.jpg" alt="" />
-								</div>
-							</div>
+							 <div th:each="imgList : ${list}">
+	          					<img th:src="${imgList.path}" alt="" />
+	       					 </div>
 						</div>
 						<!-- product tools -->
 						<div class="product-tools">
-							<div class="thumbnails row g-3" id="productThumbnails">
-								<div class="col-3">
+							<div class="thumbnails row g-3" id="productThumbnails" >
+								<div class="col-3" th:each="imgList :${list}">
 									<div class="thumbnails-img">
 										<!-- img -->
-										<img src="/user/template/assets/images/products/product-single-img-1.jpg" alt="" />
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="thumbnails-img">
-										<!-- img -->
-										<img src="/user/template/assets/images/products/product-single-img-2.jpg" alt="" />
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="thumbnails-img">
-										<!-- img -->
-										<img src="/user/template/assets/images/products/product-single-img-3.jpg" alt="" />
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="thumbnails-img">
-										<!-- img -->
-										<img src="/user/template/assets/images/products/product-single-img-4.jpg" alt="" />
+										<img th:src="${imgList.path}" alt="" />
 									</div>
 								</div>
 							</div>
@@ -474,17 +434,18 @@
 							<!-- heading -->
 							<h1 class="mb-1" th:text="${item.stayName}">한옥 게스트 하우스</h1>
 							<div class="mb-4">
-								<!-- rating -->
-								<!-- rating -->
-								<small class="text-warning">
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-half"></i>
-								</small>
-								<a href="#" class="ms-2">(30)</a>
+   							 <!-- rating -->
+							    <small class="text-warning">
+							    <!-- 평균 별점에 맞춰 별 아이콘 동적 생성 -->
+							    <i class="bi bi-star-fill" th:if="${averageRating >= 1}"></i>
+							    <i class="bi bi-star-fill" th:if="${averageRating >= 2}"></i>
+							    <i class="bi bi-star-fill" th:if="${averageRating >= 3}"></i>
+							    <i class="bi bi-star-fill" th:if="${averageRating >= 4}"></i>
+							    <i class="bi bi-star-fill" th:if="${averageRating >= 5}"></i>
+							</small>
+<!-- 							<a href="#" class="ms-2">(30)</a> -->
 							</div>
+							
 							
 							<!-- hr -->
 							<hr class="my-6" />
@@ -601,8 +562,31 @@
 				</div>
 			</div>
 		</section>
+		<!-- 성공 모달 -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">리뷰 등록 완료</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        리뷰가 성공적으로 저장되었습니다!
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 		<section class="mt-lg-14 mt-8">
+		
 			<div class="container">
+					<div id="map" 
+					     th:attr="data-lat=${item.stayLatitude != null ? item.stayLatitude : 37.5665}, 
+					              data-lng=${item.stayHardness != null ? item.stayHardness : 126.9780}" 
+					     style="width:100%;height:400px;">
+					</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="nav nav-pills nav-lb-tab" id="myTab" role="tablist">
@@ -746,11 +730,11 @@
 							<!-- 지도 컨테이너 -->
 
 
-<div id="map" 
-     th:attr="data-lat=${item.stayLatitude != null ? item.stayLatitude : 37.5665}, 
-              data-lng=${item.stayHardness != null ? item.stayHardness : 126.9780}" 
-     style="width:100%;height:400px;">
-</div>
+<!-- <div id="map"  -->
+<!--      th:attr="data-lat=${item.stayLatitude != null ? item.stayLatitude : 37.5665},  -->
+<!--               data-lng=${item.stayHardness != null ? item.stayHardness : 126.9780}"  -->
+<!--      style="width:100%;height:400px;"> -->
+<!-- </div> -->
 
 							<!-- tab pane -->
 							<div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel"
@@ -759,115 +743,96 @@
 									<!-- row -->
 									<div class="row">
 										<div class="col-md-4">
-											<div class="me-lg-12 mb-6 mb-md-0">
-												<div class="mb-5">
-													<!-- title -->
-													<h4 class="mb-3">고객 리뷰</h4>
-													<span>
-														<!-- rating -->
-														<small class="text-warning">
-															<i class="bi bi-star-fill"></i>
-															<i class="bi bi-star-fill"></i>
-															<i class="bi bi-star-fill"></i>
-															<i class="bi bi-star-fill"></i>
-															<i class="bi bi-star-half"></i>
-														</small>
-														<span class="ms-3">4.1</span>
-														<small class="ms-3">11,130 <span>개의 리뷰</span></small>
-													</span>
-												</div>
-												<div class="mb-8">
-													<!-- progress -->
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span
-																class="d-inline-block align-middle text-muted">5</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	style="width: 60%" aria-valuenow="60"
-																	aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</div>
-														<span class="text-muted ms-3">53%</span>
-													</div>
-													<!-- progress -->
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span
-																class="d-inline-block align-middle text-muted">4</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	style="width: 50%" aria-valuenow="50"
-																	aria-valuemin="0" aria-valuemax="50"></div>
-															</div>
-														</div>
-														<span class="text-muted ms-3">22%</span>
-													</div>
-													<!-- progress -->
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span
-																class="d-inline-block align-middle text-muted">3</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	style="width: 35%" aria-valuenow="35"
-																	aria-valuemin="0" aria-valuemax="35"></div>
-															</div>
-														</div>
-														<span class="text-muted ms-3">14%</span>
-													</div>
-													<!-- progress -->
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span
-																class="d-inline-block align-middle text-muted">2</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	style="width: 22%" aria-valuenow="22"
-																	aria-valuemin="0" aria-valuemax="22"></div>
-															</div>
-														</div>
-														<span class="text-muted ms-3">5%</span>
-													</div>
-													<!-- progress -->
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span
-																class="d-inline-block align-middle text-muted">1</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	style="width: 14%" aria-valuenow="14"
-																	aria-valuemin="0" aria-valuemax="14"></div>
-															</div>
-														</div>
-														<span class="text-muted ms-3">7%</span>
-													</div>
-												</div>
-												
-											</div>
-										</div>
+    <div class="me-lg-12 mb-6 mb-md-0">
+        <div class="mb-5">
+            <h4 class="mb-3">사용자 리뷰</h4>
+           
+        </div>
+        
+       <!-- 별점별 진행상황 (1 ~ 5점) -->
+<div class="mb-8">
+    <!-- 5점 -->
+    <div class="d-flex align-items-center mb-2" id="rating5">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">5</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar" th:style="'width: ' + ${ratingPercentages[4]} + '%'" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" th:text="${ratingPercentages[4]} + '%'">60%</span>
+    </div>
+
+    <!-- 4점 -->
+    <div class="d-flex align-items-center mb-2" id="rating4">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">4</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar" th:style="'width: ' + ${ratingPercentages[3]} + '%'" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" th:text="${ratingPercentages[3]} + '%'">22%</span>
+    </div>
+
+    <!-- 3점 -->
+    <div class="d-flex align-items-center mb-2" id="rating3">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">3</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar" th:style="'width: ' + ${ratingPercentages[2]} + '%'" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" th:text="${ratingPercentages[2]} + '%'">14%</span>
+    </div>
+
+    <!-- 2점 -->
+    <div class="d-flex align-items-center mb-2" id="rating2">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">2</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar" th:style="'width: ' + ${ratingPercentages[1]} + '%'" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" th:text="${ratingPercentages[1]} + '%'">5%</span>
+    </div>
+
+    <!-- 1점 -->
+    <div class="d-flex align-items-center mb-2" id="rating1">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">1</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar" th:style="'width: ' + ${ratingPercentages[0]} + '%'" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" th:text="${ratingPercentages[0]} + '%'">7%</span>
+    </div>
+</div>
+    </div>
+</div>
+										
+													<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
 										<!-- col -->
 										<div class="col-md-8">
 											<div class="mb-10">
 												<div class="d-flex justify-content-between align-items-center mb-8">
 													<div>
 														<!-- heading -->
-														<h4>리뷰(리뷰 페이지네이션은 3개씩 나오게 )</h4>
+														<h4>숙소 리뷰</h4>
 													</div>
 													<!-- <div>
 														<select class="form-select">
@@ -876,116 +841,109 @@
 														</select>
 													</div> -->
 												</div>
+												<th:block th:each="reviewItem : ${reviewList}">
 												<div class="d-flex border-bottom pb-6 mb-6">
 													<!-- img -->
 													<!-- img -->
 													<!-- <img src="/user/template/assets/images/avatar/avatar-10.jpg" alt=""
 														class="rounded-circle avatar-lg" /> -->
 													<div class="ms-5">
-														<h6 class="mb-1">안세찬</h6>
+														<h6 class="mb-1" th:text="${reviewItem.memName}">안세찬</h6><br>
+														
 														<!-- select option -->
 														<!-- content -->
 														<p class="small">
-															<span class="text-muted">2025-04-29</span>
-															
+															<span class="text-muted" th:text="${reviewItem.regDateTime}">2022-12-30</span>
+															<!-- <span class="text-primary ms-3 fw-bold">Verified
+																Purchase</span> -->
 														</p>
 														<!-- rating -->
 														<div class="mb-2">
-															<i class="bi bi-star-fill text-warning"></i>
-															<i class="bi bi-star-fill text-warning"></i>
-															<i class="bi bi-star-fill text-warning"></i>
-															<i class="bi bi-star-fill text-warning"></i>
-															<i class="bi bi-star-fill text-warning"></i>
-															<span class="ms-3 text-dark fw-bold">나쁘지 않네요</span>
+														    <th:block th:each="i : ${#numbers.sequence(1, 5)}">
+														        <i th:class="${i <= reviewItem.starScore} ? 'bi bi-star-fill text-warning' : 'bi bi-star text-warning'"></i>
+														    </th:block>
 														</div>
 														<!-- text-->
-														<p>
-															재밌게 놀다 갑니다
+														<p class="ms-3 text-dark fw-bold" th:text="${reviewItem.reTitle}"> 굿굿</p>
+														<p th:text="${reviewItem.reText}">
+															시설이 클린하고 좋네요
 														</p>
 														<div>
-															<div class="border icon-shape icon-lg border-2">
-																<!-- img -->
-																<img src="/user/template/assets/images/products/한옥집매인.avif"
-																	alt="" class="img-fluid" />
-															</div>
-															
+														
 														</div>
-														<!-- icon -->
-														<!-- <div class="d-flex justify-content-end mt-4">
-															<a href="#" class="text-muted">
-																<i class="feather-icon icon-thumbs-up me-1"></i>
-																Helpful
-															</a>
-															<a href="#" class="text-muted ms-4">
-																<i class="feather-icon icon-flag me-2"></i>
-																Report abuse
-															</a>
-														</div> -->
 														
 													</div>
-													
 												</div>
+												
+											</div>
+<!-- 												<div class="row mt-8"> -->
+<!-- 											<div style="text-align: center;"> -->
+<!-- 													  <ul class="pagination" > -->
+													  	  
+														
+<!-- 														<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item"> -->
+<!-- 															<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|"> -->
+<!-- 																<i class="feather-icon icon-chevron-left">이전</i> -->
+<!-- 															</a> -->
+<!-- 														</li> -->
+<!-- 														<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item"> -->
+<!-- 															<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}">${i.index}</a> -->
+<!-- 														</li> -->
+<!-- 														<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" > -->
+<!-- 															<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|"> -->
+<!-- 																<i class="feather-icon icon-chevron-right">다음</i> -->
+<!-- 															</a> -->
+<!-- 														</li> -->
+													  
+<!-- 													  </ul> -->
+													    
+<!-- 													</div> -->
+<!-- 													 </div> -->
+												</th:block>
 												
 												
 												
 											</div>
 											<div class="row mt-8">
-												<div class="col text-center">
-												   <!-- nav -->
-												   <nav>
-													  <ul class="pagination justify-content-center">
-														 <li class="page-item disabled">
-															<a class="page-link mx-1" href="#" aria-label="Previous">
-															   <i class="feather-icon icon-chevron-left"></i>
-															</a>
-														 </li>
-														 <li class="page-item"><a class="page-link mx-1 active" href="#">1</a></li>
-														 <li class="page-item"><a class="page-link mx-1" href="#">2</a></li>
-						   
-														 <li class="page-item"><a class="page-link mx-1" href="#">3</a></li>
-														 <li class="page-item"><a class="page-link mx-1" href="#">4</a></li>
-														 <li class="page-item"><a class="page-link mx-1" href="#">5</a></li>
-														 <li class="page-item">
-															<a class="page-link mx-1" href="#" aria-label="Next">
-															   <i class="feather-icon icon-chevron-right"></i>
-															</a>
-														 </li>
-													  </ul>
-												   </nav>
-												</div>
+												 
 											 </div>
-											<div>
+											 <form action="/reviewUdate" method="post" id="form">	
+											<!-- 숨겨진 값으로 작성자 정보 & 풋살장 번호 전달 -->
+										<input type="hidden" id="member_memSeq" name="member_memSeq" th:value="${session.sessSeqUser}">
+										<input type="hidden" id="stay_staySeq" name="stay_staySeq" th:value="${item.staySeq}">
+										<input type="hidden" id="staySeq" name="staySeq" th:value="${item.staySeq}">
+											<div >
 												<!-- rating -->
 												<h3 class="mb-5">리뷰 작성</h3>
-												<div class="border-bottom py-4 mb-4">
-													<h4 class="mb-3">리뷰 별점</h4>
-													<div class="rater"></div>
+												<div class="star-rating" id="starRating">
+												    <span class="star" data-value="1">&#9733;</span>
+												    <span class="star" data-value="2">&#9733;</span>
+												    <span class="star" data-value="3">&#9733;</span>
+												    <span class="star" data-value="4">&#9733;</span>
+												    <span class="star" data-value="5">&#9733;</span>
 												</div>
+												<div style="color: red;" id="starRatingError" name="starRatingError"></div>
+												<input type="hidden" id="starScore" name="starScore" />
 												
-												<!-- form control -->
+												<!-- 리뷰 제목 -->
 												<div class="border-bottom py-4 mb-4">
 													<h5>리뷰 제목</h5>
-													<input type="text" class="form-control"
-														placeholder="리뷰 제목을 입력하세요" />
+													<input type="text" class="form-control"placeholder="리뷰 제목을 입력해주세요" id="reTitle" name="reTitle"/>
+													<div style="color: red;" id="reTitleError" name="reTitleError"></div>
 												</div>
-												<div class="border-bottom py-4 mb-4">
-													<h5>이미지 업로드해주세요</h5>
-													<!-- <p>Shoppers find images and videos more helpful than text alone.</p> -->
-
-													<div id="my-dropzone"
-														class="dropzone mt-4 border-dashed rounded-2 min-h-0"></div>
-												</div>
+												
 												<div class="py-4 mb-4">
-													<!-- heading -->
-													<h5>리뷰 내용 작성</h5>
-													<textarea class="form-control" rows="3"
-														placeholder="리뷰내용을 작성해주세요"></textarea>
+													
+													<h5>리뷰를 작성해주세요</h5>
+													<textarea class="form-control" rows="3" placeholder="리뷰작성" id="reText" name="reText"></textarea>
+													<div style="color: red;" id="reTextError" name="reTextError"></div>
 												</div>
 												<!-- button -->
 												<div class="d-flex justify-content-end">
-													<a href="#" class="btn btn-dark">작성하기</a>
+													<button type="button" id="reviewSave" class="btn btn-primary">리뷰 제출</button>
 												</div>
 											</div>
+										</form>
 										</div>
 									</div>
 								</div>
@@ -1271,6 +1229,42 @@
 	<script src="/user/template/assets/js/vendors/zoom.js"></script>
 	<script src="/user/template/assets/js/vendors/dropzone.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e0e814070aaeeefafccf74fcf23c86"></script>
+	
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<!-- jQuery UI 한국어 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/i18n/datepicker-ko.min.js"></script>
+
+	
+<script type="text/javascript">
+$(function () {
+    // 기본 설정
+    $.datepicker.setDefaults($.datepicker.regional["ko"]); // 한국어 설정
+
+    // 체크인
+    $("#checkInDate").datepicker({
+        dateFormat: "yy-mm-dd",  // 날짜 형식
+        minDate: 0,              // 오늘 이후만 선택 가능
+        onClose: function (selectedDate) {
+            $("#checkOutDate").datepicker("option", "minDate", selectedDate);
+        }
+    });
+
+    // 체크아웃
+    $("#checkOutDate").datepicker({
+        dateFormat: "yy-mm-dd",
+        minDate: 0,
+        onClose: function (selectedDate) {
+            $("#checkInDate").datepicker("option", "maxDate", selectedDate);
+        }
+    });
+});
+</script>
 
 	
 <script type="text/javascript">
@@ -1337,6 +1331,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script type="text/javascript">
+
 $(document).ready(function () {
 
     // 공통 벨리데이션 함수
@@ -1391,7 +1386,8 @@ $(document).ready(function () {
                 "checkOutDate": $("#checkOutDate").val(),
                 "checkInName": $("#checkInName").val(),
                 "checkInTel": $("#checkInTel").val(),
-                "checkInPeoNum": $("#checkInPeoNum").val()
+                "checkInPeoNum": $("#checkInPeoNum").val(),
+                "stayPrice": $('#stayPrice').val()
             },
             success: function (response) {
                
@@ -1407,6 +1403,182 @@ $(document).ready(function () {
 
 
 
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll("#starRating .star");
+    const starScoreInput = document.getElementById("starScore");
+    const reviewSaveButton = document.getElementById("reviewSave");
+    const reviewContainer = document.getElementById("reviewContainer");
+    const userSeq = document.getElementById("member_memSeq")?.value;
+
+    let currentScore = 0;
+
+    // 별점 초기 세팅
+    document.getElementById("starRating").style.whiteSpace = "nowrap";
+    stars.forEach(function (star) {
+        star.style.display = "inline-block";
+        star.style.fontSize = "30px";
+        star.style.cursor = "pointer";
+        star.style.color = "gray";
+
+        star.addEventListener("click", function () {
+            currentScore = parseInt(star.getAttribute("data-value"));
+            starScoreInput.value = currentScore;
+            updateStarRating(currentScore);
+            document.getElementById("starRatingError").textContent = ""; // 별점 선택 시 에러 제거
+        });
+
+        star.addEventListener("mouseover", function () {
+            updateStarRating(parseInt(star.getAttribute("data-value")));
+        });
+
+        star.addEventListener("mouseout", function () {
+            updateStarRating(currentScore);
+        });
+    });
+
+    function updateStarRating(score) {
+        stars.forEach(function (star) {
+            const value = parseInt(star.getAttribute("data-value"));
+            star.style.color = value <= score ? "orange" : "gray";
+        });
+    }
+
+    function renderStars(score) {
+        let starsHtml = "";
+        for (let i = 1; i <= 5; i++) {
+            starsHtml += `<i class="bi ${i <= score ? 'bi-star-fill' : 'bi-star'} text-warning"></i>`;
+        }
+        return starsHtml;
+    }
+
+    function loadReviewList() {
+        const stayInfoId = $("#stay_staySeq").val();
+
+        $.ajax({
+            url: "/reviewList",
+            type: "GET",
+            data: { stay_staySeq: stayInfoId },
+            success: function (reviewList) {
+                reviewContainer.innerHTML = "";
+                reviewList.forEach(function (review) {
+                    const reviewHtml = `
+                        <div class="d-flex border-bottom pb-6 mb-6">
+                            <div class="ms-5">
+                                <h6 class="mb-1">${review.memName}</h6>
+                                <div class="mb-2">
+                                    ${renderStars(review.starScore)}
+                                </div>
+                                <p class="ms-3 text-dark fw-bold">${review.reTitle}</p>
+                                <p>${review.reText}</p>
+                            </div>
+                        </div>`;
+                    reviewContainer.insertAdjacentHTML("afterbegin", reviewHtml);
+                });
+            },
+            error: function (err) {
+                console.error("리뷰 불러오기 실패", err);
+            }
+        });
+    }
+
+    reviewSaveButton.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // 로그인 여부 확인
+        if (!userSeq || userSeq === "null" || userSeq === "") {
+            // 로그인 필요 모달 띄우기
+            const loginModalEl = document.getElementById("loginModal");
+            const loginModal = new bootstrap.Modal(loginModalEl);
+            loginModal.show();
+
+            // 로그인 버튼 클릭 시 이동
+            document.getElementById("goLoginBtn").addEventListener("click", function () {
+                window.location.href = "/SigninUser";
+            });
+
+            return;
+        }
+
+        // 입력값 유효성 검사
+        const score = parseInt(starScoreInput.value);
+        const title = document.getElementById("reTitle").value.trim();
+        const text = document.getElementById("reText").value.trim();
+        const scoreError = document.getElementById("starRatingError");
+        const titleError = document.getElementById("reTitleError");
+        const textError = document.getElementById("reTextError");
+
+        let valid = true;
+
+        if (!score || score < 1 || score > 5) {
+            scoreError.textContent = "별점을 선택해주세요.";
+            valid = false;
+        } else {
+            scoreError.textContent = "";
+        }
+
+        if (title === "") {
+            titleError.textContent = "리뷰 제목을 입력해주세요.";
+            valid = false;
+        } else {
+            titleError.textContent = "";
+        }
+
+        if (text === "") {
+            textError.textContent = "리뷰 내용을 입력해주세요.";
+            valid = false;
+        } else {
+            textError.textContent = "";
+        }
+
+        if (!valid) return;
+
+        const formData = $("#form").serialize();
+
+        $.ajax({
+            url: "/reviewUdate",
+            type: "POST",
+            data: formData,
+            success: function (response) {
+                if (response.status === "success") {
+                    // 성공 모달 띄우기
+                    const successModal = new bootstrap.Modal(document.getElementById("successModal"));
+                    successModal.show();
+
+                    // 폼 리셋 및 초기화
+                    $("#form")[0].reset();
+                    updateStarRating(0);
+                    currentScore = 0;
+                    loadReviewList();
+
+                    // 페이지 새로 고침
+                    setTimeout(function () {
+                        location.reload(); // 페이지를 1초 후에 새로 고침
+                    }, 1000);
+                } else {
+                    // 에러 처리 (필요 시 추가)
+                    console.error("리뷰 저장 실패", response);
+                }
+            },
+        });
+    });
+
+    loadReviewList();
+});
+</script>
+
+    <script type="text/javascript">
+    	// 페이지네이션 자바 스크립
+	    let form = document.querySelector("form[name=formList]");
+	 goList = function (thisPage) {
+	     document.querySelector("input[name=thisPage]").value = thisPage;
+	     form.action = "/DetailedPageUserForm";
+	     form.submit();
+	 }  
+
+		
+    
+    </script>
 
 
 

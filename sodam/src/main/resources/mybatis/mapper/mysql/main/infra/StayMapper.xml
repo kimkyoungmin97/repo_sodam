@@ -29,14 +29,22 @@
 			region.ifcdSeq AS regionCd,
 		    region.ifcdName AS regionName,
 		    active.ifcdSeq AS activeCd,
-            active.ifcdName AS activeName
+            active.ifcdName AS activeName,
+            b.path
 		FROM
 			stay a
 			
 		LEFT JOIN code region ON a.regionCd = region.ifcdSeq
         LEFT JOIN code active ON a.activeCd = active.ifcdSeq
-		
+        LEFT JOIN uploaded AS b ON a.staySeq = b.pSeq AND b.defaultNy=1
 		WHERE 1=1 
+		
+		<if test="shValue != null and shValue != ''">
+		  AND (
+		    a.stayName LIKE CONCAT('%', #{shValue}, '%')
+		    OR a.stayAddress LIKE CONCAT('%', #{shValue}, '%')
+		  )
+		</if>
 			AND a.stDeNy = 0
 	
 		LIMIT #{startRnumForMysql},#{rowNumToShow}
@@ -126,7 +134,6 @@
             b.memSeq,
             b.memName,
             b.memTel
-           
 		FROM
 			stay a
 			
@@ -142,7 +149,7 @@
 	</select>	
 	
 	<!--숙소등록 -->
-	<insert id="Insert">
+	<insert id="insert">
 		INSERT INTO stay(
 		stayName,
 		stayZipCode,
@@ -175,16 +182,54 @@
 		now(),
 		#{regionCd},
 		9,
-		#{memSeq},
-		stayPrice,
-		stayPersonnel,
+		#{member_memSeq},
+		#{stayPrice},
+		#{stayPersonnel},
 		0
 		)
+		<selectKey resultType="String" keyProperty="staySeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
 	</insert>
 	
 	
 	
+		 <!-- 숙소 상세 들어가면 리뷰 작성 리스트 -->
+	 	<select id="reviewList" resultMap="resultMapObj">
+		SELECT
+		    a.reSeq,
+		    a.starScore,
+		    a.reTitle,
+		    a.reText,
+		    a.member_memSeq,
+		    a.stay_staySeq,
+		    a.regDateTime,
+		    a.reDelNy,
+		    b.staySeq,
+		    b.stayName,         
+		    c.memSeq,
+		    c.memName,
+		    c.memId
+		FROM 
+		    review a
+		    JOIN stay b ON a.stay_staySeq = b.staySeq
+		    JOIN member c ON a.member_memSeq = c.memSeq
+		WHERE 1=1
+		
+		   AND stay_staySeq = #{staySeq}
+		   AND reDelNy = 0
 	
+	</select>
+	
+	<select id="imgList" resultMap="resultMapObj">
+		SELECT 
+			path
+		FROM
+			uploaded
+		WHERE
+			pSeq=#{staySeq}
+		ORDER BY seq DESC
+	</select>
 	
 	
 	

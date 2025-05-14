@@ -14,6 +14,13 @@ public class ReviewDto {
 	private String member_memSeq; //멤버 Seq
 	private String stay_staySeq; //숙소 Seq
 //	----
+	private String staySeq; // 숙소 Seq
+	private String stayName; //숙소이름
+//	----
+	private String memSeq; //멤버 Seq
+	private String memName; //멤버 이름
+//	----
+	
 	public String getReSeq() {
 		return reSeq;
 	}
@@ -67,6 +74,30 @@ public class ReviewDto {
 	}
 	public void setStay_staySeq(String stay_staySeq) {
 		this.stay_staySeq = stay_staySeq;
+	}
+	public String getStaySeq() {
+		return staySeq;
+	}
+	public void setStaySeq(String staySeq) {
+		this.staySeq = staySeq;
+	}
+	public String getStayName() {
+		return stayName;
+	}
+	public void setStayName(String stayName) {
+		this.stayName = stayName;
+	}
+	public String getMemSeq() {
+		return memSeq;
+	}
+	public void setMemSeq(String memSeq) {
+		this.memSeq = memSeq;
+	}
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
 	}
 	
 }

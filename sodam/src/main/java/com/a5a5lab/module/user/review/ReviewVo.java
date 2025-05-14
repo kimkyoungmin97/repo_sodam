@@ -1,11 +1,11 @@
-package com.a5a5lab.module.user.stay;
+package com.a5a5lab.module.user.review;
 
 import java.sql.Date;
 
 import javax.xml.crypto.Data;
 
-public class StayVo {
-	
+public class ReviewVo {
+
 //	paging
 	private int thisPage = 1;									// 현재 페이지
 	private int rowNumToShow = 3;								// 화면에 보여줄 데이터 줄 갯수
@@ -37,11 +37,6 @@ public class StayVo {
 //	----
 	private Date shQptionDate;
 //	----
-	
-	
-	private String stayAddress;
-//	----
-	
 	
 	public int getThisPage() {
 		return thisPage;
@@ -234,11 +229,4 @@ public class StayVo {
 	public void setStayName(String stayName) {
 		this.stayName = stayName;
 	}
-	public String getStayAddress() {
-		return stayAddress;
-	}
-	public void setStayAddress(String stayAddress) {
-		this.stayAddress = stayAddress;
-	}
-
 }

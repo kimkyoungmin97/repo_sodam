@@ -27,10 +27,18 @@
                         
                         <div class="mb-8">
                            <h5 class="mb-3">지역 검색</h5>
-                           <div class="my-4">
-                              <!-- input -->
-                              <input type="search" class="form-control" placeholder="지역 or 숙박시설 검색" />
-                           </div>
+<div class="my-4 search-wrapper">
+  <!-- 검색 폼 -->
+  <form id="searchForm" method="get" action="/ReservationUserList" class="d-flex align-items-center">
+    <input type="search" class="form-control" placeholder="숙소이름or지역 검색" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" />
+    <button type="button" class="btn btn-outline-secondary ms-2" onclick="resetSearch()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+      </svg>
+    </button>
+  </form>
+</div>
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
@@ -122,16 +130,16 @@
                            </div>
                 
                         </div>
-                        <div class="mb-8">
+<!--                         <div class="mb-8"> -->
                           
-                           <h5 class="mb-3">가격&nbsp;<small class="text-muted">1박 기준 가격</small></h5>
-                           <div>
+<!--                            <h5 class="mb-3">가격&nbsp;<small class="text-muted">1박 기준 가격</small></h5> -->
+<!--                            <div> -->
                              
-                              <div id="priceRange" class="mb-3"></div>
+<!--                               <div id="priceRange" class="mb-3"></div> -->
                              
-                              <span id="priceRange-value" class="small"></span>
-                           </div>
-                        </div> 
+<!--                               <span id="priceRange-value" class="small"></span> -->
+<!--                            </div> -->
+<!--                         </div>  -->
 
                         <div class="mb-8">
                            <h5 class="mb-3">즐겨찾기</h5>
@@ -272,7 +280,7 @@
                                        </div>
                                        <a href="shop-single.html">
                                           <!-- img -->
-                                          <img src="/user/template/assets/images/products/한옥집매인.avif"
+                                          <img th:src="${list.path}"
                                              alt="Grocery Ecommerce Template" class="mb-3 img-fluid" />
                                        </a>
                                     </div>
@@ -597,6 +605,25 @@
       console.error("위도/경도 값이 유효하지 않음");
   }
     </script>
+    
+    
+    
+    
+    
+<script>
+  // 엔터 키로 검색
+  function enterkey() {
+    if (window.event.keyCode === 13) {
+      document.getElementById("searchForm").submit();
+    }
+  }
+
+  // 리셋 버튼 클릭 시
+  function resetSearch() {
+    document.getElementById("shValue").value = ""; // 검색어 초기화
+    document.getElementById("searchForm").submit(); // 전체 목록 다시 불러오기
+  }
+</script>
     
     
     
