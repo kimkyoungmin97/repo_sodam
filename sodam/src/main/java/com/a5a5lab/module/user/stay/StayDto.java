@@ -29,8 +29,9 @@ public class StayDto extends FileUploadedDto{
 
 //	--대표이미지 인덱스
 	private Integer representativeIndex;
-
+	private Double averageRating;
 //	-----
+	
 	private String reSeq; //리뷰 Seq
 	private Integer starScore; // 리뷰 별점
 	private String reTitle; // 리뷰 제목
@@ -215,6 +216,12 @@ public class StayDto extends FileUploadedDto{
 	}
 	public void setStay_staySeq(String stay_staySeq) {
 		this.stay_staySeq = stay_staySeq;
+	}
+	public Double getAverageRating() {
+		return averageRating;
+	}
+	public void setAverageRating(Double averageRating) {
+		this.averageRating = averageRating;
 	}
 	
 }

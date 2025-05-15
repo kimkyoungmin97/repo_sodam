@@ -7,49 +7,62 @@
 	
 	<!-- 숙바 리스트 -->
 	<select id="stayList" resultMap="resultMapObj">
-	
-		SELECT 
-			a.staySeq, <!-- 숙박 Seq -->
-			a.stayName, <!-- 숙박이름 -->
-			a.stayZipCode, <!-- 우편번호 -->
-			a.stayAddress, <!-- 주소 -->
-			a.stayAddressDetail, <!-- 상세 주소 -->
-			a.stayLatitude, <!-- 위도 -->
-			a.stayHardness, <!-- 경도 -->
-			a.stayIntroMemo, <!-- 소개 메모 -->
-			a.stayServiceMemo, <!-- 서비스 메모 -->
-			a.stayNoticeMemo, <!-- 공지 메모 -->
-			a.regDateTime, <!-- 등록일 -->
-			a.modDateTime, <!-- 수정일 -->
-			a.regionCd, <!-- 지역CD -->
-			a.activeCd, <!-- 활성 CD -->
-			a.member_memSeq, <!-- 등록한 멤버 Seq -->
-			a.stDeNy, <!-- 삭제여부 -->
-			a.stayPrice,<!-- 숙박 가격 -->
-			region.ifcdSeq AS regionCd,
-		    region.ifcdName AS regionName,
-		    active.ifcdSeq AS activeCd,
-            active.ifcdName AS activeName,
-            b.path
-		FROM
-			stay a
-			
-		LEFT JOIN code region ON a.regionCd = region.ifcdSeq
-        LEFT JOIN code active ON a.activeCd = active.ifcdSeq
-        LEFT JOIN uploaded AS b ON a.staySeq = b.pSeq AND b.defaultNy=1
-		WHERE 1=1 
-		
-		<if test="shValue != null and shValue != ''">
-		  AND (
-		    a.stayName LIKE CONCAT('%', #{shValue}, '%')
-		    OR a.stayAddress LIKE CONCAT('%', #{shValue}, '%')
-		  )
-		</if>
-			AND a.stDeNy = 0
-	
-		LIMIT #{startRnumForMysql},#{rowNumToShow}
-	
-	</select>
+SELECT 
+    a.staySeq,
+    a.stayName,
+    a.stayZipCode,
+    a.stayAddress,
+    a.stayAddressDetail,
+    a.stayLatitude,
+    a.stayHardness,
+    a.stayIntroMemo,
+    a.stayServiceMemo,
+    a.stayNoticeMemo,
+    a.regDateTime,
+    a.modDateTime,
+    a.regionCd,
+    a.activeCd,
+    a.member_memSeq,
+    a.stDeNy,
+    a.stayPrice,
+    
+    region.ifcdSeq AS regionCd,
+    region.ifcdName AS regionName,
+    active.ifcdSeq AS activeCd,
+    active.ifcdName AS activeName,
+    b.path,
+
+    -- ⭐ 평균 별점 추가 (NULL이면 0으로 처리)
+    IFNULL(AVG(review.starScore), 0) AS averageRating
+
+FROM stay a
+LEFT JOIN code region ON a.regionCd = region.ifcdSeq
+LEFT JOIN code active ON a.activeCd = active.ifcdSeq
+LEFT JOIN uploaded AS b ON a.staySeq = b.pSeq AND b.defaultNy = 1
+LEFT JOIN review ON a.staySeq = review.stay_staySeq AND review.reDelNy = 0
+
+WHERE 1=1
+  <if test="shOption == 4 and shRegion != null and shRegion != ''">
+    AND a.regionCd IN
+    <foreach item="region" index="index" collection="shRegion.split(',')" open="(" separator="," close=")">
+      #{region}
+    </foreach>
+  </if>
+
+  <if test="shValue != null and shValue != ''">
+    AND (
+      a.stayName LIKE CONCAT('%', #{shValue}, '%')
+      OR a.stayAddress LIKE CONCAT('%', #{shValue}, '%')
+    )
+  </if>
+
+  AND a.stDeNy = 0
+
+GROUP BY a.staySeq
+ORDER BY a.regDateTime DESC
+LIMIT #{startRnumForMysql}, #{rowNumToShow}
+</select>
+
 	
 	<!-- 호스트가 숙박 등록 했을떄 리스트 -->
 	<select id="stayRegistrationList" resultMap="resultMapObj">
@@ -218,7 +231,17 @@
 		
 		   AND stay_staySeq = #{staySeq}
 		   AND reDelNy = 0
+		   LIMIT #{startRnumForMysql},#{rowNumToShow}
 	
+	</select>
+<!-- 	리뷰갯수 -->
+	<select id="reviewCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM
+			review
+		WHERE
+			stay_staySeq=#{staySeq}
+		AND reDelNy = 0
 	</select>
 	
 	<select id="imgList" resultMap="resultMapObj">

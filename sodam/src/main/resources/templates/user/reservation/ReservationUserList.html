@@ -6,6 +6,8 @@
 		<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
 		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
 		<input type="hidden" name=ifcdSeq>
+		<input type="hidden" id="staySeq" name="staySeq"  />
+		
 <div th:replace="~{user/include/head :: head}"></div>
    
 
@@ -19,30 +21,36 @@
          <div class="container">
             <div class="row gx-10">
                <!-- col -->
+               
+                <input type="hidden" id="shOption" name="shOption" value="" />
                <aside class="card col" style="background-color: #f8f9fa;">
                   <div class="offcanvas offcanvas-start offcanvas-collapse w-md-50" tabindex="-1" id="offcanvasCategory"
                      aria-labelledby="offcanvasCategoryLabel">
                      <br>
+                     
                      <div class="offcanvas-body ps-lg-2 pt-lg-0">
                         
                         <div class="mb-8">
                            <h5 class="mb-3">지역 검색</h5>
-<div class="my-4 search-wrapper">
-  <!-- 검색 폼 -->
-  <form id="searchForm" method="get" action="/ReservationUserList" class="d-flex align-items-center">
-    <input type="search" class="form-control" placeholder="숙소이름or지역 검색" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" />
-    <button type="button" class="btn btn-outline-secondary ms-2" onclick="resetSearch()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
-        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
-      </svg>
-    </button>
-  </form>
-</div>
+						<div class="my-4 search-wrapper">
+						  <!-- 검색 폼 -->
+						 
+						    <input type="search" class="form-control me-2" placeholder="숙소 검색" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()"/>
+						        
+<!-- 						        <button type="button" class="btn btn-default waves-effect" id="btnSearch"> -->
+<!-- 						            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> -->
+<!-- 						                <circle cx="11" cy="11" r="8"></circle> -->
+<!-- 						                <line x1="21" y1="21" x2="16.65" y2="16.65"></line> -->
+<!-- 						            </svg> -->
+<!-- 						        </button> -->
+						
+						</div>
+						
+						
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input region-filter" type="checkbox" value="서울" id="eGrocery" checked />
+                              <input class="form-check-input region-filter" type="checkbox" value="서울" id="eGrocery" />
                               <label class="form-check-label" for="eGrocery">서울</label>
                            </div>
                            <!-- form check -->
@@ -78,9 +86,10 @@
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input region-filter" type="checkbox" value="부산" id="Spencers" />
+                              <input class="form-check-input region-filter"  type="checkbox" value="부산" id="Spencers" />
                               <label class="form-check-label" for="Spencers">부산</label>
                            </div>
+                       
                 
                         </div>
                         <div class="mb-8">
@@ -156,7 +165,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingFive" />
+                                 <input class="form-check-input" type="checkbox" value="5" id="ratingFive" />
                                  <label class="form-check-label" for="ratingFive">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -168,7 +177,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingFour" checked />
+                                 <input class="form-check-input" type="checkbox" value="4" id="ratingFour" />
                                  <label class="form-check-label" for="ratingFour">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -180,7 +189,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingThree" />
+                                 <input class="form-check-input" type="checkbox" value="3"id="ratingThree" />
                                  <label class="form-check-label" for="ratingThree">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -192,7 +201,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
+                                 <input class="form-check-input" type="checkbox" value="2" id="ratingTwo" />
                                  <label class="form-check-label" for="ratingTwo">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -204,7 +213,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingOne" />
+                                 <input class="form-check-input" type="checkbox" value="1" id="ratingOne" />
                                  <label class="form-check-label" for="ratingOne">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star text-warning"></i>
@@ -219,6 +228,7 @@
                      </div>
                   </div>
                </aside>
+           
                <section class="col-lg-9 col-md-12">
                   <!-- card -->
                   <!-- <div class="card mb-4 bg-light border-0">
@@ -231,7 +241,7 @@
                   <div class="d-lg-flex justify-content-between align-items-center">
                      <div class="mb-3 mb-lg-0">
                         <p class="mb-0">
-                           숙박시설 갯수 :
+                           전국 숙박시설 갯수 :
                            <span class="text-dark" th:text="${vo.totalRows}">24</span>
                           
                         </p>
@@ -258,8 +268,9 @@
                      </div>
                   </div>
                   <!-- row -->
+                  <div id="futsalList">
                   <div class="row g-4 row-cols-1 mt-2">
-                     <div class="col" th:each="list : ${list}">
+                     <div class="col stay-item" th:each="list : ${list}" th:data-region="${@codeService.selectOneCachedCode(list.regionCd)}">
                         <!-- card -->
                         <div class="card card-product">
                            <div class="position-absolute top-0 end-0 m-2">
@@ -276,9 +287,9 @@
                                        <div class="position-absolute top-0">
                                           <!-- badge -->
                                           
-                                          <span class="badge bg-success">★게스트 선호(별점 평균 4.5이상일때 표시되게)</span>
+                                          <span class="badge bg-success" th:if="${list.averageRating >= 4.0}">★게스트 선호</span>
                                        </div>
-                                       <a href="shop-single.html">
+                                       <a th:href="@{/DetailedPageUserForm(staySeq=${list.staySeq})}">
                                           <!-- img -->
                                           <img th:src="${list.path}"
                                              alt="Grocery Ecommerce Template" class="mb-3 img-fluid" />
@@ -291,18 +302,15 @@
                                        <a href="#!" class="text-decoration-none text-muted"><small>Snack &
                                              Munchies</small></a>
                                     </div> -->
-                                    <h2 class="fs-6"><a href="#" class="text-inherit text-decoration-none" th:text="${list.stayName}">한옥 게스트 하우스</a></h2>
+                                    <h2 class="fs-6"><a th:href="@{/DetailedPageUserForm(staySeq=${list.staySeq})}" class="text-inherit text-decoration-none stay-name" th:text="${list.stayName}">한옥 게스트 하우스</a></h2>
                                     <div>
-                                       <!-- rating -->
-                                       <small class="text-warning">
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-fill"></i>
-                                          <i class="bi bi-star-half"></i>
-                                       </small>
-                                       <span class="text-muted small">4.5(149)</span>
-                                    </div>
+									    <small class="text-warning">
+									        <span th:each="i : ${#numbers.sequence(1, T(java.lang.Math).floor(list.averageRating))}">
+									            <i class="bi bi-star-fill"></i>
+									        </span>
+									    </small>
+									    <span class="text-muted small" th:text="${#numbers.formatDecimal(list.averageRating, 1, 1)} + '점'"></span>
+									</div>
                                     <div class="mt-6">
                                         <!-- price -->
                                         <div>
@@ -311,10 +319,19 @@
                                           
                                        </div>
                                        <div>
-                                          <span class="text-decoration-none text-muted" th:text="${list.stayAddressDetail}"><small>종로 어딘가 골목 길</small></span>
+                                       <span class="text-dark">상세주소 : </span>&nbsp;
+                                          <span class="text-dark " th:text="${list.stayAddressDetail}"><small>종로 어딘가 골목 길</small></span>
                                        </div>
 
                                     </div>
+                                     <div class="mt-6">
+                                     	 <div>
+                                          <span class="text-dark">지역 : </span>&nbsp;
+                                          <span class="text-dark" th:text="${@codeService.selectOneCachedCode(list.regionCd)}" >서울</span>
+                                          
+                                          
+                                       </div>
+                                     </div>
                                     <div class="mt-6 text-end">
                                        <!-- price -->
                                        <div>
@@ -345,7 +362,9 @@
                         </div>
                      </div>
                     
-                     
+                    </div>
+                    </div>
+                    
                  
                  
                            
@@ -611,21 +630,58 @@
     
     
 <script>
-  // 엔터 키로 검색
-  function enterkey() {
-    if (window.event.keyCode === 13) {
-      document.getElementById("searchForm").submit();
-    }
-  }
+document.addEventListener("DOMContentLoaded", function () {
+    const ratingCheckboxes = document.querySelectorAll(".form-check-input");
+    const stayItems = document.querySelectorAll(".stay-item");
+    const searchInput = document.getElementById("shValue");
+    const searchButton = document.getElementById("btnSearch");
 
-  // 리셋 버튼 클릭 시
-  function resetSearch() {
-    document.getElementById("shValue").value = ""; // 검색어 초기화
-    document.getElementById("searchForm").submit(); // 전체 목록 다시 불러오기
-  }
+    function stayList() {
+        const selectedRatings = Array.from(ratingCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => parseInt(cb.value)); // 1, 2, 3, 4, 5
+
+        const searchText = searchInput.value.trim().toLowerCase();
+
+        stayItems.forEach(item => {
+            const itemRating = parseFloat(item.getAttribute("data-rating")); // 예: 4.5
+            const itemName = item.querySelector(".stay-name").textContent.toLowerCase();
+
+            // 최소 평점 조건: 체크된 것 중 하나라도 만족하면 표시
+            const matchesRating = 
+                selectedRatings.length === 0 || 
+                selectedRatings.some(rating => itemRating >= rating);
+
+            const matchesSearch = 
+                searchText === "" || 
+                itemName.includes(searchText);
+
+            item.style.display = (matchesRating && matchesSearch) ? "block" : "none";
+        });
+    }
+
+    ratingCheckboxes.forEach(cb => cb.addEventListener("change", stayList));
+    searchInput.addEventListener("keyup", stayList);
+    searchButton.addEventListener("click", stayList);
+
+    stayList(); // 초기 실행
+});
 </script>
+
     
-    
+<!-- <!--    <script> --> 
+<!-- // 	// 엔터 키로 검색 -->
+<!-- // 	function enterkey() { -->
+<!-- // 	  if (window.event.keyCode === 13) { -->
+<!-- // 	    document.getElementById("searchForm").submit(); -->
+<!-- // 	  } -->
+<!-- // 	} -->
+<!-- // 	// 리셋 버튼 클릭 시 -->
+<!-- // 	function resetSearch() { -->
+<!-- // 	  document.getElementById("shValue").value = ""; // 검색어 초기화 -->
+<!-- // 	  document.getElementById("searchForm").submit(); // 전체 목록 다시 불러오기 -->
+<!-- // 	} -->
+<!-- <!--    </script> --> 
     
     
     

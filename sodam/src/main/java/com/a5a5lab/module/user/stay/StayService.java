@@ -30,7 +30,10 @@ public class StayService extends FileUploadedService {
 	public int selectOneCount(StayVo vo) {
 		return stayDao.selectOneCount(vo);
 	}
-	
+	//리뷰 페이지네이션
+	public int reviewCount(StayVo vo) {
+		return stayDao.reviewCount(vo);
+	}
 	//사용자 숙박 정보 리스트 상세
 	public StayDto stayOne(StayDto stayDto) {
 		
@@ -59,8 +62,8 @@ public class StayService extends FileUploadedService {
 	
 	
 	//숙소 리뷰 리스트 가져오기
-	public List<StayDto>reviewList(StayDto stayDto){
-		return stayDao.reviewList(stayDto);
+	public List<StayDto>reviewList(StayVo vo){
+		return stayDao.reviewList(vo);
 	}
 	//숙소 이미지 리스트 가져오기
 	public List<String> imgList(StayDto stayDto){

@@ -13,6 +13,8 @@ public interface StayDao {
 	
 	//페이지네이션
 	public int selectOneCount(StayVo vo);
+	//리뷰페이지네이션
+	public int reviewCount(StayVo vo);
 	
 	// 사용자 숙소 정보 리스트 상세 1개씩 뽑기
 	public StayDto stayOne(StayDto stayDto);
@@ -24,7 +26,7 @@ public interface StayDao {
 	public int insert(StayDto stayDto);
 	
 	//숙소 리뷰 리스트 가져오기
-	public List<StayDto> reviewList(StayDto stayDto);
+	public List<StayDto> reviewList(StayVo vo);
 	//숙소 이미지 리스트 가져오기
 	public List<String> imgList(StayDto stayDto);
 }
