@@ -26,7 +26,7 @@ public interface StayDao {
 	public int insert(StayDto stayDto);
 	
 	//숙소 리뷰 리스트 가져오기
-	public List<StayDto> reviewList(StayDto stayDto);
+	public List<StayDto> reviewList(StayVo vo);
 	//숙소 이미지 리스트 가져오기
 	public List<String> imgList(StayDto stayDto);
 }

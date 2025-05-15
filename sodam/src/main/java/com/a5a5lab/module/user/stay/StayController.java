@@ -29,11 +29,12 @@ public class StayController {
 	
 	//사용자 숙박예약 리스트
 	@RequestMapping(value="/ReservationUserList")
-	public String ReservationUserList(Model model, StayVo vo) {
+	public String ReservationUserList(Model model, StayVo vo ) {
 		
 		vo.setParamsPaging(stayService.selectOneCount(vo));
 		
 		model.addAttribute("list", stayService.stayList(vo));
+		
 		model.addAttribute("vo", vo);
 		
 		return "/user/reservation/ReservationUserList";
@@ -42,9 +43,9 @@ public class StayController {
 	@RequestMapping(value="DetailedPageUserForm")
 	public String DetailedPageUserForm(Model model, StayDto stayDto, StayVo vo) {
 		
-		vo.setParamsPaging(stayService.reviewCount(vo)); // 페이지 네이션 // 리뷰 페이지네이션 할거임
+		
 	    // 리뷰 목록을 가져옴
-	    List<StayDto> reviewList = stayService.reviewList(stayDto);
+	    List<StayDto> reviewList = stayService.reviewList(vo);
 
 	    // 총 리뷰 개수 계산
 	    int totalReviews = reviewList.size();
@@ -79,6 +80,7 @@ public class StayController {
 	    model.addAttribute("reviewList", reviewList); // 리뷰 목록
 		model.addAttribute("item", stayService.stayOne(stayDto));// 스테이 1개뽑아가기
 		model.addAttribute("list", stayService.imgList(stayDto));// 숙소 이미지 리스트
+		vo.setParamsPaging(stayService.reviewCount(vo)); // 페이지 네이션 // 리뷰 페이지네이션 할거임
 		model.addAttribute("vo", vo);
 		
 		
