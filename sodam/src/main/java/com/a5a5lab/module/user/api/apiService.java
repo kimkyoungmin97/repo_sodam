@@ -28,7 +28,7 @@ public class apiService {
         try {
             StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/areaBasedList1");
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=10");
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=5");
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + page);
             urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=ETC");
             urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=testApp");
@@ -119,4 +119,6 @@ public class apiService {
         }
         return "";
     }
+    
+    
 }

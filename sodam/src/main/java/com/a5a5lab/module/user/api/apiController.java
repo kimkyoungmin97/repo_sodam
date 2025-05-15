@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.a5a5lab.module.xdm.code.CodeController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +20,29 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import com.a5a5lab.module.common.BaseVo;
+
 @Controller
 public class apiController {
+
+    private final CodeController codeController;
 	  @Autowired
 	  apiService apiservice;
+
+    apiController(CodeController codeController) {
+        this.codeController = codeController;
+    }
 	  
-	@RequestMapping(value="/LocationRestaurant")
-	public String LocationRestaurant() {
-		
-		return "/user/location/LocationRestaurant";
+//	@RequestMapping(value="/LocationRestaurant")
+//	public String LocationRestaurant(Model model) {
+//		 
+//		return "/user/location/LocationRestaurant";
+//	}
+	
+	@RequestMapping("/LocationRestaurant")
+	public String redirectToDefaultArea() {
+	    return "redirect:/getRestaurants?areaCode=1";
 	}
 	
 //	 @GetMapping("/getRestaurants")
@@ -55,20 +69,33 @@ public class apiController {
 	public String getRestaurants(@RequestParam("areaCode") String areaCode,
 	                             @RequestParam(value = "page", defaultValue = "1") int page,
 	                             Model model) {
-	    // 음식점 
+
+	    BaseVo vo = new BaseVo();
+	    vo.setThisPage(page);
+	    vo.setRowNumToShow(5);
+	    vo.setPageNumToShow(5);
+
+	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode); // 총 2308개 등
+	    vo.setParamsPaging(totalCount);
+
+	    // 여기서 page는 API의 pageNo로 사용됨
 	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
+
 	    model.addAttribute("restaurantList", list);
-
-	    // 총 개수 및 페이지 수 
-	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode); 
-	    int totalPages = (int) Math.ceil(totalCount / 10.0);
-
-	    // 현재 페이지와 총 페이지 수
-	    model.addAttribute("page", page);
-	    model.addAttribute("totalPages", totalPages);
+	    model.addAttribute("vo", vo);
+	    model.addAttribute("areaCode", areaCode);
+	    
+	    System.out.println(totalCount);
+	    
+	    System.out.println("Total Count: " + totalCount);
+	    System.out.println("Total Pages: " + vo.getTotalPages());
+	    System.out.println("Start Page: " + vo.getStartPage());
+	    System.out.println("End Page: " + vo.getEndPage());
 
 	    return "/user/location/LocationRestaurant";
 	}
+
+
 	
 	@GetMapping("/user/location/restaurantDetail")
 	public String getRestaurantDetail(@RequestParam("contentId") String contentId, Model model) {
@@ -82,6 +109,7 @@ public class apiController {
 	                + "&MobileApp=AppTest"
 	                + "&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y"
 	                + "&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y";
+	        
 
 	        URL apiUrl = new URL(url);
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(apiUrl.openStream(), "UTF-8"));

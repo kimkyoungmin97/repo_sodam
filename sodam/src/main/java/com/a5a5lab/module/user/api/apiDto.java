@@ -2,7 +2,7 @@ package com.a5a5lab.module.user.api;
 
 import com.a5a5lab.module.common.BaseVo;
 
-public class apiDto extends BaseVo {
+public class apiDto extends BaseVo{
 	private String title;
     private String address;
     private String imageUrl;
