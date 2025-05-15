@@ -86,7 +86,7 @@
                            <!-- form check -->
                            <div class="form-check mb-2">
                               <!-- input -->
-                              <input class="form-check-input region-filter"  type="checkbox" value="부산" id="Spencers" />
+                              <input class="form-check-input region-filter" type="checkbox" value="부산" id="Spencers" />
                               <label class="form-check-label" for="Spencers">부산</label>
                            </div>
                        
@@ -177,7 +177,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="4" id="ratingFour" />
+                                 <input class="form-check-input" type="checkbox" value="4" id="ratingFour" checked />
                                  <label class="form-check-label" for="ratingFour">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -631,43 +631,45 @@
     
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const ratingCheckboxes = document.querySelectorAll(".form-check-input");
-    const stayItems = document.querySelectorAll(".stay-item");
-    const searchInput = document.getElementById("shValue");
-    const searchButton = document.getElementById("btnSearch");
+    let checkboxes = document.querySelectorAll(".region-filter");
+    let stayItems = document.querySelectorAll(".stay-item");
+    let searchButton = document.getElementById("btnSearch");
+    let searchInput = document.getElementById("shValue");
+
+    // 🔥 초기 화면에서 모든 체크박스를 해제
+    checkboxes.forEach(checkbox => checkbox.checked = false);
 
     function stayList() {
-        const selectedRatings = Array.from(ratingCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => parseInt(cb.value)); // 1, 2, 3, 4, 5
-
-        const searchText = searchInput.value.trim().toLowerCase();
+        let selectedRegions = Array.from(checkboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
 
         stayItems.forEach(item => {
-            const itemRating = parseFloat(item.getAttribute("data-rating")); // 예: 4.5
-            const itemName = item.querySelector(".stay-name").textContent.toLowerCase();
+            let itemRegion = item.getAttribute("data-region");
+            let itemName = item.querySelector(".stay-name").textContent.toLowerCase();
+            let searchText = searchInput.value.toLowerCase();
 
-            // 최소 평점 조건: 체크된 것 중 하나라도 만족하면 표시
-            const matchesRating = 
-                selectedRatings.length === 0 || 
-                selectedRatings.some(rating => itemRating >= rating);
+            let matchesRegion = selectedRegions.length === 0 || selectedRegions.includes(itemRegion);
+            let matchesSearch = searchText === "" || itemName.includes(searchText);
 
-            const matchesSearch = 
-                searchText === "" || 
-                itemName.includes(searchText);
-
-            item.style.display = (matchesRating && matchesSearch) ? "block" : "none";
+            item.style.display = matchesRegion && matchesSearch ? "block" : "none";
         });
     }
 
-    ratingCheckboxes.forEach(cb => cb.addEventListener("change", stayList));
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", stayList);
+    });
+
     searchInput.addEventListener("keyup", stayList);
-    searchButton.addEventListener("click", stayList);
 
-    stayList(); // 초기 실행
+    searchButton.onclick = function () {
+    	stayList();
+    };
+
+    stayList(); // 초기 실행 시 필터링 적용
 });
-</script>
 
+</script>
     
 <!-- <!--    <script> --> 
 <!-- // 	// 엔터 키로 검색 -->
