@@ -92,53 +92,7 @@
                        
                 
                         </div>
-                        <div class="mb-8">
-                           <h5 class="mb-3">호스트 언어</h5>
                       
-                           <!-- form check -->
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="eGrocery" checked />
-                              <label class="form-check-label" for="eGrocery">한국어</label>
-                           </div>
-                           <!-- form check -->
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="DealShare" />
-                              <label class="form-check-label" for="DealShare">영어</label>
-                           </div>
-                           <!-- form check -->
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="Dmart" />
-                              <label class="form-check-label" for="Dmart">일본어</label>
-                           </div>
-                           <!-- form check -->
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="Blinkit" />
-                              <label class="form-check-label" for="Blinkit">중국어</label>
-                           </div>
-                           <!-- form check -->
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="BigBasket" />
-                              <label class="form-check-label" for="BigBasket">프랑스어</label>
-                           </div>
-                           <!-- form check -->
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="StoreFront" />
-                              <label class="form-check-label" for="StoreFront">아랍어</label>
-                           </div>
-                           <!-- form check -->
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="Spencers" />
-                              <label class="form-check-label" for="Spencers">인도네시아어</label>
-                           </div>
-                
-                        </div>
 <!--                         <div class="mb-8"> -->
                           
 <!--                            <h5 class="mb-3">가격&nbsp;<small class="text-muted">1박 기준 가격</small></h5> -->
@@ -150,14 +104,7 @@
 <!--                            </div> -->
 <!--                         </div>  -->
 
-                        <div class="mb-8">
-                           <h5 class="mb-3">즐겨찾기</h5>
-                           <div class="form-check mb-2">
-                              <!-- input -->
-                              <input class="form-check-input" type="checkbox" value="" id="Spencers" />
-                              <label class="form-check-label" for="Spencers">즐겨찾기</label>
-                           </div>
-                        </div>
+                       
                         <!-- rating -->
                         <div class="mb-8">
                            <h5 class="mb-3">별점</h5>
@@ -224,7 +171,70 @@
                               </div>
                            </div>
                         </div>
-                       
+                          <div class="mb-8">
+                           <h5 class="mb-3">호스트 언어</h5>
+                      
+                           <!-- form check -->
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="eGrocery" checked />
+                              <label class="form-check-label" for="eGrocery">한국어</label>
+                           </div>
+                           <!-- form check -->
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="DealShare" />
+                              <label class="form-check-label" for="DealShare">영어</label>
+                           </div>
+                           <!-- form check -->
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="Dmart" />
+                              <label class="form-check-label" for="Dmart">일본어</label>
+                           </div>
+                           <!-- form check -->
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="Blinkit" />
+                              <label class="form-check-label" for="Blinkit">중국어</label>
+                           </div>
+                           <!-- form check -->
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="BigBasket" />
+                              <label class="form-check-label" for="BigBasket">프랑스어</label>
+                           </div>
+                           <!-- form check -->
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="StoreFront" />
+                              <label class="form-check-label" for="StoreFront">아랍어</label>
+                           </div>
+                           <!-- form check -->
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="Spencers" />
+                              <label class="form-check-label" for="Spencers">인도네시아어</label>
+                           </div>
+                
+                        </div>
+                        <div class="mb-8">
+                           <h5 class="mb-3">즐겨찾기</h5>
+                           <div class="form-check mb-2">
+                              <!-- input -->
+                              <input class="form-check-input" type="checkbox" value="" id="Spencers" />
+                              <label class="form-check-label" for="Spencers">즐겨찾기</label>
+                           </div>
+                        </div>
+                         <h5 class="mb-3">숙소 지도</h5>
+                        <div class="mb-8" id="map" style="width: 100%; height: 300px;"></div>
+
+						<!-- 마커용 데이터는 JS에서 사용할 수 있도록 hidden 요소나 dataset에 저장 -->
+						<div class="markerData" th:each="list : ${list}"
+						     th:attr="data-lat=${list.stayLatitude}, 
+						              data-lng=${list.stayHardness},
+						              data-url=@{/DetailedPageUserForm(staySeq=${list.staySeq})}">
+						</div>
                      </div>
                   </div>
                </aside>
@@ -678,6 +688,59 @@ document.addEventListener("DOMContentLoaded", function () {
     stayList(); // 초기 렌더링
 });
 </script>
+<script type="text/javascript">
+  window.onload = function () {
+    const mapContainer = document.getElementById('map');
+
+    const mapOption = {
+      center: new kakao.maps.LatLng(37.5665, 126.9780),
+      level: 6
+    };
+
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+    const bounds = new kakao.maps.LatLngBounds();
+
+    const markerImageSrc = '/user/template/assets/images/logo/buddhist-temple-sticker-design-element-vector.png';
+    const imageSize = new kakao.maps.Size(24, 24);
+    const imageOption = { offset: new kakao.maps.Point(12, 24) };
+    const markerImage = new kakao.maps.MarkerImage(markerImageSrc, imageSize, imageOption);
+
+    const markerDataElements = document.querySelectorAll('.markerData'); // ✅ class 사용
+
+    markerDataElements.forEach(function (el) {
+      const lat = parseFloat(el.getAttribute('data-lat'));
+      const lng = parseFloat(el.getAttribute('data-lng'));
+      const url = el.getAttribute('data-url'); // ✅ 이동할 URL
+
+      if (isNaN(lat) || isNaN(lng)) {
+        console.error("위도 또는 경도 값이 유효하지 않습니다.");
+        return;
+      }
+
+      const position = new kakao.maps.LatLng(lat, lng);
+
+      const marker = new kakao.maps.Marker({
+        position: position,
+        map: map,
+        image: markerImage
+      });
+
+      // ✅ 마커 클릭 시 URL 이동
+      kakao.maps.event.addListener(marker, 'click', function () {
+        if (url) {
+          window.location.href = url;
+        }
+      });
+
+      bounds.extend(position);
+    });
+
+    if (!bounds.isEmpty()) {
+      map.setBounds(bounds);
+    }
+  };
+</script>
+
     
 <!-- <!--    <script> --> 
 <!-- // 	// 엔터 키로 검색 -->

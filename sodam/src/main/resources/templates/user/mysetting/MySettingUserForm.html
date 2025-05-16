@@ -59,21 +59,21 @@
 											<div class="row mb-4">
 												<div class="col-7">
 												  <label class="form-label">이름</label>
-												  <input type="text" class="form-control" id="memName" name ="memName" th:value="${item.memName}"  />
+												  <input type="text" class="form-control" id="memName" name ="memName" th:value="${item.memName}"  disabled/>
 												</div>
 											  
 												<div class="col-5">
 												  <label class="form-label">성별</label>
-												  <input type="text" class="form-control" id="genderCd" name="genderCd" th:value="${item.genderCd}"  />
+												  <input type="text" class="form-control" id="genderCd" name="genderCd"  th:value="${@codeService.selectOneCachedCode(item.genderCd)}" disabled/>
 												</div>
 											  </div>
 											<div class="mb-4">
 												<label class="form-label">생년월일</label>
-												<input type="text" class="form-control" value="1999-06-15"  />
+												<input type="text" class="form-control" value="1999-06-15"  disabled/>
 											</div>
 											<div class="mb-4">
 												<label class="form-label">ID</label>
-												<input type="text" class="form-control" id="memId" name ="memId" th:value="${item.memId}"  />
+												<input type="text" class="form-control" id="memId" name ="memId" th:value="${item.memId}"  disabled/>
 											</div>
 											<!-- input -->
 											<div class="mb-4">
@@ -85,7 +85,7 @@
 											<div class="row mb-4">
 												<div class="col-5">
 												  <label for="carrier" class="form-label">통신사</label>
-												  <select class="form-select" id="carrier" name="carrier">
+												  <select class="form-select" id="agencyCd" name="agencyCd">
 													<option value="">통신사 선택하세요</option>
 													<option value="skt">SKT</option>
 													<option value="kt">KT</option>
@@ -99,48 +99,10 @@
 												  <input type="text" class="form-control" id="memTel" name ="memTel" th:value="${item.memTel}" />
 												</div>
 											</div>
-											<!-- <div class="mb-4">
-												<label class="form-label d-block">호스트 언어</label>
-											  
-												<div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="lang-korean" value="한국어">
-												  <label class="form-check-label" for="lang-korean">한국어</label>
-												</div>
-											  
-												<div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="lang-english" value="영어">
-												  <label class="form-check-label" for="lang-english">영어</label>
-												</div>
-											  
-												<div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="lang-japanese" value="일본어">
-												  <label class="form-check-label" for="lang-japanese">일본어</label>
-												</div>
-											  
-												<div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="lang-chinese" value="중국어">
-												  <label class="form-check-label" for="lang-chinese">중국어</label>
-												</div>
-											  
-												<div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="lang-french" value="프랑스어">
-												  <label class="form-check-label" for="lang-french">프랑스어</label>
-												</div>
-											  
-												<div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="lang-arabic" value="아랍어">
-												  <label class="form-check-label" for="lang-arabic">아랍어</label>
-												</div>
-											  
-												<div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="lang-indonesian" value="인도네시아어">
-												  <label class="form-check-label" for="lang-indonesian">인도네시아어</label>
-												</div>
-											  </div> -->
-											<!-- button -->
+										
 											 <br>
 											<div class="mb-4">
-												<button class="btn btn-dark">변경 하기</button>
+												<button class="btn btn-dark" id="btnSave">변경 하기</button>
 											</div>
 										</form>
 									</div>
