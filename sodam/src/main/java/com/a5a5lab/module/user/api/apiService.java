@@ -71,7 +71,7 @@ public class apiService {
         return list;
     }
 
-    // 총 레스토랑 수 
+   
     public int getTotalCountByAreaCode(String areaCode) {
         try {
             StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551011/KorService1/areaBasedList1");
@@ -110,7 +110,7 @@ public class apiService {
         return 0;
     }
 
-    // 태그
+    
     private String getTagValue(String tag, Element e) {
         NodeList nlList = e.getElementsByTagName(tag);
         if (nlList.getLength() > 0) {

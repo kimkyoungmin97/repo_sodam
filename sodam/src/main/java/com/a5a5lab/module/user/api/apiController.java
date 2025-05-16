@@ -68,17 +68,17 @@ public class apiController {
 	@GetMapping("/getRestaurants")
 	public String getRestaurants(@RequestParam("areaCode") String areaCode,
 	                             @RequestParam(value = "page", defaultValue = "1") int page,
-	                             Model model) {
+	                             Model model, BaseVo vo) {
 
-	    BaseVo vo = new BaseVo();
+//	    BaseVo vo = new BaseVo();
 	    vo.setThisPage(page);
 	    vo.setRowNumToShow(5);
 	    vo.setPageNumToShow(5);
 
-	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode); // 총 2308개 등
+	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode);
 	    vo.setParamsPaging(totalCount);
 
-	    // 여기서 page는 API의 pageNo로 사용됨
+	    
 	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
 
 	    model.addAttribute("restaurantList", list);
@@ -124,12 +124,12 @@ public class apiController {
 	        String xmlResponse = responseBuilder.toString();
 
 
-	        // 응답 디버깅
+	        
 	        System.out.println("====== XML 응답 시작 ======");
 	        System.out.println(xmlResponse);
 	        System.out.println("====== XML 응답 끝 ======");
 
-	        // 인코딩 
+	        
 	        InputSource is = new InputSource(new StringReader(xmlResponse));
 	        is.setEncoding("UTF-8");
 
