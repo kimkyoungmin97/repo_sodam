@@ -55,7 +55,27 @@ WHERE 1=1
       OR a.stayAddress LIKE CONCAT('%', #{shValue}, '%')
     )
   </if>
-
+        <choose>
+            <when test="shOption == 1">
+                AND a.stayName LIKE CONCAT('%', #{shValue}, '%')
+            </when>
+         
+            <when test="shOption == 4">
+                AND a.futsalRegion = (
+                    CASE 
+                        WHEN #{shValue} = '서울' THEN 16
+                        WHEN #{shValue} = '인천' THEN 17
+                        WHEN #{shValue} = '대전' THEN 18
+                        WHEN #{shValue} = '대구' THEN 19
+                        WHEN #{shValue} = '광주' THEN 20
+                        WHEN #{shValue} = '울산' THEN 21
+                        WHEN #{shValue} = '부산' THEN 22
+                        ELSE -1
+                    END
+                )
+            </when>
+            
+        </choose>
   AND a.stDeNy = 0
 
 GROUP BY a.staySeq

@@ -39,6 +39,12 @@ public class StayController {
 		
 		return "/user/reservation/ReservationUserList";
 	}
+
+
+	
+	
+	
+	
 	//사용자 숙박예약 리스트 상세
 	@RequestMapping(value="DetailedPageUserForm")
 	public String DetailedPageUserForm(Model model, StayDto stayDto, StayVo vo) {
