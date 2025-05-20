@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import com.a5a5lab.module.xdm.code.CodeController;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import com.a5a5lab.module.common.BaseVo;
+import com.a5a5lab.module.xdm.code.CodeController;
 
 @Controller
 public class apiController {
@@ -29,6 +30,8 @@ public class apiController {
     private final CodeController codeController;
 	  @Autowired
 	  apiService apiservice;
+	  
+	  
 
     apiController(CodeController codeController) {
         this.codeController = codeController;
@@ -65,37 +68,88 @@ public class apiController {
 //	    return "/user/location/LocationRestaurant";
 //	}
 	
+//	@GetMapping("/getRestaurants")
+//	public String getRestaurants(@RequestParam("areaCode") String areaCode,
+//	                             @RequestParam(value = "page", defaultValue = "1") int page,
+//	                             Model model, BaseVo vo) {
+//
+////	    BaseVo vo = new BaseVo();
+//	    vo.setThisPage(page);
+//	    vo.setRowNumToShow(5);
+//	    vo.setPageNumToShow(5);
+//
+//	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode);
+//	    vo.setParamsPaging(totalCount);
+//
+//	    
+//	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
+//	    
+//	    String areaName = getAreaNameByCode(areaCode);
+//
+//	    model.addAttribute("restaurantList", list);
+//	    model.addAttribute("vo", vo);
+//	    model.addAttribute("areaCode", areaCode);
+//	    model.addAttribute("areaName", areaName);
+//	    
+//	    System.out.println(totalCount);
+//	    
+//	    System.out.println("Total Count: " + totalCount);
+//	    System.out.println("Total Pages: " + vo.getTotalPages());
+//	    System.out.println("Start Page: " + vo.getStartPage());
+//	    System.out.println("End Page: " + vo.getEndPage());
+//
+//	    return "/user/location/LocationRestaurant";
+//	}
 	@GetMapping("/getRestaurants")
 	public String getRestaurants(@RequestParam("areaCode") String areaCode,
 	                             @RequestParam(value = "page", defaultValue = "1") int page,
 	                             Model model, BaseVo vo) {
 
-//	    BaseVo vo = new BaseVo();
 	    vo.setThisPage(page);
 	    vo.setRowNumToShow(5);
 	    vo.setPageNumToShow(5);
 
-	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode);
-	    vo.setParamsPaging(totalCount);
-
+	    // 데이터 조회 및 페이징 처리 통합
+	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
 	    
-	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
-
 	    model.addAttribute("restaurantList", list);
 	    model.addAttribute("vo", vo);
 	    model.addAttribute("areaCode", areaCode);
+	    model.addAttribute("areaName", getAreaNameByCode(areaCode));
 	    
-	    System.out.println(totalCount);
-	    
-	    System.out.println("Total Count: " + totalCount);
-	    System.out.println("Total Pages: " + vo.getTotalPages());
-	    System.out.println("Start Page: " + vo.getStartPage());
-	    System.out.println("End Page: " + vo.getEndPage());
-
+	    // 위도 경도 디버깅용
+//	    for (apiDto dto : list) {
+//	        System.out.println("Title: " + dto.getTitle() + ", mapX: " + dto.getMapX() + ", mapY: " + dto.getMapY());
+//	    }
 	    return "/user/location/LocationRestaurant";
 	}
 
+	private String getAreaNameByCode(String areaCode) {
+	    switch (areaCode) {
+	        case "1": return "서울";
+	        case "2": return "인천";
+	        case "3": return "대전";
+	        case "4": return "대구";
+	        case "5": return "광주";
+	        case "6": return "부산";
+	        case "7": return "울산";
+	        case "8": return "세종";
+	        case "31": return "경기";
+	        case "32": return "강원";
+	        case "33": return "충북";
+	        case "34": return "충남";
+	        case "35": return "경북";
+	        case "36": return "경남";
+	        case "37": return "전북";
+	        case "38": return "전남";
+	        case "39": return "제주";
+	        default: return "전국";
+	    }
+	}
+	
+	
 
+	
 	
 	@GetMapping("/user/location/restaurantDetail")
 	public String getRestaurantDetail(@RequestParam("contentId") String contentId, Model model) {
@@ -178,6 +232,8 @@ public class apiController {
 	    }
 	    return "";
 	}
+	
+	
 
 	
 
