@@ -1,6 +1,7 @@
 package com.a5a5lab.module.user.stay;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.xml.crypto.Data;
 
@@ -37,10 +38,12 @@ public class StayVo {
 //	----
 	private Date shQptionDate;
 //	----
-
-	
-	
+	 private List<String> regions;
+	 private String regionName;
+	 private String shRegion;  // ex: "16,17"
 	private String stayAddress;
+	  private String shRating;  // ex: "5,4"
+	  private String shStar;
 //	----
 	
 	
@@ -241,5 +244,42 @@ public class StayVo {
 	public void setStayAddress(String stayAddress) {
 		this.stayAddress = stayAddress;
 	}
+	public void setRegion(String region) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setRegions(List<String> regions) {
+		// TODO Auto-generated method stub
+		
+	}
+	public List<String> getRegions() {
+		return regions;
+	}
+
+	public String getRegionName() {
+		return regionName;
+	}
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
+	}
+	public String getShRegion() {
+		return shRegion;
+	}
+	public void setShRegion(String shRegion) {
+		this.shRegion = shRegion;
+	}
+	public String getShRating() {
+		return shRating;
+	}
+	public void setShRating(String shRating) {
+		this.shRating = shRating;
+	}
+	public String getShStar() {
+		return shStar;
+	}
+	public void setShStar(String shStar) {
+		this.shStar = shStar;
+	}
+
 
 }
