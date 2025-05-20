@@ -140,6 +140,7 @@ LIMIT #{startRnumForMysql}, #{rowNumToShow}
 			a.member_memSeq, <!-- 등록한 멤버 Seq -->
 			a.stDeNy, <!-- 삭제여부 -->
 			a.stayPrice,<!-- 숙박 가격 -->
+			a.stayPersonnel,
 			region.ifcdSeq AS regionCd,
 		    region.ifcdName AS regionName,
 		    active.ifcdSeq AS activeCd,
@@ -254,7 +255,25 @@ LIMIT #{startRnumForMysql}, #{rowNumToShow}
 		ORDER BY seq DESC
 	</select>
 	
-	
+	<update id="update">
+		UPDATE stay set
+			stayName=#{stayName},
+			stayZipCode=#{stayZipCode},
+			stayAddress=#{stayAddress},
+			stayAddressDetail=#{stayAddressDetail},
+			stayLatitude=#{stayLatitude},
+			stayHardness=#{stayHardness},
+			stayIntroMemo=#{stayIntroMemo},
+			modDateTime=#{modDateTime},
+			regionCd=#{regionCd},
+			stayPrice=#{stayPrice},
+			stayPersonnel=#{stayPersonnel}
+		WHERE
+			staySeq=#{staySeq}
+		
+		
+		
+	</update>
 	
 	
 	

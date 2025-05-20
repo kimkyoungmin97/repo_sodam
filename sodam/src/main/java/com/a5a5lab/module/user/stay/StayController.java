@@ -1,13 +1,17 @@
 package com.a5a5lab.module.user.stay;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a5a5lab.module.common.fileuploaded.FileUploadedService;
+import com.a5a5lab.module.user.review.ReviewDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -87,6 +91,23 @@ public class StayController {
 		return "/user/detailedpage/DetailedPageUserForm";
 		
 	}
+	// 숙소예약페이지 리뷰목록페이지네이션 아작스
+		@ResponseBody
+		@RequestMapping(value = "/reviewProc")
+		public Map<String, Object> reviewUdate(StayVo vo, HttpSession httpSession) throws Exception {
+		    
+		    Map<String, Object> returnMap = new HashMap<>();
+		    
+			  System.out.println("getThisPage():" + vo.getThisPage());
+				System.out.println("getTotalRows():" + vo.getTotalRows());
+				System.out.println("getRowNumToShow():" + vo.getRowNumToShow());
+				System.out.println("getTotalPages():" + vo.getTotalPages());
+			    System.out.println("getStartPage():" + vo.getStartPage());
+			    System.out.println("getEndPage():" + vo.getEndPage());
+//				
+				System.out.println("getStartRnumForMysql(): " + vo.getStartRnumForMysql());
+		    return returnMap;
+		}
 
 	
 //	// 호스트 로그인했을때  스테이 리스트 보여주기
@@ -110,7 +131,14 @@ public class StayController {
 	
 	// 호스트 로그인했을때 스테이 등록 폼
 	@RequestMapping(value="StayUserFrom")
-	public String StayUserFrom() {
+	public String StayUserFrom(StayDto stayDto,Model model) {
+		if (stayDto.getStaySeq() == null) {
+//			insert mode
+		} else {
+//			update mode
+			
+			model.addAttribute("item",stayService.stayOne(stayDto));
+		}
 		
 		
 		return "/user/stayfrom/StayUserFrom";
@@ -122,6 +150,12 @@ public class StayController {
 		
 		stayDto.setMember_memSeq((String) httpSession.getAttribute("sessSeqUser"));
 		stayService.insert(stayDto);
+		return "redirect:/StayUserList";
+	}
+	//숙소수정
+	@RequestMapping(value="/StayUpdt")
+	public String StayUpdt(StayDto stayDto, HttpSession httpSession) throws Exception {
+		stayService.update(stayDto);
 		return "redirect:/StayUserList";
 	}
 	

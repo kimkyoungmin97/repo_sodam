@@ -1425,36 +1425,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         return starsHtml;
     }
+	//리뷰보여주는아작스 
+//     function loadReviewList() {
+//         const stayInfoId = $("#stay_staySeq").val();
 
-    function loadReviewList() {
-        const stayInfoId = $("#stay_staySeq").val();
-
-        $.ajax({
-            url: "/reviewList",
-            type: "GET",
-            data: { stay_staySeq: stayInfoId },
-            success: function (reviewList) {
-                reviewContainer.innerHTML = "";
-                reviewList.forEach(function (review) {
-                    const reviewHtml = `
-                        <div class="d-flex border-bottom pb-6 mb-6">
-                            <div class="ms-5">
-                                <h6 class="mb-1">${review.memName}</h6>
-                                <div class="mb-2">
-                                    ${renderStars(review.starScore)}
-                                </div>
-                                <p class="ms-3 text-dark fw-bold">${review.reTitle}</p>
-                                <p>${review.reText}</p>
-                            </div>
-                        </div>`;
-                    reviewContainer.insertAdjacentHTML("afterbegin", reviewHtml);
-                });
-            },
-            error: function (err) {
-                console.error("리뷰 불러오기 실패", err);
-            }
-        });
-    }
+//         $.ajax({
+//             url: "/reviewList",
+//             type: "GET",
+//             data: { stay_staySeq: stayInfoId },
+//             success: function (reviewList) {
+//                 reviewContainer.innerHTML = "";
+//                 reviewList.forEach(function (review) {
+//                     const reviewHtml = `
+//                         <div class="d-flex border-bottom pb-6 mb-6">
+//                             <div class="ms-5">
+//                                 <h6 class="mb-1">${review.memName}</h6>
+//                                 <div class="mb-2">
+//                                     ${renderStars(review.starScore)}
+//                                 </div>
+//                                 <p class="ms-3 text-dark fw-bold">${review.reTitle}</p>
+//                                 <p>${review.reText}</p>
+//                             </div>
+//                         </div>`;
+//                     reviewContainer.insertAdjacentHTML("afterbegin", reviewHtml);
+//                 });
+//             },
+//             error: function (err) {
+//                 console.error("리뷰 불러오기 실패", err);
+//             }
+//         });
+//     }
 
     reviewSaveButton.addEventListener("click", function (e) {
         e.preventDefault();
@@ -1543,11 +1543,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <script type="text/javascript">
     	// 페이지네이션 자바 스크립
-	    let form = document.querySelector("form[name=formList]");
+// 	    let form = document.querySelector("form[name=formList]");
 	 goList = function (thisPage) {
-	     form.action = "/DetailedPageUserForm";
-	     document.querySelector("input[name=thisPage]").value = thisPage;
-	     form.submit();
+		 alert(thisPage);
+		 
+// 	     form.action = "/DetailedPageUserForm";
+// 	     document.querySelector("input[name=thisPage]").value = thisPage;
+// 	     form.submit();
+		  $.ajax({
+	            url: "/reviewProc",
+	            type: "POST",
+	            data:{ "thisPage" : $("#thisPage").val()},
+	            success: function (response) {
+	               
+	            },
+	        });
 	 }  
 
 		
