@@ -151,7 +151,7 @@ public class apiController {
 
 	
 	
-	@GetMapping("/user/location/restaurantDetail")
+	@GetMapping("/restaurantDetail")
 	public String getRestaurantDetail(@RequestParam("contentId") String contentId, Model model) {
 	    try {
 	        String serviceKey = "ypV%2BIc0IdKPrc0ARu5HqM%2B1vQGs5eCO6y8g1AxfMBEKmaltQYGhonU4ivnxsDAwCu6LSbrI1FjCDA8L5s5OkIA%3D%3D";
@@ -198,14 +198,28 @@ public class apiController {
 	        String title = getTagValue("title", element);
 	        String overview = getTagValue("overview", element);
 	        String addr1 = getTagValue("addr1", element);
+	        String addr2 = getTagValue("addr2", element);
 	        String firstImage = getTagValue("firstimage", element);
 	        String contentIdFromApi = getTagValue("contentid", element);
+	        String tel = getTagValue("tel", element);
+	        String telname = getTagValue("telname", element);
+	        String zipcode = getTagValue("zipcode", element);
+	        String homepage = getTagValue("homepage", element);
+	        String mapx = getTagValue("mapx", element);
+	        String mapy = getTagValue("mapy", element);
 	        
 	        model.addAttribute("title", title);
             model.addAttribute("overview", overview);
             model.addAttribute("addr1", addr1);
+            model.addAttribute("addr2", addr2);
             model.addAttribute("firstImage", firstImage);
             model.addAttribute("contentId", contentIdFromApi);
+            model.addAttribute("tel", tel);
+            model.addAttribute("telname", telname);
+            model.addAttribute("zipcode", zipcode);
+            model.addAttribute("homepage", homepage);
+            model.addAttribute("mapx", mapx);
+            model.addAttribute("mapy", mapy);
         } else {
             model.addAttribute("title", "데이터 없음");
             model.addAttribute("overview", "item 태그가 없습니다.");
