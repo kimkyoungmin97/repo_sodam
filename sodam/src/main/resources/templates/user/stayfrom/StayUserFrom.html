@@ -14,27 +14,28 @@
        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">스테이 등록</h2>
  
        <form class="space-y-6" id="formList" method="post" enctype="multipart/form-data">
+       <input type="hidden" id="staySeq" name="staySeq" th:value="${item?.staySeq}">
  
          <!-- 숙박 이름 -->
          <div >
            
            <h4 class="mb-3 h5">숙박 이름</h4>
            
-                  <input type="text" class="form-control" id="stayName" name="stayName" placeholder="숙박 시설 이름" >
+                  <input type="text" class="form-control" id="stayName" name="stayName" th:value="${item?.stayName}" placeholder="숙박 시설 이름" >
                   
          </div>
          <br>
          <div >
             
             <h4 class="mb-3 h5">1박 숙박 비용</h4>
-                   <input type="text" class="form-control" id="stayPrice" name="stayPrice" placeholder="비용 입력" >
+                   <input type="text" class="form-control" id="stayPrice" name="stayPrice"th:value="${item?.stayPrice}"  placeholder="비용 입력" >
                    
           </div>
           <br>
           <div >
             
             <h4 class="mb-3 h5">1박 숙박 정원</h4>
-                   <input type="text" class="form-control" id="stayPersonnel" name="stayPersonnel" placeholder="1박 숙박 정원 정해주세요 (예/5 5명)" >
+                   <input type="text" class="form-control" id="stayPersonnel" name="stayPersonnel" th:value="${item?.stayPersonnel}" placeholder="1박 숙박 정원 정해주세요 (예/5 5명)" >
                    
           </div>
           <br>
@@ -46,12 +47,12 @@
              style="background-color: #FF6F61; color: white; padding: 10px 20px; font-size: 16px; 
            border: none; border-radius: 5px; cursor: pointer; 
            transition: background-color 0.3s ease;"><br><br>
-            <input class="form-control w-40" type="text" id="stayZipCode" name="stayZipCode" placeholder="우편번호"><br>
+            <input class="form-control w-40" type="text" id="stayZipCode" name="stayZipCode" th:value="${item?.stayZipCode}" placeholder="우편번호"><br>
 
-            <input class="form-control" type="text" id="stayAddress" name="stayAddress"  placeholder="주소"><br>
-            <input class="form-control" type="text" id="stayAddressDetail" name="stayAddressDetail" placeholder="상세주소">
-            <input type="hidden" id="stayLatitude" name="stayLatitude">
-            <input type="hidden" id="stayHardness" name="stayHardness">
+            <input class="form-control" type="text" id="stayAddress" name="stayAddress"th:value="${item?.stayAddress}"  placeholder="주소"><br>
+            <input class="form-control" type="text" id="stayAddressDetail" name="stayAddressDetail"th:value="${item?.stayAddressDetail}" placeholder="상세주소">
+            <input type="hidden" id="stayLatitude" name="stayLatitude"th:value="${item?.stayLatitude}">
+            <input type="hidden" id="stayHardness" name="stayHardness"th:value="${item?.stayHardness}" >
             <!-- <input class="form-control" type="text" id="latitude" name="latitude" placeholder="위도">
             <input class="form-control" type="text" id="hardness" name="hardness" placeholder="경도"> -->
 
@@ -65,7 +66,9 @@
          <h4 class="mb-3 h5">주소 지역 선택</h4>
           <div class="grid grid-cols-2 gap-4" th:each="regionList :${@codeService.selectListCachedCode(6)}">
             <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" id="regionCd" name="regionCd" th:value="${regionList.ifcdSeq}"/>
+              <input type="radio" class="accent-blue-500" id="regionCd" name="regionCd" th:value="${regionList.ifcdSeq}" 
+          th:checked="${item.regionCd != null and item.regionCd.toString() == regionList.ifcdSeq}"/>
+             
               <span th:text="${regionList.ifcdName}"></span>
             </label>&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
@@ -112,7 +115,7 @@
          <br>
          <div>
             <h4 class="mb-3 h5">숙소 소개</h4>
-            <textarea rows="4" class="form-control no-resize" id="stayIntroMemo" name="stayIntroMemo" placeholder="시설 및 이용 규칙"  ></textarea>
+            <textarea rows="4" class="form-control no-resize" id="stayIntroMemo" name="stayIntroMemo" th:text="${item?.stayIntroMemo}" placeholder="시설 및 이용 규칙"  ></textarea>
          </div>
          <br>
          <!-- 숙박 이미지 4개 삽입 -->
@@ -121,7 +124,7 @@
          <div>
           
           <h4 class="mb-3 h5">시설 / 서비스</h4>
-          <textarea rows="4" class="form-control no-resize" id="stayServiceMemo" name="stayServiceMemo" placeholder="시설 및 이용 규칙"  ></textarea>
+          <textarea rows="4" class="form-control no-resize" id="stayServiceMemo" name="stayServiceMemo"th:text="${item?.stayServiceMemo}" placeholder="시설 및 이용 규칙"  ></textarea>
                 
                  
          </div>
@@ -130,7 +133,7 @@
          <div>
           
           <h4 class="mb-3 h5">예약 공지</h4>
-          <textarea rows="4" class="form-control no-resize" id="stayNoticeMemo" name="stayNoticeMemo" placeholder="시설 및 이용 규칙"  ></textarea>
+          <textarea rows="4" class="form-control no-resize" id="stayNoticeMemo" name="stayNoticeMemo"th:text="${item?.stayNoticeMemo}" placeholder="시설 및 이용 규칙"  ></textarea>
                 
                  
          </div>
@@ -368,21 +371,32 @@
     
     document.getElementById("btnSave").onclick=function(){
     	let form = document.getElementById("formList");
+    	let staySeq = document.getElementById("staySeq");
     	
+    	if(staySeq.value == "0" || staySeq.value == "") {
+			//insert
+			alert("인서트");
     	// 기존에 존재하는 대표 이미지 인덱스 input 제거
-        const existingInput = document.querySelector('input[name="representativeIndex"]');
-        if (existingInput) existingInput.remove();
+//         const existingInput = document.querySelector('input[name="representativeIndex"]');
+//         if (existingInput) existingInput.remove();
 
-        // 대표 이미지 인덱스 input 추가
-        const representativeInput = document.createElement('input');
-        representativeInput.type = 'hidden';
-        representativeInput.name = 'representativeIndex';
-        representativeInput.value = representativeIndex;
-        form.appendChild(representativeInput);
-    	form.action="/StayInst";
-    	form.submit();
+//         // 대표 이미지 인덱스 input 추가
+//         const representativeInput = document.createElement('input');
+//         representativeInput.type = 'hidden';
+//         representativeInput.name = 'representativeIndex';
+//         representativeInput.value = representativeIndex;
+//         form.appendChild(representativeInput);
+//     	form.action="/StayInst";
+//     	form.submit();
+    	}
+			 else{
+			//update
+			alert("업데이트");
+	 		}
+		
     	
     }
+ 
 </script>
    
 </body>

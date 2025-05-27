@@ -10,11 +10,18 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,6 +30,10 @@ import org.xml.sax.InputSource;
 
 import com.a5a5lab.module.common.BaseVo;
 import com.a5a5lab.module.xdm.code.CodeController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class apiController {
@@ -31,6 +42,7 @@ public class apiController {
 	  @Autowired
 	  apiService apiservice;
 	  
+
 	  
 
     apiController(CodeController codeController) {
@@ -46,6 +58,7 @@ public class apiController {
 	@RequestMapping("/LocationRestaurant")
 	public String redirectToDefaultArea() {
 	    return "redirect:/getRestaurants?areaCode=1";
+
 	}
 	
 //	 @GetMapping("/getRestaurants")
@@ -113,6 +126,7 @@ public class apiController {
 	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
 	    
 	    model.addAttribute("restaurantList", list);
+
 	    model.addAttribute("vo", vo);
 	    model.addAttribute("areaCode", areaCode);
 	    model.addAttribute("areaName", getAreaNameByCode(areaCode));
@@ -123,6 +137,18 @@ public class apiController {
 //	    }
 	    return "/user/location/LocationRestaurant";
 	}
+
+	    // 총 개수 및 페이지 수 
+//	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode); 
+//	    int totalPages = (int) Math.ceil(totalCount / 10.0);
+//
+//	    // 현재 페이지와 총 페이지 수
+//	    model.addAttribute("page", page);
+//	    model.addAttribute("totalPages", totalPages);
+//
+//	    return "user/location/LocationRestaurant";
+//
+//	}
 
 	private String getAreaNameByCode(String areaCode) {
 	    switch (areaCode) {
@@ -146,6 +172,7 @@ public class apiController {
 	        default: return "전국";
 	    }
 	}
+	
 	
 	
 
@@ -235,7 +262,7 @@ public class apiController {
 	        model.addAttribute("firstImage", "");
 	    }    
 
-	    return "/user/location/RestaurantDetail";
+	    return "user/location/RestaurantDetail";
 	}
 
 	private String getTagValue(String tag, Element element) {
@@ -247,6 +274,57 @@ public class apiController {
 	    return "";
 	}
 	
+
+	//카카오
+	//카카오로그인 클릭시 불러오는 메서드
+	@RequestMapping("/kakaoCallback")
+	public String kakaoCallback(@RequestParam("code") String code) throws JsonMappingException, JsonProcessingException {
+		System.out.println("코드 한번 보자" + code);
+		 // 1. access token 요청 준비
+	    RestTemplate restTemplate = new RestTemplate();
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+	    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+	    params.add("grant_type", "authorization_code");
+	    params.add("client_id", "dd6ae05f675628e6a259a81bde3a53cb"); // ★카카오 앱 REST API 키
+	    params.add("redirect_uri", "http://localhost:8080/kakaoCallback"); // ★redirectUri와 일치해야 함
+	    params.add("code", code);
+
+	    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+	    // 2. POST 요청 보내기
+	    ResponseEntity<String> response = restTemplate.postForEntity(
+	            "https://kauth.kakao.com/oauth/token",
+	            request,
+	            String.class
+	    );
+
+	    // 3. 응답 출력
+	    System.out.println("토큰 전체 응답: " + response.getBody());
+	    
+	    //전체응답에서 원하는 값만 출력하기
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    JsonNode jsonNode = objectMapper.readTree(response.getBody());
+
+	    String accessToken = jsonNode.get("access_token").asText();
+	    String idToken = jsonNode.get("id_token").asText();
+	    System.out.println("액세스 토큰: " + accessToken);
+	    System.out.println("아이디 토큰: " + idToken);
+//	    String scope = jsonNode.get("scope").asText();
+//	    System.out.println("scope: " + scope);
+	    
+	    //4. 아이디 토큰으로 사용자 정보 불러오기
+	    
+	    
+	    
+
+	    return "redirect:/indexUser";
+	}
+	
+	
+
 	
 
 	

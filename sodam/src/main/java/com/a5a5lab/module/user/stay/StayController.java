@@ -1,13 +1,17 @@
 package com.a5a5lab.module.user.stay;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a5a5lab.module.common.fileuploaded.FileUploadedService;
+import com.a5a5lab.module.user.review.ReviewDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -23,7 +27,7 @@ public class StayController {
 	@RequestMapping(value="/indexUser")
 	public String indexUser() {
 		
-		return "/user/index/IndexUser";
+		return "user/index/IndexUser";
 	}
 	
 	
@@ -37,8 +41,14 @@ public class StayController {
 		
 		model.addAttribute("vo", vo);
 		
-		return "/user/reservation/ReservationUserList";
+		return "user/reservation/ReservationUserList";
 	}
+
+
+	
+	
+	
+	
 	//사용자 숙박예약 리스트 상세
 	@RequestMapping(value="DetailedPageUserForm")
 	public String DetailedPageUserForm(Model model, StayDto stayDto, StayVo vo) {
@@ -84,9 +94,26 @@ public class StayController {
 		model.addAttribute("vo", vo);
 		
 		
-		return "/user/detailedpage/DetailedPageUserForm";
+		return "user/detailedpage/DetailedPageUserForm";
 		
 	}
+	// 숙소예약페이지 리뷰목록페이지네이션 아작스
+		@ResponseBody
+		@RequestMapping(value = "/reviewProc")
+		public Map<String, Object> reviewUdate(StayVo vo, HttpSession httpSession) throws Exception {
+		    
+		    Map<String, Object> returnMap = new HashMap<>();
+		    
+			  System.out.println("getThisPage():" + vo.getThisPage());
+				System.out.println("getTotalRows():" + vo.getTotalRows());
+				System.out.println("getRowNumToShow():" + vo.getRowNumToShow());
+				System.out.println("getTotalPages():" + vo.getTotalPages());
+			    System.out.println("getStartPage():" + vo.getStartPage());
+			    System.out.println("getEndPage():" + vo.getEndPage());
+//				
+				System.out.println("getStartRnumForMysql(): " + vo.getStartRnumForMysql());
+		    return returnMap;
+		}
 
 	
 //	// 호스트 로그인했을때  스테이 리스트 보여주기
@@ -104,16 +131,23 @@ public class StayController {
 	    vo.setParamsPaging(stayService.selectOneCount(vo));
 	    model.addAttribute("vo", vo);
 
-	    return "/user/staylist/StayUserList";
+	    return "user/staylist/StayUserList";
 	}
 	
 	
 	// 호스트 로그인했을때 스테이 등록 폼
 	@RequestMapping(value="StayUserFrom")
-	public String StayUserFrom() {
+	public String StayUserFrom(StayDto stayDto,Model model) {
+		if (stayDto.getStaySeq() == null) {
+//			insert mode
+		} else {
+//			update mode
+			
+			model.addAttribute("item",stayService.stayOne(stayDto));
+		}
 		
 		
-		return "/user/stayfrom/StayUserFrom";
+		return "user/stayfrom/StayUserFrom";
 	}
 	
 	//숙소등록
@@ -122,6 +156,12 @@ public class StayController {
 		
 		stayDto.setMember_memSeq((String) httpSession.getAttribute("sessSeqUser"));
 		stayService.insert(stayDto);
+		return "redirect:/StayUserList";
+	}
+	//숙소수정
+	@RequestMapping(value="/StayUpdt")
+	public String StayUpdt(StayDto stayDto, HttpSession httpSession) throws Exception {
+		stayService.update(stayDto);
 		return "redirect:/StayUserList";
 	}
 	

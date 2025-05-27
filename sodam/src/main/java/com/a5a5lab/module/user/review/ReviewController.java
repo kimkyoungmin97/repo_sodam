@@ -51,7 +51,7 @@ public class ReviewController {
         // 모델에 리스트 담아서 뷰로 전달
         model.addAttribute("list", reviewList);
 		
-		return "/user/review/WrittenReviewUser";
+		return "user/review/WrittenReviewUser";
 	}
 	
 	//리뷰 업데이트 삭제

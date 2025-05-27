@@ -59,6 +59,21 @@ public class StayService extends FileUploadedService {
     			, amazonS3Client);
 		return 1;
 	}
+	//숙소수정
+	public int update(StayDto stayDto) throws Exception{
+		stayDao.update(stayDto);
+		uploadFilesToS3(
+				stayDto.getUploadImg1()
+    			, stayDto
+    			, "stayUploaded"
+    			, 1
+    			, stayDto.getRepresentativeIndex()
+    			, 4
+    			, stayDto.getStaySeq()
+    			, fileUploadedDao
+    			, amazonS3Client);
+		return 1;
+	}
 	
 	
 	//숙소 리뷰 리스트 가져오기

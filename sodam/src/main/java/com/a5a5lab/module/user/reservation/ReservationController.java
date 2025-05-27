@@ -29,7 +29,7 @@ public class ReservationController {
 	@RequestMapping(value="/MyReservationsUser")
 	public String MyReservationsUser() {
 		
-		return "/user/myreservations/MyReservationsUser";
+		return "user/myreservations/MyReservationsUser";
 	}
 	
 	
@@ -37,7 +37,7 @@ public class ReservationController {
 	@RequestMapping(value="/StayReservationUserList")
 	public String StayReservationUserList() {
 		
-		return "/user/stayreservation/StayReservationUserList";
+		return "user/stayreservation/StayReservationUserList";
 	}
 	
 	//숙소 예약 정보 아작스 담기
@@ -105,7 +105,7 @@ public class ReservationController {
 	    model.addAttribute("item", stayService.stayOne(stayDto));
 	
 	    
-	    return "/user/pay/PayUserForm"; // 실제 JSP 경로
+	    return "user/pay/PayUserForm"; // 실제 JSP 경로
 	}
 
 	
