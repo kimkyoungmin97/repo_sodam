@@ -66,8 +66,8 @@
          <h4 class="mb-3 h5">주소 지역 선택</h4>
           <div class="grid grid-cols-2 gap-4" th:each="regionList :${@codeService.selectListCachedCode(6)}">
             <label class="flex items-center space-x-2">
-              <input type="checkbox" class="accent-blue-500" id="regionCd" name="regionCd" th:value="${regionList.ifcdSeq}" 
-          th:checked="${item?.regionCd != null}"/>
+              <input type="radio" class="accent-blue-500" id="regionCd" name="regionCd" th:value="${regionList.ifcdSeq}" 
+          th:checked="${item.regionCd != null and item.regionCd.toString() == regionList.ifcdSeq}"/>
              
               <span th:text="${regionList.ifcdName}"></span>
             </label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -396,6 +396,7 @@
 		
     	
     }
+ 
 </script>
    
 </body>

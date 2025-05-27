@@ -19,7 +19,7 @@ public class InfoController {
 		
 		model.addAttribute("list",infoService.selectList(Dto));
 		
-		return "/user/info/infoList";
+		return "user/info/infoList";
 	
 	}
 	
@@ -35,7 +35,7 @@ public class InfoController {
 		}
 		
 		
-		return "/user/info/infoView";
+		return "user/info/infoView";
 	
 	}
 	
@@ -50,7 +50,7 @@ public class InfoController {
 		
 		model.addAttribute("list",infoService.selectList(Dto));
 		
-		return "/user/info/infoUser";
+		return "user/info/infoUser";
 		
 	}
 	
@@ -59,7 +59,7 @@ public class InfoController {
 		
 		model.addAttribute("item",infoService.selectOne(Dto));
 		
-		return "/user/info/infoUserView";
+		return "user/info/infoUserView";
 		
 	}
 	

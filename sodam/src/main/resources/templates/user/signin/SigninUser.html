@@ -102,7 +102,7 @@
                 </div>
                 <!-- btn -->
                 <div class="col-12 d-grid"><button type="button" class="btn btn-dark" id="buttonSignIn">로그인</button></div>
-                <div class="col-12 d-grid"><button type="submit" class="btn btn-warning"> <img src="/user/template/assets/images/png/kakao-talk_2111496.png"  style="height: 20px; margin-right: 8px;">카카오 로그인</button></div>
+                <div class="col-12 d-grid"><button type="button" class="btn btn-warning" id="btnKakao"> <img src="/user/template/assets/images/png/kakao-talk_2111496.png"  style="height: 20px; margin-right: 8px;">카카오 로그인</button></div>
                 <!-- link -->
                 <div>
                   계정이 없으신가요 
@@ -324,6 +324,18 @@
 			}
 		});
 	}
+	
+</script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+  Kakao.init('76e67f4c96cf4197b12d3891557023c9'); // 카카오 앱의 JavaScript 키
+</script>
+<script>
+  document.getElementById('btnKakao').addEventListener('click', function () {
+    Kakao.Auth.authorize({
+      redirectUri: 'http://localhost:8080/kakaoCallback' // 백엔드 콜백 주소
+    });
+  });
 </script>
   
   

@@ -27,7 +27,7 @@ public class StayController {
 	@RequestMapping(value="/indexUser")
 	public String indexUser() {
 		
-		return "/user/index/IndexUser";
+		return "user/index/IndexUser";
 	}
 	
 	
@@ -41,7 +41,7 @@ public class StayController {
 		
 		model.addAttribute("vo", vo);
 		
-		return "/user/reservation/ReservationUserList";
+		return "user/reservation/ReservationUserList";
 	}
 
 
@@ -94,7 +94,7 @@ public class StayController {
 		model.addAttribute("vo", vo);
 		
 		
-		return "/user/detailedpage/DetailedPageUserForm";
+		return "user/detailedpage/DetailedPageUserForm";
 		
 	}
 	// 숙소예약페이지 리뷰목록페이지네이션 아작스
@@ -131,7 +131,7 @@ public class StayController {
 	    vo.setParamsPaging(stayService.selectOneCount(vo));
 	    model.addAttribute("vo", vo);
 
-	    return "/user/staylist/StayUserList";
+	    return "user/staylist/StayUserList";
 	}
 	
 	
@@ -147,7 +147,7 @@ public class StayController {
 		}
 		
 		
-		return "/user/stayfrom/StayUserFrom";
+		return "user/stayfrom/StayUserFrom";
 	}
 	
 	//숙소등록

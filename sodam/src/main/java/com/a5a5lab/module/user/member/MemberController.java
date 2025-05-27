@@ -5,19 +5,17 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-
-
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.a5a5lab.module.xdm.code.CodeController;
-import jakarta.servlet.http.HttpSession;
 
 import com.a5a5lab.module.common.BaseVo;
+import com.a5a5lab.module.xdm.code.CodeController;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -53,8 +51,9 @@ public class MemberController {
 	//로그인화면 보여주기
 	@RequestMapping(value="/SigninUser")
 	public String SigninUser () {
-		return "/user/signin/SigninUser";
+		return "user/signin/SigninUser";
 	}
+
 	
 	
 	//사용자 로그인화면 구현
@@ -121,7 +120,7 @@ public class MemberController {
 	//admin 로그인화면 보여주기
 	@RequestMapping(value="/sodam/xdm/SigninXdm")
 	public String SigininXdm() {
-		return"/xdm/signin/SigninXdm";
+		return"xdm/signin/SigninXdm";
 	}
 	//admin 로그인화면 아작스
 	@ResponseBody
@@ -152,9 +151,10 @@ public class MemberController {
 	
 	//회원가입 유형 선택 보여주기
 	@RequestMapping(value="/SignupUserSelect")
-	public String SignupUserSelect() {
+	public String SignupUserSelect(@RequestParam("code") String code) {
+		System.out.println("코드 한번 보자" + code);
 		
-		return "/user/signup/SignupUserSelect";
+		return "user/signup/SignupUserSelect";
 	}
 	
 	
@@ -162,7 +162,7 @@ public class MemberController {
 	@RequestMapping(value="/SignupUserForm")
 	public String SignupUserForm(MemberDto Dto,Model model) {
 		model.addAttribute("item", Dto);
-		return "/user/signup/SignupUserForm";
+		return "user/signup/SignupUserForm";
 	}
 		
 
@@ -183,20 +183,20 @@ public class MemberController {
 
 	    
 	    model.addAttribute("item", memberService.selectId(Dto));
-		return "/user/mysetting/MySettingUserForm";
+		return "user/mysetting/MySettingUserForm";
 	}
 	
 	//My페이지 비밀번호 변경
 	@RequestMapping(value="/MyPasswordUserForm")
 	public String MyPasswordUserForm() {
 		
-		return "/user/mypassword/MyPasswordUserForm";
+		return "user/mypassword/MyPasswordUserForm";
 	}
 	
 	//My페이지 회원 탈퇴 페이지
 	@RequestMapping(value="MySecessionUser")
 	public String MySecessionUser() {
-		return"/user/mysecession/MySecessionUser";
+		return"user/mysecession/MySecessionUser";
 	}
 	
 
