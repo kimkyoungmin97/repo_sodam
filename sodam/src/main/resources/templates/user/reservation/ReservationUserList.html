@@ -230,11 +230,11 @@
                         <div class="mb-8" id="map" style="width: 100%; height: 300px;"></div>
 
 						<!-- 마커용 데이터는 JS에서 사용할 수 있도록 hidden 요소나 dataset에 저장 -->
-						<div class="markerData" th:each="list : ${list}"
-						     th:attr="data-lat=${list.stayLatitude}, 
-						              data-lng=${list.stayHardness},
-						              data-url=@{/DetailedPageUserForm(staySeq=${list.staySeq})}">
-						</div>
+					<div class="markerData" th:each="list1 : ${list1}"
+					     th:attr="data-lat=${list1.stayLatitude}, 
+					              data-lng=${list1.stayHardness},
+					              data-url=@{/DetailedPageUserForm(staySeq=${list1.staySeq})}">
+					</div>
                      </div>
                   </div>
                </aside>

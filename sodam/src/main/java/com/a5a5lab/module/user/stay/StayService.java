@@ -26,6 +26,11 @@ public class StayService extends FileUploadedService {
 		return stayDao.stayList(vo);
 	}
 	
+	//사용자 숙박 정보 리스트 보여주기
+	public List<StayDto> stayList1(){
+		return stayDao.stayList1();
+	}
+	
 	//페이지 네이션
 	public int selectOneCount(StayVo vo) {
 		return stayDao.selectOneCount(vo);

@@ -11,6 +11,8 @@ public interface StayDao {
 	// 사용자 숙소 정보 리스트
 	public List<StayDto> stayList(StayVo vo);
 	
+	public List<StayDto> stayList1();
+	
 	//페이지네이션
 	public int selectOneCount(StayVo vo);
 	//리뷰페이지네이션
