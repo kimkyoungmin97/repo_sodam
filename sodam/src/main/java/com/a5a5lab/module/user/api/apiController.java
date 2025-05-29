@@ -145,7 +145,7 @@ public class apiController {
 	                try {
 	                    weather.setDate(sdf.parse(weather.getDateString()));
 	                } catch (ParseException e) {
-	                    e.printStackTrace(); // 예외 처리 필요시 로그 또는 에러 처리
+	                    e.printStackTrace();
 	                }
 	            }
 

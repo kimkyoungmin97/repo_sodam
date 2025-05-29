@@ -1,10 +1,13 @@
 package com.a5a5lab.module.user.api;
 
-import java.util.Date;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,21 +47,28 @@ public class WeatherService {
 
             for (int i = 0; i < list.length(); i++) {
                 JSONObject item = list.getJSONObject(i);
-                String dtTxt = item.getString("dt_txt"); // "2024-06-01 12:00:00"
-                String date = dtTxt.split(" ")[0];
+                String dtTxt = item.getString("dt_txt"); // UTC: "2024-06-01 12:00:00"
 
-                if (!dateToWeather.containsKey(date) && dtTxt.contains("12:00:00")) {
+                // 1. UTC -> KST 변환
+                LocalDateTime utcDateTime = LocalDateTime.parse(dtTxt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                ZonedDateTime kstDateTime = utcDateTime.atZone(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of("Asia/Seoul"));
+
+                String kstDate = kstDateTime.toLocalDate().toString(); // 변환된 날짜: yyyy-MM-dd
+                String kstHour = String.format("%02d", kstDateTime.getHour()); // 시각: HH
+
+                // 2. 정오(KST 12:00) 기준 예보만 필터링
+                if (!dateToWeather.containsKey(kstDate) && "12".equals(kstHour)) {
                     JSONObject main = item.getJSONObject("main");
                     JSONArray weatherArr = item.getJSONArray("weather");
                     JSONObject weatherObj = weatherArr.getJSONObject(0);
 
                     WeatherDto dto = new WeatherDto();
-                    dto.setDate(date);
+                    dto.setDateString(kstDate); // 컨트롤러에서 SimpleDateFormat으로 변환
                     dto.setTemperature(main.getDouble("temp"));
-                    dto.setWeatherIcon(weatherObj.getString("icon")); // ex: 10d
+                    dto.setWeatherIcon(weatherObj.getString("icon"));
                     dto.setDescription(weatherObj.getString("description"));
 
-                    dateToWeather.put(date, dto);
+                    dateToWeather.put(kstDate, dto);
                 }
             }
 
