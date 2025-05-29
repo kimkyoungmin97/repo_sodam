@@ -231,7 +231,7 @@
 							                        <div class="position-absolute top-0">
 							                           <span class="badge bg-danger">Hot</span>
 							                        </div>
-							                        <a href="#!">
+							                        <a th:href="@{restaurantDetail(contentId=${item.contentId})}">
 							                           <img th:src="${item.imageUrl}" alt="맛집 이미지" class="mb-3 img-fluid" loading="lazy" />
 							                        </a>
 							                     </div>
@@ -251,13 +251,20 @@
 							
 							                     <div class="mt-6">
 							                        
-							                       <div class="mt-2" >
-													   <button type="button" class="btn btn-primary"
-													                              th:onclick="|showMap([[${item.mapY}]], [[${item.mapX}]])|">
-													                              <i class="bi bi-geo-alt-fill me-2"></i>
-													                              지도보기
-													                           </button>
-													</div>
+<div class="mt-4 d-flex gap-3">
+  <!-- 지도보기 버튼 (Outline 스타일) -->
+  <button type="button" class="btn btn-outline-primary d-flex align-items-center"
+          th:onclick="|showMap([[${item.mapY}]], [[${item.mapX}]])|">
+    <i class="bi bi-geo-alt-fill me-2"></i>
+    지도보기
+  </button>
+
+  <!-- 상세 페이지 버튼 (Primary 스타일) -->
+  <a class="btn btn-primary fw-semibold px-4"
+     th:href="@{restaurantDetail(contentId=${item.contentId})}">
+    상세 페이지
+  </a>
+</div>
 
 							                     </div>
 							                  </div>
