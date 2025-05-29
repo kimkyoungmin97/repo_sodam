@@ -1,26 +1,1491 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${title}">맛집 상세정보</title>
-</head>
-<body>
-    <h2 th:text="${title}">음식점 이름</h2>
-<p><strong>주소:</strong> <span th:text="${addr1}">주소 없음</span></p>
-<div>
-    <th:block th:if="${firstImage}">
-        <img th:src="${firstImage}" alt="음식점 이미지" width="300"/>
-    </th:block>
-    <th:block th:unless="${firstImage}">
-        <p>이미지가 없습니다.</p>
-    </th:block>
-</div>
-<div>
-    <h3>소개</h3>
-    <p th:utext="${overview}">소개 내용 없음</p>
-</div>
+ <!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-    
-    
+<div th:replace="~{user/include/head :: head}"></div>
+
+<!-- <input type="hidden" id="staySeq" name="staySeq"  /> -->
+<!-- <!-- 	<input type="hidden" id="stay_staySeq" name="stay_staySeq" th:value="${item.staySeq}"> --> -->
+<!-- <input type="hidden" id="stayPrice" name="stayPrice"/>  -->
+
+
+
+
+
+	<!-- Shop Cart -->
+
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+		<div class="offcanvas-header border-bottom">
+			<div class="text-start">
+				<h5 id="offcanvasRightLabel" class="mb-0 fs-4">Shop Cart</h5>
+				<small>Location in 382480</small>
+			</div>
+			<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div>
+				<!-- alert -->
+				<div class="alert alert-danger p-2" role="alert">
+					You’ve got FREE delivery. Start
+					<a href="#!" class="alert-link">checkout now!</a>
+				</div>
+				<ul class="list-group list-group-flush">
+					<!-- list group -->
+					<li class="list-group-item py-3 ps-0 border-top">
+						<!-- row -->
+						<div class="row align-items-center">
+							<div class="col-6 col-md-6 col-lg-7">
+								<div class="d-flex">
+									<img src="/user/template/assets/images/products/product-img-1.jpg" alt="Ecommerce"
+										class="icon-shape icon-xxl" />
+									<div class="ms-3">
+										<!-- title -->
+										<a href="/user/template/pages/shop-single.html" class="text-inherit">
+											<h6 class="mb-0">Haldiram's Sev Bhujia</h6>
+										</a>
+										<span><small class="text-muted">.98 / lb</small></span>
+										<!-- text -->
+										<div class="mt-2 small lh-1">
+											<a href="#!" class="text-decoration-none text-inherit">
+												<span class="me-1 align-text-bottom">
+													<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+														viewBox="0 0 24 24" fill="none" stroke="currentColor"
+														stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-trash-2 text-success">
+														<polyline points="3 6 5 6 21 6"></polyline>
+														<path
+															d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+														</path>
+														<line x1="10" y1="11" x2="10" y2="17"></line>
+														<line x1="14" y1="11" x2="14" y2="17"></line>
+													</svg>
+												</span>
+												<span class="text-muted">Remove</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- input group -->
+							<div class="col-4 col-md-3 col-lg-3">
+								<!-- input -->
+								<!-- input -->
+								<div class="input-group input-spinner">
+									<input type="button" value="-" class="button-minus btn btn-sm"
+										data-field="quantity" />
+									<input type="number" step="1" max="10" value="1" name="quantity"
+										class="quantity-field form-control-sm form-input" />
+									<input type="button" value="+" class="button-plus btn btn-sm"
+										data-field="quantity" />
+								</div>
+							</div>
+							<!-- price -->
+							<div class="col-2 text-lg-end text-start text-md-end col-md-2">
+								<span class="fw-bold">$5.00</span>
+							</div>
+						</div>
+					</li>
+					<!-- list group -->
+					<li class="list-group-item py-3 ps-0">
+						<!-- row -->
+						<div class="row align-items-center">
+							<div class="col-6 col-md-6 col-lg-7">
+								<div class="d-flex">
+									<img src="/user/template/assets/images/products/product-img-2.jpg" alt="Ecommerce"
+										class="icon-shape icon-xxl" />
+									<div class="ms-3">
+										<a href="/user/template/pages/shop-single.html" class="text-inherit">
+											<h6 class="mb-0">NutriChoice Digestive</h6>
+										</a>
+										<span><small class="text-muted">250g</small></span>
+										<!-- text -->
+										<div class="mt-2 small lh-1">
+											<a href="#!" class="text-decoration-none text-inherit">
+												<span class="me-1 align-text-bottom">
+													<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+														viewBox="0 0 24 24" fill="none" stroke="currentColor"
+														stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-trash-2 text-success">
+														<polyline points="3 6 5 6 21 6"></polyline>
+														<path
+															d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+														</path>
+														<line x1="10" y1="11" x2="10" y2="17"></line>
+														<line x1="14" y1="11" x2="14" y2="17"></line>
+													</svg>
+												</span>
+												<span class="text-muted">Remove</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- input group -->
+							<div class="col-4 col-md-3 col-lg-3">
+								<!-- input -->
+								<!-- input -->
+								<div class="input-group input-spinner">
+									<input type="button" value="-" class="button-minus btn btn-sm"
+										data-field="quantity" />
+									<input type="number" step="1" max="10" value="1" name="quantity"
+										class="quantity-field form-control-sm form-input" />
+									<input type="button" value="+" class="button-plus btn btn-sm"
+										data-field="quantity" />
+								</div>
+							</div>
+							<!-- price -->
+							<div class="col-2 text-lg-end text-start text-md-end col-md-2">
+								<span class="fw-bold text-danger">$20.00</span>
+								<div class="text-decoration-line-through text-muted small">$26.00</div>
+							</div>
+						</div>
+					</li>
+					<!-- list group -->
+					<li class="list-group-item py-3 ps-0">
+						<!-- row -->
+						<div class="row align-items-center">
+							<div class="col-6 col-md-6 col-lg-7">
+								<div class="d-flex">
+									<img src="/user/template/assets/images/products/product-img-3.jpg" alt="Ecommerce"
+										class="icon-shape icon-xxl" />
+									<div class="ms-3">
+										<!-- title -->
+										<a href="/user/template/pages/shop-single.html" class="text-inherit">
+											<h6 class="mb-0">Cadbury 5 Star Chocolate</h6>
+										</a>
+										<span><small class="text-muted">1 kg</small></span>
+										<!-- text -->
+										<div class="mt-2 small lh-1">
+											<a href="#!" class="text-decoration-none text-inherit">
+												<span class="me-1 align-text-bottom">
+													<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+														viewBox="0 0 24 24" fill="none" stroke="currentColor"
+														stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-trash-2 text-success">
+														<polyline points="3 6 5 6 21 6"></polyline>
+														<path
+															d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+														</path>
+														<line x1="10" y1="11" x2="10" y2="17"></line>
+														<line x1="14" y1="11" x2="14" y2="17"></line>
+													</svg>
+												</span>
+												<span class="text-muted">Remove</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- input group -->
+							<div class="col-4 col-md-3 col-lg-3">
+								<!-- input -->
+								<!-- input -->
+								<div class="input-group input-spinner">
+									<input type="button" value="-" class="button-minus btn btn-sm"
+										data-field="quantity" />
+									<input type="number" step="1" max="10" value="1" name="quantity"
+										class="quantity-field form-control-sm form-input" />
+									<input type="button" value="+" class="button-plus btn btn-sm"
+										data-field="quantity" />
+								</div>
+							</div>
+							<!-- price -->
+							<div class="col-2 text-lg-end text-start text-md-end col-md-2">
+								<span class="fw-bold">$15.00</span>
+								<div class="text-decoration-line-through text-muted small">$20.00</div>
+							</div>
+						</div>
+					</li>
+					<!-- list group -->
+					<li class="list-group-item py-3 ps-0">
+						<!-- row -->
+						<div class="row align-items-center">
+							<div class="col-6 col-md-6 col-lg-7">
+								<div class="d-flex">
+									<img src="/user/template/assets/images/products/product-img-4.jpg" alt="Ecommerce"
+										class="icon-shape icon-xxl" />
+									<div class="ms-3">
+										<!-- title -->
+										<!-- title -->
+										<a href="/user/template/pages/shop-single.html" class="text-inherit">
+											<h6 class="mb-0">Onion Flavour Potato</h6>
+										</a>
+										<span><small class="text-muted">250g</small></span>
+										<!-- text -->
+										<div class="mt-2 small lh-1">
+											<a href="#!" class="text-decoration-none text-inherit">
+												<span class="me-1 align-text-bottom">
+													<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+														viewBox="0 0 24 24" fill="none" stroke="currentColor"
+														stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-trash-2 text-success">
+														<polyline points="3 6 5 6 21 6"></polyline>
+														<path
+															d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+														</path>
+														<line x1="10" y1="11" x2="10" y2="17"></line>
+														<line x1="14" y1="11" x2="14" y2="17"></line>
+													</svg>
+												</span>
+												<span class="text-muted">Remove</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- input group -->
+							<div class="col-4 col-md-3 col-lg-3">
+								<!-- input -->
+								<!-- input -->
+								<div class="input-group input-spinner">
+									<input type="button" value="-" class="button-minus btn btn-sm"
+										data-field="quantity" />
+									<input type="number" step="1" max="10" value="1" name="quantity"
+										class="quantity-field form-control-sm form-input" />
+									<input type="button" value="+" class="button-plus btn btn-sm"
+										data-field="quantity" />
+								</div>
+							</div>
+							<!-- price -->
+							<div class="col-2 text-lg-end text-start text-md-end col-md-2">
+								<span class="fw-bold">$15.00</span>
+								<div class="text-decoration-line-through text-muted small">$20.00</div>
+							</div>
+						</div>
+					</li>
+					<!-- list group -->
+					<li class="list-group-item py-3 ps-0 border-bottom">
+						<!-- row -->
+						<div class="row align-items-center">
+							<div class="col-6 col-md-6 col-lg-7">
+								<div class="d-flex">
+									<img src="/user/template/assets/images/products/product-img-5.jpg" alt="Ecommerce"
+										class="icon-shape icon-xxl" />
+									<div class="ms-3">
+										<!-- title -->
+										<a href="/user/template/pages/shop-single.html" class="text-inherit">
+											<h6 class="mb-0">Salted Instant Popcorn</h6>
+										</a>
+										<span><small class="text-muted">100g</small></span>
+										<!-- text -->
+										<div class="mt-2 small lh-1">
+											<a href="#!" class="text-decoration-none text-inherit">
+												<span class="me-1 align-text-bottom">
+													<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+														viewBox="0 0 24 24" fill="none" stroke="currentColor"
+														stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+														class="feather feather-trash-2 text-success">
+														<polyline points="3 6 5 6 21 6"></polyline>
+														<path
+															d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+														</path>
+														<line x1="10" y1="11" x2="10" y2="17"></line>
+														<line x1="14" y1="11" x2="14" y2="17"></line>
+													</svg>
+												</span>
+												<span class="text-muted">Remove</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- input group -->
+							<div class="col-4 col-md-3 col-lg-3">
+								<!-- input -->
+								<!-- input -->
+								<div class="input-group input-spinner">
+									<input type="button" value="-" class="button-minus btn btn-sm"
+										data-field="quantity" />
+									<input type="number" step="1" max="10" value="1" name="quantity"
+										class="quantity-field form-control-sm form-input" />
+									<input type="button" value="+" class="button-plus btn btn-sm"
+										data-field="quantity" />
+								</div>
+							</div>
+							<!-- price -->
+							<div class="col-2 text-lg-end text-start text-md-end col-md-2">
+								<span class="fw-bold">$15.00</span>
+								<div class="text-decoration-line-through text-muted small">$25.00</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<!-- btn -->
+				<div class="d-flex justify-content-between mt-4">
+					<a href="#!" class="btn btn-primary">Continue Shopping</a>
+					<a href="#!" class="btn btn-dark">Update Cart</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body p-6">
+					<div class="d-flex justify-content-between align-items-start">
+						<div>
+							<h5 class="mb-1" id="locationModalLabel">Choose your Delivery Location</h5>
+							<p class="mb-0 small">Enter your address and we will specify the offer you area.</p>
+						</div>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="my-5">
+						<input type="search" class="form-control" placeholder="Search your area" />
+					</div>
+					<div class="d-flex justify-content-between align-items-center mb-2">
+						<h6 class="mb-0">Select Location</h6>
+						<a href="#" class="btn btn-outline-gray-400 text-muted btn-sm">Clear All</a>
+					</div>
+					<div>
+						<div data-simplebar style="height: 300px">
+							<div class="list-group list-group-flush">
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action active">
+									<span>Alabama</span>
+									<span>Min:$20</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>Alaska</span>
+									<span>Min:$30</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>Arizona</span>
+									<span>Min:$50</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>California</span>
+									<span>Min:$29</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>Colorado</span>
+									<span>Min:$80</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>Florida</span>
+									<span>Min:$90</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>Arizona</span>
+									<span>Min:$50</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>California</span>
+									<span>Min:$29</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>Colorado</span>
+									<span>Min:$80</span>
+								</a>
+								<a href="#"
+									class="list-group-item d-flex justify-content-between align-items-center px-2 py-3 list-group-item-action">
+									<span>Florida</span>
+									<span>Min:$90</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/user/template/assets/js/vendors/validation.js"></script>
+	<main>
+		
+<section class="mt-5">
+  <div class="container">
+    <div class="row align-items-start">
+      <!-- 이미지 영역 -->
+      <div class="col-md-6 mb-4">
+        <div class="product" id="product">
+          <th:block th:if="${firstImage}">
+            <img th:src="${firstImage}" alt="맛집 사진" class="img-fluid rounded shadow-sm mx-auto d-block" style="max-height: 400px; object-fit: cover;" />
+          </th:block>
+        </div>
+        <!-- 썸네일 (추후 확장용) -->
+        <div class="product-tools mt-3">
+          <div class="thumbnails row g-2" id="productThumbnails">
+            <div class="col-3">
+              <div class="thumbnails-img">
+                <img alt="" class="img-fluid rounded" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 상세 정보 영역 -->
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-3" th:text="${title}">가게 이름</h2>
+        <hr />
+
+        <table class="table table-borderless">
+          <tbody>
+            <tr th:if="${zipcode != null and !zipcode.isEmpty()}">
+              <th class="text-muted" style="width: 120px;">우편번호</th>
+              <td th:text="${zipcode}"></td>
+            </tr>
+            <tr th:if="${homepage != null and !homepage.isEmpty()}">
+              <th class="text-muted">홈페이지</th>
+              <td><a th:href="${homepage}" th:text="${homepage}" target="_blank" class="text-decoration-none text-primary"></a></td>
+            </tr>
+            <tr th:if="${telname != null and !telname.isEmpty()}">
+              <th class="text-muted">전화명</th>
+              <td th:text="${telname}"></td>
+            </tr>
+            <tr th:if="${tel != null and !tel.isEmpty()}">
+              <th class="text-muted">전화번호</th>
+              <td th:text="${tel}"></td>
+            </tr>
+            <tr th:if="${addr1 != null and !addr1.isEmpty()}">
+              <th class="text-muted">주소</th>
+              <td th:text="${addr1}"></td>
+            </tr>
+            <tr th:if="${addr2 != null and !addr2.isEmpty()}">
+              <th class="text-muted">상세주소</th>
+              <td th:text="${addr2}"></td>
+            </tr>
+            <tr th:if="${mapx != null and !mapx.isEmpty()}" style="display: none;">
+              <th>위도</th>
+              <td id="mapx" th:text="${mapx}"></td>
+            </tr>
+            <tr th:if="${mapy != null and !mapy.isEmpty()}" style="display: none;">
+              <th>경도</th>
+              <td id="mapy" th:text="${mapy}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+		<!-- 성공 모달 -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">리뷰 등록 완료</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        리뷰가 성공적으로 저장되었습니다!
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+		<section class="mt-lg-14 mt-8">
+		
+			<div class="container">
+			<div id="map-data"
+         th:attr="data-mapx=${mapx}, data-mapy=${mapy}">
+    </div>
+					<div id="map" style="width:100%;height:400px;"></div>
+					
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="nav nav-pills nav-lb-tab" id="myTab" role="tablist">
+							<!-- nav item -->
+							<li class="nav-item" role="presentation">
+								<!-- btn -->
+								<button class="nav-link active" id="product-tab" data-bs-toggle="tab"
+									data-bs-target="#product-tab-pane" type="button" role="tab"
+									aria-controls="product-tab-pane" aria-selected="true">
+									맛집 소개
+								</button>
+							</li>
+							<!-- nav item -->
+							<!-- <li class="nav-item" role="presentation">  
+								btn
+								<button class="nav-link" id="details-tab" data-bs-toggle="tab"
+									data-bs-target="#details-tab-pane" type="button" role="tab"
+									aria-controls="details-tab-pane" aria-selected="false">
+									시설/서비스
+								</button>
+							</li>
+							
+							nav item
+							
+							nav item
+							<li class="nav-item" role="presentation">
+								btn
+								<button class="nav-link" id="sellerInfo-tab" data-bs-toggle="tab"
+									data-bs-target="#sellerInfo-tab-pane" type="button" role="tab"
+									aria-controls="sellerInfo-tab-pane" aria-selected="false">
+									예약 공지
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								btn
+								<button class="nav-link" id="wleh-tab" data-bs-toggle="tab"
+									data-bs-target="#wleh-tab-pane" type="button" role="tab"
+									aria-controls="wleh-tab-pane" aria-selected="false">
+									지도
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								btn
+								<button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
+									data-bs-target="#reviews-tab-pane" type="button" role="tab"
+									aria-controls="reviews-tab-pane" aria-selected="false">
+									리뷰
+								</button>
+							</li> -->
+						</ul>
+						<!-- tab content -->
+						<div class="tab-content" id="myTabContent">
+							<!-- tab pane -->
+							<div class="tab-pane fade show active" id="product-tab-pane" role="tabpanel"
+								aria-labelledby="product-tab" tabindex="0">
+								<div class="my-8">
+									<div class="mb-5">
+										<!-- text -->
+										<h4 class="mb-1"></h4>
+										<p class="mb-0" th:utext="${overview}">
+										</p>
+									</div>
+									
+								</div>
+							</div>
+							<!-- tab pane -->
+							<div class="tab-pane fade" id="details-tab-pane" role="tabpanel"
+								aria-labelledby="details-tab" tabindex="0">
+								<div class="my-8">
+									<div class="mb-5">
+										<!-- text -->
+										<h4 class="mb-1">편의시설 소개</h4>
+										<p class="mb-0" >
+										</p>
+									</div>
+									
+									
+								</div>
+							</div>
+							<!-- tab pane -->
+							<div class="tab-pane fade" id="sellerInfo-tab-pane" role="tabpanel"
+								aria-labelledby="sellerInfo-tab" tabindex="0">
+								<div class="my-8">
+									<div class="mb-5">
+										<!-- text -->
+										<h4 class="mb-1">예약 공지</h4>
+										<p class="mb-0" >
+										</p>
+									</div>
+									
+									
+								</div>
+							
+							
+							</div>
+							<!-- tab pane -->
+							<!-- 지도 탭 -->
+<!-- 								<div class="tab-pane fade" id="wleh-tab-pane" role="tabpanel" aria-labelledby="wleh-tab-pane" tabindex="0"> -->
+<!-- 								    <div class="my-8"> -->
+<!-- 								        <div class="mb-5"> -->
+<!-- 								            <h4 class="mb-1">지도</h4> -->
+								           
+								           
+								           
+								           
+								           
+<!-- 								        </div> -->
+								        
+<!-- 								    </div> -->
+								   
+<!-- 								</div> -->
+							<!-- 지도 컨테이너 -->
+
+
+<!-- <div id="map" style="width:1150px;height:200px; margin:0 auto; border: 1px solid black;"></div> -->
+
+							<!-- tab pane -->
+							<div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel"
+								aria-labelledby="reviews-tab" tabindex="0">
+								<div class="my-8">
+									<!-- row -->
+									<div class="row">
+										<div class="col-md-4">
+    <div class="me-lg-12 mb-6 mb-md-0">
+        <div class="mb-5">
+            <h4 class="mb-3">사용자 리뷰</h4>
+           
+        </div>
+        
+       <!-- 별점별 진행상황 (1 ~ 5점) -->
+<div class="mb-8">
+    <!-- 5점 -->
+    <div class="d-flex align-items-center mb-2" id="rating5">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">5</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar"  aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" >60%</span>
+    </div>
+
+    <!-- 4점 -->
+    <div class="d-flex align-items-center mb-2" id="rating4">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">4</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" >22%</span>
+    </div>
+
+    <!-- 3점 -->
+    <div class="d-flex align-items-center mb-2" id="rating3">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">3</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar"  aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" >14%</span>
+    </div>
+
+    <!-- 2점 -->
+    <div class="d-flex align-items-center mb-2" id="rating2">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">2</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar"  aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" >5%</span>
+    </div>
+
+    <!-- 1점 -->
+    <div class="d-flex align-items-center mb-2" id="rating1">
+        <div class="text-nowrap me-3 text-muted">
+            <span class="d-inline-block align-middle text-muted">1</span>
+            <i class="bi bi-star-fill ms-1 small text-warning"></i>
+        </div>
+        <div class="w-100">
+            <div class="progress" style="height: 6px">
+                <div class="progress-bar bg-warning" role="progressbar"  aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <span class="text-muted ms-3 percentage-text" >7%</span>
+    </div>
+</div>
+    </div>
+</div>
+										
+
+										<!-- col -->
+										<div class="col-md-8">
+											<div class="mb-10">
+										<form name="formList" id="formList" method="post" autocomplete="off">
+<!-- 											<input type="hidden" id="thisPage"name="thisPage" th:value="${vo.thisPage}" default="1"/> -->
+<!-- 											<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/> -->
+<!-- 											<input type="hidden" id="staySeq" name="staySeq" th:value="${item?.staySeq}" /> -->
+												<div class="d-flex justify-content-between align-items-center mb-8">
+													<div>
+														<!-- heading -->
+														<h4>숙소 리뷰</h4>
+													</div>
+													<!-- <div>
+														<select class="form-select">
+															<option selected>Top Reviews</option>
+															<option value="Most Recent">Most Recent</option>
+														</select>
+													</div> -->
+												</div>
+<!-- 												<th:block th:each="reviewItem : ${reviewList}"> -->
+												<div class="d-flex border-bottom pb-6 mb-6">
+													<!-- img -->
+													<!-- img -->
+													<!-- <img src="/user/template/assets/images/avatar/avatar-10.jpg" alt=""
+														class="rounded-circle avatar-lg" /> -->
+													<div class="ms-5">
+														<h6 class="mb-1" >안세찬</h6><br>
+														
+														<!-- select option -->
+														<!-- content -->
+														<p class="small">
+															<span class="text-muted" >2022-12-30</span>
+															<!-- <span class="text-primary ms-3 fw-bold">Verified
+																Purchase</span> -->
+														</p>
+														<!-- rating -->
+														<div class="mb-2">
+<!-- 														    <th:block th:each="i : ${#numbers.sequence(1, 5)}"> -->
+<!-- 														        <i th:class="${i <= reviewItem.starScore} ? 'bi bi-star-fill text-warning' : 'bi bi-star text-warning'"></i> -->
+<!-- 														    </th:block> -->
+														</div>
+														<!-- text-->
+														<p class="ms-3 text-dark fw-bold" > 굿굿</p>
+														<p >
+															시설이 클린하고 좋네요
+														</p>
+														<div>
+														
+														</div>
+														
+													</div>
+												</div>
+												</form>
+											</div>
+												<div class="row mt-8">
+											<div style="text-align: center;">
+<!-- 													  <ul class="pagination" > -->
+													  	  
+														
+<!-- 														<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item"> -->
+<!-- 															<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|"> -->
+<!-- 																<i class="feather-icon icon-chevron-left">이전</i> -->
+<!-- 															</a> -->
+<!-- 														</li> -->
+<!-- 														<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item"> -->
+<!-- 															<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}">${i.index}</a> -->
+<!-- 														</li> -->
+<!-- 														<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" > -->
+<!-- 															<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|"> -->
+<!-- 																<i class="feather-icon icon-chevron-right">다음</i> -->
+<!-- 															</a> -->
+<!-- 														</li> -->
+													  
+<!-- 													  </ul> -->
+													    
+													</div>
+													 </div>
+<!-- 												</th:block> -->
+												
+												
+												
+											</div>
+											<div class="row mt-8">
+												 
+											 </div>
+											 <form action="/reviewUdate" method="post" id="form">	
+<!-- 										<input type="hidden" id="member_memSeq" name="member_memSeq" th:value="${session.sessSeqUser}"> -->
+<!-- 										<input type="hidden" id="stay_staySeq" name="stay_staySeq" th:value="${item.staySeq}"> -->
+<!-- 										<input type="hidden" id="staySeq" name="staySeq" th:value="${item.staySeq}"> -->
+										
+											<div >
+												<!-- rating -->
+												<h3 class="mb-5">리뷰 작성</h3>
+												<div class="star-rating" id="starRating">
+												    <span class="star" data-value="1">&#9733;</span>
+												    <span class="star" data-value="2">&#9733;</span>
+												    <span class="star" data-value="3">&#9733;</span>
+												    <span class="star" data-value="4">&#9733;</span>
+												    <span class="star" data-value="5">&#9733;</span>
+												</div>
+												<div style="color: red;" id="starRatingError" name="starRatingError"></div>
+												<input type="hidden" id="starScore" name="starScore" />
+												
+												<!-- 리뷰 제목 -->
+												<div class="border-bottom py-4 mb-4">
+													<h5>리뷰 제목</h5>
+													<input type="text" class="form-control"placeholder="리뷰 제목을 입력해주세요" id="reTitle" name="reTitle"/>
+													<div style="color: red;" id="reTitleError" name="reTitleError"></div>
+												</div>
+												
+												<div class="py-4 mb-4">
+													
+													<h5>리뷰를 작성해주세요</h5>
+													<textarea class="form-control" rows="3" placeholder="리뷰작성" id="reText" name="reText"></textarea>
+													<div style="color: red;" id="reTextError" name="reTextError"></div>
+												</div>
+												<!-- button -->
+												<div class="d-flex justify-content-end">
+													<button type="button" id="reviewSave" class="btn btn-primary">리뷰 제출</button>
+												</div>
+											</div>
+										</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- section -->
+		
+	</main>
+	<!-- Footer -->
+	<!-- footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row g-4 py-4">
+				
+			</div>
+			<div class="border-top py-4">
+				<div class="row align-items-center">
+					<div class="col-lg-5 text-lg-start text-center mb-2 mb-lg-0">
+						<ul class="list-inline mb-0">
+							<li class="list-inline-item text-dark">Payment Partners</li>
+							<li class="list-inline-item">
+								<a href="#!"><img src="/user/template/assets/images/payment/amazonpay.svg" alt=""></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#!"><img src="/user/template/assets/images/payment/american-express.svg" alt=""></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#!"><img src="/user/template/assets/images/payment//mastercard.svg" alt=""></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#!"><img src="/user/template/assets/images/payment/paypal.svg" alt=""></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#!"><img src="/user/template/assets/images/payment/visa.svg" alt=""></a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-lg-7 mt-4 mt-md-0">
+						<ul class="list-inline mb-0 text-lg-end text-center">
+							<li class="list-inline-item mb-2 mb-md-0 text-dark">Get deliveries with FreshCart</li>
+							<li class="list-inline-item ms-4">
+								<a href="#!"> <img src="/user/template/assets/images/appbutton/appstore-btn.svg" alt=""
+										style="width: 140px;"></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#!"> <img src="/user/template/assets/images/appbutton/googleplay-btn.svg" alt=""
+										style="width: 140px;"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<div class="border-top py-4">
+				<div class="row align-items-center">
+					<div class="col-md-6"><span class="small text-muted">© 2022 <span id="copyright"> -
+								<script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+							</span>FreshCart eCommerce HTML Template. All rights reserved. Powered by <a
+								href="https://codescandy.com/">Codescandy</a>.</span></div>
+					<div class="col-md-6">
+						<ul class="list-inline text-md-end mb-0 small mt-3 mt-md-0">
+							<li class="list-inline-item text-muted">Follow us on</li>
+							<li class="list-inline-item me-1">
+								<a href="#!" class="btn btn-xs btn-social btn-icon"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-facebook" viewBox="0 0 16 16">
+										<path
+											d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+									</svg></a>
+							</li>
+							<li class="list-inline-item me-1">
+								<a href="#!" class="btn btn-xs btn-social btn-icon"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-twitter" viewBox="0 0 16 16">
+										<path
+											d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
+									</svg></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#!" class="btn btn-xs btn-social btn-icon"><svg
+										xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-instagram" viewBox="0 0 16 16">
+										<path
+											d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
+									</svg></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</footer>
+	<!-- modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-xl modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body p-8">
+					<div class="position-absolute top-0 end-0 me-3 mt-3">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<!-- img slide -->
+							<div class="product productModal" id="productModal">
+								<div class="zoom" onmousemove="zoom(event)" style="
+                  background-image: url(/user/template/assets/images/products/product-single-img-1.jpg);
+                ">
+									<!-- img -->
+									<img src="/user/template/assets/images/products/product-single-img-1.jpg" alt="">
+								</div>
+								<div>
+									<div class="zoom" onmousemove="zoom(event)" style="
+                    background-image: url(/user/template/assets/images/products/product-single-img-2.jpg);
+                  ">
+										<!-- img -->
+										<img src="/user/template/assets/images/products/product-single-img-2.jpg" alt="">
+									</div>
+								</div>
+								<div>
+									<div class="zoom" onmousemove="zoom(event)" style="
+                    background-image: url(/user/template/assets/images/products/product-single-img-3.jpg);
+                  ">
+										<!-- img -->
+										<img src="/user/template/assets/images/products/product-single-img-3.jpg" alt="">
+									</div>
+								</div>
+								<div>
+									<div class="zoom" onmousemove="zoom(event)" style="
+                    background-image: url(/user/template/assets/images/products/product-single-img-4.jpg);
+                  ">
+										<!-- img -->
+										<img src="/user/template/assets/images/products/product-single-img-4.jpg" alt="">
+									</div>
+								</div>
+							</div>
+							<!-- product tools -->
+							<div class="product-tools">
+								<div class="thumbnails row g-3" id="productModalThumbnails">
+									<div class="col-3 tns-nav-active" >
+										<div class="thumbnails-img">
+											<!-- img -->
+											<img src="/user/template/assets/images/products/product-single-img-1.jpg" alt="">
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="thumbnails-img">
+											<!-- img -->
+											<img src="/user/template/assets/images/products/product-single-img-2.jpg" alt="">
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="thumbnails-img">
+											<!-- img -->
+											<img src="/user/template/assets/images/products/product-single-img-3.jpg" alt="">
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="thumbnails-img">
+											<!-- img -->
+											<img src="/user/template/assets/images/products/product-single-img-4.jpg" alt="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="ps-lg-8 mt-6 mt-lg-0">
+								<a href="#!" class="mb-4 d-block">Bakery Biscuits</a>
+								<h2 class="mb-1 h1">Napolitanke Ljesnjak</h2>
+								<div class="mb-4">
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i></small><a href="#" class="ms-2">(30 reviews)</a>
+								</div>
+								<div class="fs-4">
+									<span class="fw-bold text-dark">$32</span>
+									<span class="text-decoration-line-through text-muted">$35</span><span><small
+											class="fs-6 ms-2 text-danger">26% Off</small></span>
+								</div>
+								<hr class="my-6">
+								<div class="mb-4">
+									<button type="button" class="btn btn-outline-secondary">
+										250g
+									</button>
+									<button type="button" class="btn btn-outline-secondary">
+										500g
+									</button>
+									<button type="button" class="btn btn-outline-secondary">
+										1kg
+									</button>
+								</div>
+								<div>
+									<!-- input -->
+									<!-- input -->
+									<div class="input-group input-spinner  ">
+										<input type="button" value="-" class="button-minus  btn  btn-sm "
+											data-field="quantity">
+										<input type="number" step="1" max="10" value="1" name="quantity"
+											class="quantity-field form-control-sm form-input   ">
+										<input type="button" value="+" class="button-plus btn btn-sm "
+											data-field="quantity">
+									</div>
+								</div>
+								<div class="mt-3 row justify-content-start g-2 align-items-center">
+
+									<div class="col-lg-4 col-md-5 col-6 d-grid">
+										<!-- button -->
+										<!-- btn -->
+										<button type="button" class="btn btn-primary">
+											<i class="feather-icon icon-shopping-bag me-2"></i>Add to
+											cart
+										</button>
+									</div>
+									<div class="col-md-4 col-5">
+										<!-- btn -->
+										<a class="btn btn-light" href="#" data-bs-toggle="tooltip" data-bs-html="true"
+											aria-label="Compare"><i class="bi bi-arrow-left-right"></i></a>
+										<a class="btn btn-light" href="#!" data-bs-toggle="tooltip" data-bs-html="true"
+											aria-label="Wishlist"><i class="feather-icon icon-heart"></i></a>
+									</div>
+								</div>
+								<hr class="my-6">
+								<div>
+									<table class="table table-borderless">
+										<tbody>
+											<tr>
+												<td>Product Code:</td>
+												<td>FBB00255</td>
+											</tr>
+											<tr>
+												<td>Availability:</td>
+												<td>In Stock</td>
+											</tr>
+											<tr>
+												<td>Type:</td>
+												<td>Fruits</td>
+											</tr>
+											<tr>
+												<td>Shipping:</td>
+												<td>
+													<small>01 day shipping.<span class="text-muted">( Free pickup
+															today)</span></small>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Javascript-->
+	<script src="/user/template/assets/libs/rater-js/index.js"></script>
+	<script src="/user/template/assets/libs/dropzone/dist/min/dropzone.min.js"></script>
+	<!-- Libs JS -->
+	<!-- <script src="/user/template/assets/libs/jquery/dist/jquery.min.js"></script> -->
+	<script src="/user/template/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/user/template/assets/libs/simplebar/dist/simplebar.min.js"></script>
+
+	<!-- Theme JS -->
+	<script src="/user/template/assets/js/theme.min.js"></script>
+
+	<script src="/user/template/assets/js/vendors/jquery.min.js"></script>
+	<script src="/user/template/assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
+	<script src="/user/template/assets/js/vendors/tns-slider.js"></script>
+	<script src="/user/template/assets/js/vendors/zoom.js"></script>
+	<script src="/user/template/assets/js/vendors/dropzone.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e0e814070aaeeefafccf74fcf23c86"></script>
+	
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<!-- jQuery UI 한국어 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/i18n/datepicker-ko.min.js"></script>
+
+	
+<script type="text/javascript">
+// $(function () {
+//     // 기본 설정
+//     $.datepicker.setDefaults($.datepicker.regional["ko"]); // 한국어 설정
+
+//     // 체크인
+//     $("#checkInDate").datepicker({
+//         dateFormat: "yy-mm-dd",  // 날짜 형식
+//         minDate: 0,              // 오늘 이후만 선택 가능
+//         onClose: function (selectedDate) {
+//             $("#checkOutDate").datepicker("option", "minDate", selectedDate);
+//         }
+//     });
+
+//     // 체크아웃
+//     $("#checkOutDate").datepicker({
+//         dateFormat: "yy-mm-dd",
+//         minDate: 0,
+//         onClose: function (selectedDate) {
+//             $("#checkInDate").datepicker("option", "maxDate", selectedDate);
+//         }
+//     });
+// });
+</script>
+
+	
+<script type="text/javascript">
+// // 페이지가 로드되면 실행되는 함수
+// window.onload = function() {
+//   const mapContainer = document.getElementById('map');
+  
+//   // data-lat와 data-lng에서 위도, 경도 값 가져오기
+//   const lat = parseFloat(mapContainer.getAttribute('data-lat'));
+//   const lng = parseFloat(mapContainer.getAttribute('data-lng'));
+
+//   // 위도, 경도가 유효한지 확인
+//   if (isNaN(lat) || isNaN(lng)) {
+//     console.error("위도 또는 경도 값이 유효하지 않습니다.");
+//     return;
+//   }
+
+//   // Kakao 지도 옵션 설정 (초기 위치, 지도 레벨 등)
+//   const mapOption = {
+//     center: new kakao.maps.LatLng(lat, lng), // 지도 중심 좌표 설정
+//     level: 3 // 지도 레벨 (숫자가 작을수록 더 확대된 지도)
+//   };
+
+//   // 지도 생성
+//   const map = new kakao.maps.Map(mapContainer, mapOption);
+
+//   // 마커 위치 설정
+//   const markerPosition = new kakao.maps.LatLng(lat, lng);
+
+//   // 마커 생성
+//   const marker = new kakao.maps.Marker({
+//     position: markerPosition
+//   });
+
+//   // 마커 지도에 표시
+//   marker.setMap(map);
+// };
+</script>
+
+<!-- 방문인원 자바스트립 -->
+<script type="text/javascript">
+// document.addEventListener('DOMContentLoaded', function () {
+// 	  const buttonsMinus = document.querySelectorAll('.button-minus');
+// 	  const buttonsPlus = document.querySelectorAll('.button-plus');
+
+// 	  buttonsMinus.forEach(btn => {
+// 	    btn.addEventListener('click', function () {
+// 	      const input = document.querySelector(`input[name="${this.dataset.field}"]`);
+// 	      let value = parseInt(input.value) || 1;
+// 	      if (value > 1) input.value = value - 1;
+// 	    });
+// 	  });
+
+// 	  buttonsPlus.forEach(btn => {
+// 	    btn.addEventListener('click', function () {
+// 	      const input = document.querySelector(`input[name="${this.dataset.field}"]`);
+// 	      let value = parseInt(input.value) || 1;
+// 	      const max = parseInt(input.getAttribute('max')) || 10;
+// 	      if (value < max) input.value = value + 1;
+// 	    });
+// 	  });
+// 	});
+</script>
+
+
+<script type="text/javascript">
+
+// $(document).ready(function () {
+
+//     // 공통 벨리데이션 함수
+//     function validateField(field, errorField, message) {
+//         if (field.value.trim() === "") {
+//             errorField.innerText = message;
+//             field.classList.add("is-invalid");
+//             field.classList.remove("is-valid");
+//             return false;
+//         } else {
+//             errorField.innerText = "";
+//             field.classList.remove("is-invalid");
+//             field.classList.add("is-valid");
+//             return true;
+//         }
+//     }
+
+//     // 예약 버튼 클릭 시
+//     $("#reservationSave").on("click", function () {
+
+//         let checkInDate = document.getElementById("checkInDate");
+//         let checkOutDate = document.getElementById("checkOutDate");
+//         let checkInName = document.getElementById("checkInName");
+//         let checkInTel = document.getElementById("checkInTel");
+//         let checkInPeoNum = document.getElementById("checkInPeoNum");
+
+//         let isCheckInDateValid = validateField(checkInDate, document.getElementById("checkInDateError"), "체크인 날짜를 선택하세요");
+//         let isCheckOutDateValid = validateField(checkOutDate, document.getElementById("checkOutDateError"), "체크아웃 날짜를 선택하세요");
+//         let isNameValid = validateField(checkInName, document.getElementById("checkInNameError"), "성명을 입력하세요");
+//         let isTelValid = validateField(checkInTel, document.getElementById("checkInTelError"), "연락처를 입력하세요");
+
+//         // 인원 수 1 이상인지 확인
+//         let isPeopleValid = true;
+//         if (checkInPeoNum.value <= 0) {
+//             alert("인원 수는 1명 이상이어야 합니다.");
+//             isPeopleValid = false;
+//         }
+
+//         if (!isCheckInDateValid || !isCheckOutDateValid || !isNameValid || !isTelValid || !isPeopleValid) {
+//             return false;
+//         }
+       
+//         // 모든 유효성 검사 통과하면 AJAX 전송
+//         $.ajax({
+//             async: true,
+//             cache: false,
+//             type: "post",
+//             url: "/DetailedPageUser",
+//             data: {
+//                 "staySeq": $("#staySeq").val(),
+//                 "checkInDate": $("#checkInDate").val(),
+//                 "checkOutDate": $("#checkOutDate").val(),
+//                 "checkInName": $("#checkInName").val(),
+//                 "checkInTel": $("#checkInTel").val(),
+//                 "checkInPeoNum": $("#checkInPeoNum").val(),
+//                 "stayPrice": $('#stayPrice').val()
+//             },
+//             success: function (response) {
+               
+//                 window.location.href = '/PayUserForm?staySeq=' + response.result;
+//             },
+           
+//         });
+//     });
+
+// });
+
+</script>
+
+
+
+<script type="text/javascript">
+// document.addEventListener("DOMContentLoaded", function () {
+//     const stars = document.querySelectorAll("#starRating .star");
+//     const starScoreInput = document.getElementById("starScore");
+//     const reviewSaveButton = document.getElementById("reviewSave");
+//     const reviewContainer = document.getElementById("reviewContainer");
+//     const userSeq = document.getElementById("member_memSeq")?.value;
+
+//     let currentScore = 0;
+
+//     // 별점 초기 세팅
+//     document.getElementById("starRating").style.whiteSpace = "nowrap";
+//     stars.forEach(function (star) {
+//         star.style.display = "inline-block";
+//         star.style.fontSize = "30px";
+//         star.style.cursor = "pointer";
+//         star.style.color = "gray";
+
+//         star.addEventListener("click", function () {
+//             currentScore = parseInt(star.getAttribute("data-value"));
+//             starScoreInput.value = currentScore;
+//             updateStarRating(currentScore);
+//             document.getElementById("starRatingError").textContent = ""; // 별점 선택 시 에러 제거
+//         });
+
+//         star.addEventListener("mouseover", function () {
+//             updateStarRating(parseInt(star.getAttribute("data-value")));
+//         });
+
+//         star.addEventListener("mouseout", function () {
+//             updateStarRating(currentScore);
+//         });
+//     });
+
+//     function updateStarRating(score) {
+//         stars.forEach(function (star) {
+//             const value = parseInt(star.getAttribute("data-value"));
+//             star.style.color = value <= score ? "orange" : "gray";
+//         });
+//     }
+
+//     function renderStars(score) {
+//         let starsHtml = "";
+//         for (let i = 1; i <= 5; i++) {
+//             starsHtml += `<i class="bi ${i <= score ? 'bi-star-fill' : 'bi-star'} text-warning"></i>`;
+//         }
+//         return starsHtml;
+//     }
+
+//     function loadReviewList() {
+//         const stayInfoId = $("#stay_staySeq").val();
+
+//         $.ajax({
+//             url: "/reviewList",
+//             type: "GET",
+//             data: { stay_staySeq: stayInfoId },
+//             success: function (reviewList) {
+//                 reviewContainer.innerHTML = "";
+//                 reviewList.forEach(function (review) {
+//                     const reviewHtml = `
+//                         <div class="d-flex border-bottom pb-6 mb-6">
+//                             <div class="ms-5">
+//                                 <h6 class="mb-1">${review.memName}</h6>
+//                                 <div class="mb-2">
+//                                     ${renderStars(review.starScore)}
+//                                 </div>
+//                                 <p class="ms-3 text-dark fw-bold">${review.reTitle}</p>
+//                                 <p>${review.reText}</p>
+//                             </div>
+//                         </div>`;
+//                     reviewContainer.insertAdjacentHTML("afterbegin", reviewHtml);
+//                 });
+//             },
+//             error: function (err) {
+//                 console.error("리뷰 불러오기 실패", err);
+//             }
+//         });
+//     }
+
+//     reviewSaveButton.addEventListener("click", function (e) {
+//         e.preventDefault();
+
+//         // 로그인 여부 확인
+//         if (!userSeq || userSeq === "null" || userSeq === "") {
+//             // 로그인 필요 모달 띄우기
+//             const loginModalEl = document.getElementById("loginModal");
+//             const loginModal = new bootstrap.Modal(loginModalEl);
+//             loginModal.show();
+
+//             // 로그인 버튼 클릭 시 이동
+//             document.getElementById("goLoginBtn").addEventListener("click", function () {
+//                 window.location.href = "/SigninUser";
+//             });
+
+//             return;
+//         }
+
+//         // 입력값 유효성 검사
+//         const score = parseInt(starScoreInput.value);
+//         const title = document.getElementById("reTitle").value.trim();
+//         const text = document.getElementById("reText").value.trim();
+//         const scoreError = document.getElementById("starRatingError");
+//         const titleError = document.getElementById("reTitleError");
+//         const textError = document.getElementById("reTextError");
+
+//         let valid = true;
+
+//         if (!score || score < 1 || score > 5) {
+//             scoreError.textContent = "별점을 선택해주세요.";
+//             valid = false;
+//         } else {
+//             scoreError.textContent = "";
+//         }
+
+//         if (title === "") {
+//             titleError.textContent = "리뷰 제목을 입력해주세요.";
+//             valid = false;
+//         } else {
+//             titleError.textContent = "";
+//         }
+
+//         if (text === "") {
+//             textError.textContent = "리뷰 내용을 입력해주세요.";
+//             valid = false;
+//         } else {
+//             textError.textContent = "";
+//         }
+
+//         if (!valid) return;
+
+//         const formData = $("#form").serialize();
+
+//         $.ajax({
+//             url: "/reviewUdate",
+//             type: "POST",
+//             data: formData,
+//             success: function (response) {
+//                 if (response.status === "success") {
+//                     // 성공 모달 띄우기
+//                     const successModal = new bootstrap.Modal(document.getElementById("successModal"));
+//                     successModal.show();
+
+//                     // 폼 리셋 및 초기화
+//                     $("#form")[0].reset();
+//                     updateStarRating(0);
+//                     currentScore = 0;
+//                     loadReviewList();
+
+//                     // 페이지 새로 고침
+//                     setTimeout(function () {
+//                         location.reload(); // 페이지를 1초 후에 새로 고침
+//                     }, 1000);
+//                 } else {
+//                     // 에러 처리 (필요 시 추가)
+//                     console.error("리뷰 저장 실패", response);
+//                 }
+//             },
+//         });
+//     });
+
+//     loadReviewList();
+// });
+</script>
+
+    <script type="text/javascript">
+    	// 페이지네이션 자바 스크립
+// 	    let form = document.querySelector("form[name=formList]");
+// 	 goList = function (thisPage) {
+// 	     form.action = "/DetailedPageUserForm";
+// 	     document.querySelector("input[name=thisPage]").value = thisPage;
+// 	     form.submit();
+// 	 }  
+
+	</script>
+	
+	<script>
+        
+        const mapDataEl = document.getElementById("map-data");
+        const mapX = parseFloat(mapDataEl.getAttribute("data-mapx"));
+        const mapY = parseFloat(mapDataEl.getAttribute("data-mapy"));
+
+        console.log("MapX:", mapX, "MapY:", mapY);
+
+        const container = document.getElementById('map');
+        const options = {
+            center: new kakao.maps.LatLng(mapY, mapX),
+            level: 3
+        };
+
+        const map = new kakao.maps.Map(container, options);
+
+        const markerPosition  = new kakao.maps.LatLng(mapY, mapX); 
+        const marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        marker.setMap(map);
+    </script>
+
+
+
+	
+	
 </body>
+
 </html>

@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
+<form name="formList" id="formList" method="post" autocomplete="off">
+		<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+		
+
 <div th:replace="~{user/include/head :: head}"></div>
 
 <main>
 <!-- section-->
-      <br>
+      <div class="mt-8 mb-lg-14 mb-8">
       <!-- container -->
          <div class="container">
             <!-- row -->
@@ -16,6 +21,22 @@
                         <div class="mb-8">
                            <!-- title -->
                            <h5 class="mb-3">지역별</h5>
+                           <div class="my-4 search-wrapper">
+						  <!-- 검색 폼 -->
+						 	<form method="get" th:action="@{/getRestaurants}">
+							    <input type="hidden" name="areaCode" th:value="${areaCode}" class="form-control me-2" />
+							    <input type="search" class="form-control me-2" placeholder="맛집 검색"
+							           id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" />
+							    <select name="shOption" style="display:none;">
+							        <option th:value="1" th:selected="${vo.shOption == 1}">제목</option>
+							    </select>
+							</form>
+
+						
+						</div>
+						
+						
+						
                            <!-- nav -->
                            <ul class="nav flex-column ms-3">
 							  <li class="nav-item">
@@ -43,169 +64,71 @@
 							    <a href="/getRestaurants?areaCode=8" class="nav-link" th:classappend="${param.areaCode == '8'} ? 'active'">세종특별자치시</a>
 							  </li>
 							  <li class="nav-item">
-							    <a href="/getRestaurants?areaCode=9" class="nav-link" th:classappend="${param.areaCode == '9'} ? 'active'">경기도</a>
+							    <a href="/getRestaurants?areaCode=31" class="nav-link" th:classappend="${param.areaCode == '31'} ? 'active'">경기도</a>
 							  </li>
 							  <li class="nav-item">
-							    <a href="/getRestaurants?areaCode=10" class="nav-link" th:classappend="${param.areaCode == '10'} ? 'active'">강원도</a>
+							    <a href="/getRestaurants?areaCode=32" class="nav-link" th:classappend="${param.areaCode == '32'} ? 'active'">강원특별자치도</a>
 							  </li>
-							  <!-- 나머지 지역도 같은 방식으로 추가 -->
+							  
 							</ul>
                          
                         </div>
 
-                        <div class="mb-8">
-                           <h5 class="mb-3">Stores</h5>
-                           <div class="my-4">
-                              <!-- input -->
-                              <input type="search" class="form-control" placeholder="Search by store" />
-                           </div>
-                        </div>
-                        <div class="mb-8">
-                           <!-- price -->
-                           <h5 class="mb-3">Price</h5>
-                           <div>
-                              <!-- range -->
-                              <div id="priceRange" class="mb-3"></div>
-                              <small class="text-muted">Price:</small>
-                              <span id="priceRange-value" class="small"></span>
-                           </div>
-                        </div>
+                        
+                        
                         <!-- rating -->
-                        <div class="mb-8">
-                           <h5 class="mb-3">Rating</h5>
-                           <div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingFive" />
-                                 <label class="form-check-label" for="ratingFive">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                 </label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingFour" checked />
-                                 <label class="form-check-label" for="ratingFour">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                 </label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingThree" />
-                                 <label class="form-check-label" for="ratingThree">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                 </label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
-                                 <label class="form-check-label" for="ratingTwo">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                 </label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="ratingOne" />
-                                 <label class="form-check-label" for="ratingOne">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                    <i class="bi bi-star text-warning"></i>
-                                 </label>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="mb-8 position-relative">
-                           <!-- Banner Design -->
-                           <!-- Banner Content -->
-                           <div class="position-absolute p-5 py-8">
-                              <h3 class="mb-0">Fresh Fruits</h3>
-                              <p>Get Upto 25% Off</p>
-                              <a href="#" class="btn btn-dark">
-                                 Shop Now
-                                 <i class="feather-icon icon-arrow-right ms-1"></i>
-                              </a>
-                           </div>
-                           <!-- Banner Content -->
-                           <!-- Banner Image -->
-                           <!-- img -->
-                           <img src="../assets/images/banner/assortment-citrus-fruits.png" alt=""
-                              class="img-fluid rounded" />
-                           <!-- Banner Image -->
-                        </div>
+                        
+                        
                      </div>
                </aside>
                <section class="col-lg-9 col-md-12">
                         <div class="row g-2 mb-4 ">
-                           <div class="col-md-6 d-flex">
+
+                           <!-- 날씨위젯 -->
+<div class="col-md-12">
+    <div class="card shadow-sm w-100">
+        <h5 class="px-6 py-4 bg-transparent mb-0">전국 날씨</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-4 py-3">
+                <div class="container">
+                    <div class="row text-center" 
+                         th:each="row : ${#numbers.sequence(0, forecastList.size() / 5)}">
+                        <div class="col" th:each="weather : ${forecastList.subList(row * 5, (row * 5 + 5) > forecastList.size() ? forecastList.size() : (row * 5 + 5))}">
+                            <div th:text="${#dates.format(weather.date, 'E')}"></div>
+                            <div th:text="${#dates.format(weather.date, 'MM.dd')}"></div>
+                            <img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.weatherIcon} + '@2x.png'}" alt="날씨 아이콘" />
+                            <div th:text="${weather.temperature + '℃'}"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+                           <div class="col-md-12">
                               <div class="card shadow-sm w-100">
                                  <h5 class="px-6 py-4 bg-transparent mb-0">지역 관광지</h5>
                                  <ul class="list-group list-group-flush">
                                     <li class="list-group-item px-4 py-3">
-                                       <div class="row" style="padding: 10px;">
-                                          <img src="/user/template/assets/images/overview/image.png"/>
-                                       </div>
+                                       <div class="mb-8" id="map" style="width: 100%; height: 300px;"></div>
+
+						<!-- 마커용 데이터는 JS에서 사용할 수 있도록 hidden 요소나 dataset에 저장 -->
+						<!-- 맛집 정보 div, 숨김 처리해도 무방 -->
+										<div class="markerData"
+										     th:each="item : ${restaurantList}"
+										     th:attr="data-lat=${item.mapY},
+										              data-lng=${item.mapX},
+										              data-title=${item.title},
+										              data-url=@{restaurantDetail(contentId=${item.contentId})},
+										              data-content-id=${item.title}">
+										</div>
+
+
                                     </li>
                                  </ul>
                               </div>
                            </div>
-                           <!-- 날씨위젯 -->
-                           <div class="col-md-6 d-flex">
-                              <div class="card shadow-sm w-100">
-                                 <h5 class="px-6 py-4 bg-transparent mb-0">전국 날씨</h5>
-                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item px-4 py-3">
-                                       <div class="row">
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             월<br>오늘
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             화<br>4.30
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             수<br>5.01
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             목<br>5.02
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             금<br>5.03
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             토<br>5.04
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             일<br>5.05
-                                          </div>
-                                       </div>
-                                       <div class="row" style="padding: 10px;">
-                                          <img src="/user/template/assets/images/날씨2.png"/>
-                                       </div>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
+
                         </div>
                         <div class="row card shadow-sm mb-4 p-4">
                            <!-- list icon -->
@@ -220,12 +143,7 @@
                               <!-- icon -->
                               <div class="d-md-flex justify-content-between align-items-center">
                                  <div class="d-flex align-items-center justify-content-between">
-                                    <div>
-                                       <a href="shop-list.html" class="text-muted me-3"><i class="bi bi-list-ul"></i></a>
-                                       <a href="shop-grid.html" class="me-3 active"><i class="bi bi-grid"></i></a>
-                                       <a href="shop-grid-3-column.html" class="me-3 text-muted"><i
-                                             class="bi bi-grid-3x3-gap"></i></a>
-                                    </div>
+                                    
                                     <div class="ms-2 d-lg-none">
                                        <a class="btn btn-outline-gray-400 text-muted" data-bs-toggle="offcanvas"
                                           href="#offcanvasCategory" role="button" aria-controls="offcanvasCategory">
@@ -242,22 +160,11 @@
                                  <div class="d-flex mt-2 mt-lg-0">
                                     <div class="me-2 flex-grow-1">
                                        <!-- select option -->
-                                       <select class="form-select">
-                                          <option selected>Show: 50</option>
-                                          <option value="10">10</option>
-                                          <option value="20">20</option>
-                                          <option value="30">30</option>
-                                       </select>
+                                       
                                     </div>
                                     <div>
                                        <!-- select option -->
-                                       <select class="form-select">
-                                          <option selected>Sort by: Featured</option>
-                                          <option value="Low to High">Price: Low to High</option>
-                                          <option value="High to Low">Price: High to Low</option>
-                                          <option value="Release Date">Release Date</option>
-                                          <option value="Avg. Rating">Avg. Rating</option>
-                                       </select>
+                                       
                                     </div>
                                  </div>
                               </div>
@@ -266,28 +173,42 @@
                            
                                     <!-- row -->
                            <!-- 검색 필터 영역 -->
-							<form action="/getRestaurants" method="get" class="mb-4">
-							   <div class="row g-3 align-items-center">
-<!-- 							      <div class="col-auto"> -->
-<!-- 							         <label for="areaCode" class="col-form-label">지역 선택</label> -->
-<!-- 							      </div> -->
-<!-- 							      <div class="col-auto"> -->
-<!-- 							         <select name="areaCode" id="areaCode" class="form-select"> -->
-<!-- 							            <option value="1" th:selected="${param.areaCode == '1'}">서울</option> -->
-<!-- 							            <option value="2" th:selected="${param.areaCode == '2'}">인천</option> -->
-<!-- 							            <option value="6" th:selected="${param.areaCode == '6'}">부산</option> -->
-<!-- 							            필요한 지역 추가 -->
-<!-- 							         </select> -->
-<!-- 							      </div> -->
-<!-- 							      <div class="col-auto"> -->
-<!-- 							         <button type="submit" class="btn btn-primary">검색</button> -->
-<!-- 							      </div> -->
-							   </div>
-							</form>
+							<div class="d-lg-flex justify-content-between align-items-center">
+                     <div class="mb-3 mb-lg-0">
+                        <div class="mb-3 mb-lg-0">
+						  <p class="mb-0">
+						    <span th:text="${areaName}">지역</span> 맛집 갯수 :
+						    <span class="text-dark" th:text="${vo.totalRows}">0</span>
+						  </p>
+						</div>
+                     </div>
+   
+
+                     <!-- icon -->
+                     <div class="d-md-flex justify-content-between align-items-center">
+       
+
+<!--                         <div class="d-flex mt-2 mt-lg-0"> -->
+
+<!--                            <div class="me-2 flex-grow-1"> -->
+<!--                               select option -->
+<!--                               <select class="form-select" id="changeRowNum" name="changeRowNum"> -->
+<!--                                  <option value="3" th:selected="${vo.rowNumToShow eq 3}">Show: 3</option> -->
+<!--                                  <option value="5" th:selected="${vo.rowNumToShow eq 5}">Show: 5</option> -->
+<!--                                  <option value="10" th:selected="${vo.rowNumToShow eq 10}">Show: 10</option> -->
+                                 
+<!--                               </select> -->
+<!--                            </div> -->
+                        
+<!--                         </div> -->
+                     </div>
+                  </div>
 							
 							<!-- 맛집 카드 목록 -->
 							<div class="row g-4 row-cols-1 mt-2">
-							   <th:block th:each="item : ${restaurantList}">
+							   <div class="row g-4 row-cols-1 mt-2">
+							   <th:block th:each="item : ${restaurantList}" 
+							             th:if="${item.imageUrl}">
 							      <div class="col">
 							         <div class="card card-product">
 							            <div class="card-body">
@@ -297,8 +218,8 @@
 							                        <div class="position-absolute top-0">
 							                           <span class="badge bg-danger">Hot</span>
 							                        </div>
-							                        <a href="#!">
-							                           <img th:src="${item.imageUrl}" alt="맛집 이미지" class="mb-3 img-fluid" />
+							                        <a th:href="@{restaurantDetail(contentId=${item.contentId})}">
+							                           <img th:src="${item.imageUrl}" alt="맛집 이미지" class="mb-3 img-fluid" loading="lazy" />
 							                        </a>
 							                     </div>
 							                  </div>
@@ -309,27 +230,29 @@
 							                        </a>
 							                     </div>
 							                     <h2 class="fs-6">
-													  <a th:href="@{/user/location/restaurantDetail(contentId=${item.contentId})}" 
-													     class="text-inherit text-decoration-none"
-													     th:text="${item.title}">맛집 이름</a>
-													</h2>
-													<div class="text-muted small" th:text="${item.address}">주소</div>
+							                        <a th:href="@{restaurantDetail(contentId=${item.contentId})}" 
+							                           class="text-inherit text-decoration-none"
+							                           th:text="${item.title}">맛집 이름</a>
+							                     </h2>
+							                     <div class="text-muted small" th:text="${item.address}">주소</div>
 							
 							                     <div class="mt-6">
-							                        <div class="mt-3">
-							                           <a href="#!" class="btn btn-icon btn-sm btn-outline-gray-400 text-muted" data-bs-toggle="tooltip" title="즐겨찾기">
-							                              <i class="bi bi-heart"></i>
-							                           </a>
-							                           <a href="#!" class="btn btn-icon btn-sm btn-outline-gray-400 text-muted" data-bs-toggle="tooltip" title="공유">
-							                              <i class="bi bi-share"></i>
-							                           </a>
-							                        </div>
-							                        <div class="mt-2">
-							                           <a href="#!" class="btn btn-primary">
-							                              <i class="bi bi-geo-alt-fill me-2"></i>
-							                              방문하기
-							                           </a>
-							                        </div>
+							                        
+<div class="mt-4 d-flex gap-3">
+  <!-- 지도보기 버튼 (Outline 스타일) -->
+  <button type="button" class="btn btn-outline-primary d-flex align-items-center"
+          th:onclick="|showMap([[${item.mapY}]], [[${item.mapX}]])|">
+    <i class="bi bi-geo-alt-fill me-2"></i>
+    지도보기
+  </button>
+
+  <!-- 상세 페이지 버튼 (Primary 스타일) -->
+  <a class="btn btn-primary fw-semibold px-4"
+     th:href="@{restaurantDetail(contentId=${item.contentId})}">
+    상세 페이지
+  </a>
+</div>
+
 							                     </div>
 							                  </div>
 							               </div>
@@ -338,40 +261,81 @@
 							      </div>
 							   </th:block>
 							</div>
+
+
+
 							
 							<!-- 더보기 버튼 -->
-							<div class="d-flex justify-content-center mt-4">
-							   <form action="/getRestaurants" method="get">
-							      <input type="hidden" name="areaCode" th:value="${param.areaCode}" />
-							      <input type="hidden" name="page" th:value="${nextPage}" />
-							      <button type="submit" class="btn btn-outline-primary">더보기</button>
-							   </form>
-							</div>
-
+<!-- 							<div class="d-flex justify-content-center mt-4"> -->
+<!-- 							   <form action="/getRestaurants" method="get"> -->
+<!-- 							      <input type="hidden" name="areaCode" th:value="${param.areaCode}" /> -->
+<!-- 							      <input type="hidden" name="page" th:value="${nextPage}" /> -->
+<!-- 							      <button type="submit" class="btn btn-outline-primary">더보기</button> -->
+<!-- 							   </form> -->
+<!-- 							</div> -->
+							
+							
+							
                            <!-- row끗-->
                            <!-- 페이지네이션시작작 -->
                            <div class="row mt-8">
                               <div class="col">
-                                 
-                                 <nav>
-                                    <ul class="pagination" style="justify-content: center;">
-                                       <li class="page-item disabled">
-                                          <a class="page-link mx-1" href="#" aria-label="Previous">
-                                             <i class="feather-icon icon-chevron-left"></i>
-                                          </a>
-                                       </li>
-                                       <li class="page-item"><a class="page-link mx-1 active" href="#">1</a></li>
-                                       <li class="page-item"><a class="page-link mx-1" href="#">2</a></li>
+                                <nav>
+  <ul class="pagination" style="justify-content: center;">
+    
+    <!-- 이전 블록 -->
+    <li class="page-item" th:classappend="${vo.startPage == 1} ? 'disabled'">
+      <a class="page-link mx-1"
+         th:href="@{/getRestaurants(areaCode=${areaCode}, page=${vo.startPage - 1}, shValue=${vo.shValue}, shOption=${vo.shOption})}"
+         aria-label="Previous">
+        <i class="feather-icon icon-chevron-left"></i>
+      </a>
+    </li>
+
+    <!-- 페이지 번호 -->
+    <th:block th:each="i : ${#numbers.sequence(vo.startPage, vo.endPage)}">
+      <li class="page-item" th:classappend="${vo.thisPage == i} ? 'active'">
+        <a class="page-link mx-1"
+           th:href="@{/getRestaurants(areaCode=${areaCode}, page=${i}, shValue=${vo.shValue}, shOption=${vo.shOption})}"
+           th:text="${i}">1</a>
+      </li>
+    </th:block>
+
+    <!-- 다음 블록 -->
+    <li class="page-item" th:classappend="${vo.endPage >= vo.totalPages} ? 'disabled'">
+      <a class="page-link mx-1"
+         th:href="@{/getRestaurants(areaCode=${areaCode}, page=${vo.endPage + 1}, shValue=${vo.shValue}, shOption=${vo.shOption})}"
+         aria-label="Next">
+        <i class="feather-icon icon-chevron-right"></i>
+      </a>
+    </li>
+
+  </ul>
+</nav>
+ 
+							
+							
+							
+							
+<!--                                  <nav> -->
+<!--                                     <ul class="pagination" style="justify-content: center;"> -->
+<!--                                        <li class="page-item disabled"> -->
+<!--                                           <a class="page-link mx-1" href="#" aria-label="Previous"> -->
+<!--                                              <i class="feather-icon icon-chevron-left"></i> -->
+<!--                                           </a> -->
+<!--                                        </li> -->
+<!--                                        <li class="page-item"><a class="page-link mx-1 active" href="#">1</a></li> -->
+<!--                                        <li class="page-item"><a class="page-link mx-1" href="#">2</a></li> -->
                                        
-                                       <li class="page-item"><a class="page-link mx-1" href="#">...</a></li>
-                                       <li class="page-item"><a class="page-link mx-1" href="#">12</a></li>
-                                       <li class="page-item">
-                                          <a class="page-link mx-1" href="#" aria-label="Next">
-                                             <i class="feather-icon icon-chevron-right"></i>
-                                          </a>
-                                       </li>
-                                    </ul>
-                                 </nav>
+<!--                                        <li class="page-item"><a class="page-link mx-1" href="#">...</a></li> -->
+<!--                                        <li class="page-item"><a class="page-link mx-1" href="#">12</a></li> -->
+<!--                                        <li class="page-item"> -->
+<!--                                           <a class="page-link mx-1" href="#" aria-label="Next"> -->
+<!--                                              <i class="feather-icon icon-chevron-right"></i> -->
+<!--                                           </a> -->
+<!--                                        </li> -->
+<!--                                     </ul> -->
+<!--                                  </nav> -->
                               </div>
                            </div>
                            <!-- 페이지네이션끗 -->
@@ -464,9 +428,170 @@
          </div>
       </div>
    </footer>
+   </form>
+
 
 
 
  <div th:replace="~{user/include/script :: script}"></div>
+ 
+<!-- <!-- <script type="text/javascript"> --> 
+<!-- // //외부 js에서는 이 변수들이 전역(global)으로 들어온다고 가정하고 사용 --><!-- // 
+  if (!isNaN(stayLatitude) && !isNaN(stayLongitude)) { -->
+<!-- //       const mapContainer = document.getElementById('map'); -->
+<!-- //       const mapOption = { -->
+<!-- //           center: new kakao.maps.LatLng(mapX, mapY), -->
+<!-- //           level: 3 -->
+<!-- //       }; -->
+<!-- //       const map = new kakao.maps.Map(mapContainer, mapOption); -->
+
+<!-- //       const markerPosition = new kakao.maps.LatLng(mapX, mapY); -->
+<!-- //       const marker = new kakao.maps.Marker({ position: markerPosition }); -->
+<!-- //       marker.setMap(map); -->
+<!-- //   } else { -->
+<!-- //       console.error("위도/경도 값이 유효하지 않음"); -->
+<!-- //   } -->
+<!-- <!--     </script> --> 
+
+<script>
+  function showMap(lat, lng) {
+    const mapContainer = document.getElementById('map'); // 지도를 표시할 div
+    const yOffset = -200; // 원하는 만큼 위로 조정 (음수면 더 위로 이동)
+    const y = mapContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    const mapOption = {
+      center: new kakao.maps.LatLng(lat, lng),
+      level: 3
+    };
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+
+    const marker = new kakao.maps.Marker({
+      position: new kakao.maps.LatLng(lat, lng)
+    });
+    marker.setMap(map);
+  }
+</script>
+
+<script type="text/javascript">
+  window.onload = function () {
+    const mapContainer = document.getElementById('map');
+
+    const mapOption = {
+      center: new kakao.maps.LatLng(37.5665, 126.9780),
+      level: 6
+    };
+
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+    const bounds = new kakao.maps.LatLngBounds();
+
+    const markerImageSrc = '/user/template/assets/images/logo/buddhist-temple-sticker-design-element-vector.png';
+    const imageSize = new kakao.maps.Size(24, 24);
+    const imageOption = { offset: new kakao.maps.Point(12, 24) };
+    const markerImage = new kakao.maps.MarkerImage(markerImageSrc, imageSize, imageOption);
+
+    const markerDataElements = document.querySelectorAll('.markerData');
+
+    markerDataElements.forEach(function (el) {
+      const lat = parseFloat(el.getAttribute('data-lat'));
+      const lng = parseFloat(el.getAttribute('data-lng'));
+      const url = el.getAttribute('data-url');
+      const contentId = el.getAttribute('data-content-id');
+
+      if (isNaN(lat) || isNaN(lng)) {
+        console.error("위도 또는 경도 값이 유효하지 않습니다.");
+        return;
+      }
+
+      const position = new kakao.maps.LatLng(lat, lng);
+
+      const marker = new kakao.maps.Marker({
+        position: position,
+        map: map,
+        image: markerImage
+      });
+
+      // ✅ 마커 클릭 시 URL로 이동
+      kakao.maps.event.addListener(marker, 'click', function () {
+        if (url) {
+          window.location.href = url;
+        }
+      });
+
+      // ✅ 마우스 오버 시 contentId 표시 (인포윈도우 사용)
+      const infoWindow = new kakao.maps.InfoWindow({
+        content: `<div style="padding:10px; font-size:10px;">${contentId}</div>`,
+        removable: false
+      });
+
+      kakao.maps.event.addListener(marker, 'mouseover', function () {
+        infoWindow.open(map, marker);
+      });
+
+      kakao.maps.event.addListener(marker, 'mouseout', function () {
+        infoWindow.close();
+      });
+
+      bounds.extend(position);
+    });
+
+    if (!bounds.isEmpty()) {
+      map.setBounds(bounds);
+    }
+  };
+</script>
+
+
+
+<!-- <!-- <script> --> 
+<!-- // document.addEventListener("DOMContentLoaded", function () { -->
+<!-- //     const markerElements = document.querySelectorAll(".markerData"); -->
+
+<!-- //     if (markerElements.length === 0) { -->
+<!-- //         alert("표시할 맛집 정보가 없습니다."); -->
+<!-- //         return; -->
+<!-- //     } -->
+
+<!-- //     // 첫 번째 아이템 기준으로 지도 중심 잡기 -->
+<!-- //     const firstLat = parseFloat(markerElements[0].getAttribute("data-lat")); -->
+<!-- //     const firstLng = parseFloat(markerElements[0].getAttribute("data-lng")); -->
+
+<!-- //     const mapContainer = document.getElementById('map'); -->
+<!-- //     const mapOption = { -->
+<!-- //         center: new kakao.maps.LatLng(firstLat, firstLng), -->
+<!-- //         level: 6 -->
+<!-- //     }; -->
+
+<!-- //     const map = new kakao.maps.Map(mapContainer, mapOption); -->
+
+<!-- //     // 각 마커 생성 -->
+<!-- //     markerElements.forEach(el => { -->
+<!-- //         const lat = parseFloat(el.getAttribute("data-lat")); -->
+<!-- //         const lng = parseFloat(el.getAttribute("data-lng")); -->
+<!-- //         const title = el.getAttribute("data-title"); -->
+<!-- //         const url = el.getAttribute("data-url"); -->
+
+<!-- //         const marker = new kakao.maps.Marker({ -->
+<!-- //             position: new kakao.maps.LatLng(lat, lng), -->
+<!-- //             map: map, -->
+<!-- //             title: title -->
+<!-- //         }); -->
+
+<!-- //         // 마커 클릭 시 상세 페이지 이동 -->
+<!-- //         kakao.maps.event.addListener(marker, 'click', function () { -->
+<!-- //             window.location.href = url; -->
+<!-- //         }); -->
+<!-- //     }); -->
+<!-- // }); -->
+<!-- <!-- </script> --> 
+
+
+
+
+
+
+
+
+
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

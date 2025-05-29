@@ -38,6 +38,13 @@ dependencies {
 	//json데이터 원하는값만꺼내오는데 필요한 라이브러리
 	implementation('com.fasterxml.jackson.core:jackson-databind')
 	
+	// api로 받아온 홈페이지 주소를 escape 하여 링크 적용하기 위해 필요
+		// https://mvnrepository.com/artifact/org.apache.commons/commons-text
+	implementation("org.apache.commons:commons-text:1.13.1")
+	
+	// api json으로 받아오기 위한 패키지
+		// https://mvnrepository.com/artifact/org.json/json
+	implementation("org.json:json:20250517")
 	
 }
 

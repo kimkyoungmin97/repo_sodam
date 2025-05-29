@@ -2,12 +2,14 @@ package com.a5a5lab.module.user.api;
 
 import com.a5a5lab.module.common.BaseVo;
 
-public class apiDto extends BaseVo {
+public class apiDto extends BaseVo{
 	private String title;
     private String address;
     private String imageUrl;
     private String contentId;
     private String overview;
+    private Double mapX; // 경도
+    private Double mapY; // 위도
 //-----
     
     
@@ -15,7 +17,23 @@ public class apiDto extends BaseVo {
         return title;
     }
 
-    public String getOverview() {
+    public Double getMapX() {
+		return mapX;
+	}
+
+	public void setMapX(Double mapX) {
+		this.mapX = mapX;
+	}
+
+	public Double getMapY() {
+		return mapY;
+	}
+
+	public void setMapY(Double mapY) {
+		this.mapY = mapY;
+	}
+
+	public String getOverview() {
 		return overview;
 	}
 

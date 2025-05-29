@@ -83,6 +83,51 @@ ORDER BY a.regDateTime DESC
 LIMIT #{startRnumForMysql}, #{rowNumToShow}
 </select>
 
+
+	<!-- 숙바 리스트 -->
+	<select id="stayList1" resultMap="resultMapObj">
+	SELECT 
+	    a.staySeq,
+	    a.stayName,
+	    a.stayZipCode,
+	    a.stayAddress,
+	    a.stayAddressDetail,
+	    a.stayLatitude,
+	    a.stayHardness,
+	    a.stayIntroMemo,
+	    a.stayServiceMemo,
+	    a.stayNoticeMemo,
+	    a.regDateTime,
+	    a.modDateTime,
+	    a.regionCd,
+	    a.activeCd,
+	    a.member_memSeq,
+	    a.stDeNy,
+	    a.stayPrice,
+	    
+	    region.ifcdSeq AS regionCd,
+	    region.ifcdName AS regionName,
+	    active.ifcdSeq AS activeCd,
+	    active.ifcdName AS activeName,
+	    b.path
+	
+	    
+	    
+	
+	FROM stay a
+	LEFT JOIN code region ON a.regionCd = region.ifcdSeq
+	LEFT JOIN code active ON a.activeCd = active.ifcdSeq
+	LEFT JOIN uploaded AS b ON a.staySeq = b.pSeq AND b.defaultNy = 1
+	
+	
+	WHERE 1=1
+	
+	
+	  AND a.stDeNy = 0
+
+
+</select>
+
 	
 	<!-- 호스트가 숙박 등록 했을떄 리스트 -->
 	<select id="stayRegistrationList" resultMap="resultMapObj">
