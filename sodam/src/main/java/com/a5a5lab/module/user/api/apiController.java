@@ -38,36 +38,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class apiController {
 
-    private final CodeController codeController;
-	  @Autowired
-	  apiService apiservice;
-	  
+	private final CodeController codeController;
+	@Autowired
+	apiService apiservice;
 
-	  
+	apiController(CodeController codeController) {
+		this.codeController = codeController;
+	}
 
-    apiController(CodeController codeController) {
-        this.codeController = codeController;
-    }
-	  
 //	@RequestMapping(value="/LocationRestaurant")
 //	public String LocationRestaurant(Model model) {
 //		 
-//		return "/user/location/LocationRestaurant";
+//		return "user/location/LocationRestaurant";
 //	}
-	
+
 	@RequestMapping("/LocationRestaurant")
 	public String redirectToDefaultArea() {
-	    return "redirect:/getRestaurants?areaCode=1";
+		return "redirect:/getRestaurants?areaCode=1";
 
 	}
-	
+
 //	 @GetMapping("/getRestaurants")
 //	    public String getRestaurants(@RequestParam("areaCode") String areaCode, Model model) {
 //	        List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode);
 //	        model.addAttribute("restaurantList", list);
-//	        return "/user/location/LocationRestaurant"; 
+//	        return "user/location/LocationRestaurant"; 
 //	    }
-	 
+
 //	@GetMapping("/getRestaurants")
 //	public String getRestaurants(@RequestParam("areaCode") String areaCode,
 //	                             @RequestParam(value = "page", defaultValue = "1") int page,
@@ -78,9 +75,9 @@ public class apiController {
 //	    // 여기 추가
 //	    model.addAttribute("nextPage", page + 1);
 //
-//	    return "/user/location/LocationRestaurant";
+//	    return "user/location/LocationRestaurant";
 //	}
-	
+
 //	@GetMapping("/getRestaurants")
 //	public String getRestaurants(@RequestParam("areaCode") String areaCode,
 //	                             @RequestParam(value = "page", defaultValue = "1") int page,
@@ -111,34 +108,34 @@ public class apiController {
 //	    System.out.println("Start Page: " + vo.getStartPage());
 //	    System.out.println("End Page: " + vo.getEndPage());
 //
-//	    return "/user/location/LocationRestaurant";
+//	    return "user/location/LocationRestaurant";
 //	}
 	@GetMapping("/getRestaurants")
 	public String getRestaurants(@RequestParam("areaCode") String areaCode,
-	                             @RequestParam(value = "page", defaultValue = "1") int page,
-	                             Model model, BaseVo vo) {
+			@RequestParam(value = "page", defaultValue = "1") int page, Model model, BaseVo vo) {
 
-	    vo.setThisPage(page);
-	    vo.setRowNumToShow(5);
-	    vo.setPageNumToShow(5);
+		vo.setThisPage(page);
+		vo.setRowNumToShow(5);
+		vo.setPageNumToShow(5);
 
-	    // 데이터 조회 및 페이징 처리 통합
-	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
-	    
-	    model.addAttribute("restaurantList", list);
+		// 데이터 조회 및 페이징 처리 통합
+		List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
 
-	    model.addAttribute("vo", vo);
-	    model.addAttribute("areaCode", areaCode);
-	    model.addAttribute("areaName", getAreaNameByCode(areaCode));
-	    
-	    // 위도 경도 디버깅용
+		model.addAttribute("restaurantList", list);
+
+		model.addAttribute("vo", vo);
+		model.addAttribute("areaCode", areaCode);
+		model.addAttribute("areaName", getAreaNameByCode(areaCode));
+
+		// 위도 경도 디버깅용
 //	    for (apiDto dto : list) {
 //	        System.out.println("Title: " + dto.getTitle() + ", mapX: " + dto.getMapX() + ", mapY: " + dto.getMapY());
 //	    }
-	    return "/user/location/LocationRestaurant";
+		return "user/location/LocationRestaurant";
+
 	}
 
-	    // 총 개수 및 페이지 수 
+	// 총 개수 및 페이지 수
 //	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode); 
 //	    int totalPages = (int) Math.ceil(totalCount / 10.0);
 //
@@ -151,182 +148,174 @@ public class apiController {
 //	}
 
 	private String getAreaNameByCode(String areaCode) {
-	    switch (areaCode) {
-	        case "1": return "서울";
-	        case "2": return "인천";
-	        case "3": return "대전";
-	        case "4": return "대구";
-	        case "5": return "광주";
-	        case "6": return "부산";
-	        case "7": return "울산";
-	        case "8": return "세종";
-	        case "31": return "경기";
-	        case "32": return "강원";
-	        case "33": return "충북";
-	        case "34": return "충남";
-	        case "35": return "경북";
-	        case "36": return "경남";
-	        case "37": return "전북";
-	        case "38": return "전남";
-	        case "39": return "제주";
-	        default: return "전국";
-	    }
+		switch (areaCode) {
+		case "1":
+			return "서울";
+		case "2":
+			return "인천";
+		case "3":
+			return "대전";
+		case "4":
+			return "대구";
+		case "5":
+			return "광주";
+		case "6":
+			return "부산";
+		case "7":
+			return "울산";
+		case "8":
+			return "세종";
+		case "31":
+			return "경기";
+		case "32":
+			return "강원";
+		case "33":
+			return "충북";
+		case "34":
+			return "충남";
+		case "35":
+			return "경북";
+		case "36":
+			return "경남";
+		case "37":
+			return "전북";
+		case "38":
+			return "전남";
+		case "39":
+			return "제주";
+		default:
+			return "전국";
+		}
 	}
-	
-	
-	
 
-	
-	
 	@GetMapping("/restaurantDetail")
 	public String getRestaurantDetail(@RequestParam("contentId") String contentId, Model model) {
-	    try {
-	        String serviceKey = "ypV%2BIc0IdKPrc0ARu5HqM%2B1vQGs5eCO6y8g1AxfMBEKmaltQYGhonU4ivnxsDAwCu6LSbrI1FjCDA8L5s5OkIA%3D%3D";
-	        String url = "http://apis.data.go.kr/B551011/KorService1/detailCommon1"
-	                + "?ServiceKey=" + serviceKey
-	                + "&contentTypeId=39"
-	                + "&contentId=" + contentId
-	                + "&MobileOS=ETC"
-	                + "&MobileApp=AppTest"
-	                + "&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y"
-	                + "&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y";
-	        
+		try {
+			String serviceKey = "ypV%2BIc0IdKPrc0ARu5HqM%2B1vQGs5eCO6y8g1AxfMBEKmaltQYGhonU4ivnxsDAwCu6LSbrI1FjCDA8L5s5OkIA%3D%3D";
+			String url = "http://apis.data.go.kr/B551011/KorService1/detailCommon1" + "?ServiceKey=" + serviceKey
+					+ "&contentTypeId=39" + "&contentId=" + contentId + "&MobileOS=ETC" + "&MobileApp=AppTest"
+					+ "&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y" + "&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y";
 
-	        URL apiUrl = new URL(url);
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(apiUrl.openStream(), "UTF-8"));
+			URL apiUrl = new URL(url);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(apiUrl.openStream(), "UTF-8"));
 
-	        StringBuilder responseBuilder = new StringBuilder();
-	        String line;
-	        while ((line = reader.readLine()) != null) {
-	            responseBuilder.append(line);
-	        }
-	        reader.close();
+			StringBuilder responseBuilder = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				responseBuilder.append(line);
+			}
+			reader.close();
 
-	        String xmlResponse = responseBuilder.toString();
+			String xmlResponse = responseBuilder.toString();
 
+			System.out.println("====== XML 응답 시작 ======");
+			System.out.println(xmlResponse);
+			System.out.println("====== XML 응답 끝 ======");
 
-	        
-	        System.out.println("====== XML 응답 시작 ======");
-	        System.out.println(xmlResponse);
-	        System.out.println("====== XML 응답 끝 ======");
+			InputSource is = new InputSource(new StringReader(xmlResponse));
+			is.setEncoding("UTF-8");
 
-	        
-	        InputSource is = new InputSource(new StringReader(xmlResponse));
-	        is.setEncoding("UTF-8");
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(is);
 
-	        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder builder = factory.newDocumentBuilder();
-	        Document document = builder.parse(is);
+			Node item = document.getElementsByTagName("item").item(0);
+			if (item != null && item.getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element) item;
+				String homepageFromApi = getTagValue("homepage", element); // ← 여기 추가
+				String homepageUrl = apiservice.extractUrlFromHtml(homepageFromApi);
+				String title = getTagValue("title", element);
+				String overview = getTagValue("overview", element);
+				String addr1 = getTagValue("addr1", element);
+				String addr2 = getTagValue("addr2", element);
+				String firstImage = getTagValue("firstimage", element);
+				String contentIdFromApi = getTagValue("contentid", element);
+				String tel = getTagValue("tel", element);
+				String telname = getTagValue("telname", element);
+				String zipcode = getTagValue("zipcode", element);
+				String mapx = getTagValue("mapx", element);
+				String mapy = getTagValue("mapy", element);
 
-	        Node item = document.getElementsByTagName("item").item(0);
-	        if (item != null && item.getNodeType() == Node.ELEMENT_NODE) {
-	            Element element = (Element) item;
+				model.addAttribute("title", title);
+				model.addAttribute("overview", overview);
+				model.addAttribute("addr1", addr1);
+				model.addAttribute("addr2", addr2);
+				model.addAttribute("firstImage", firstImage);
+				model.addAttribute("contentId", contentIdFromApi);
+				model.addAttribute("tel", tel);
+				model.addAttribute("telname", telname);
+				model.addAttribute("zipcode", zipcode);
+				model.addAttribute("homepage", homepageUrl);
+				model.addAttribute("mapx", mapx);
+				model.addAttribute("mapy", mapy);
+			} else {
+				model.addAttribute("title", "데이터 없음");
+				model.addAttribute("overview", "item 태그가 없습니다.");
+				model.addAttribute("addr1", "-");
+				model.addAttribute("firstImage", "");
+			}
 
-	        String title = getTagValue("title", element);
-	        String overview = getTagValue("overview", element);
-	        String addr1 = getTagValue("addr1", element);
-	        String addr2 = getTagValue("addr2", element);
-	        String firstImage = getTagValue("firstimage", element);
-	        String contentIdFromApi = getTagValue("contentid", element);
-	        String tel = getTagValue("tel", element);
-	        String telname = getTagValue("telname", element);
-	        String zipcode = getTagValue("zipcode", element);
-	        String homepage = getTagValue("homepage", element);
-	        String mapx = getTagValue("mapx", element);
-	        String mapy = getTagValue("mapy", element);
-	        
-	        model.addAttribute("title", title);
-            model.addAttribute("overview", overview);
-            model.addAttribute("addr1", addr1);
-            model.addAttribute("addr2", addr2);
-            model.addAttribute("firstImage", firstImage);
-            model.addAttribute("contentId", contentIdFromApi);
-            model.addAttribute("tel", tel);
-            model.addAttribute("telname", telname);
-            model.addAttribute("zipcode", zipcode);
-            model.addAttribute("homepage", homepage);
-            model.addAttribute("mapx", mapx);
-            model.addAttribute("mapy", mapy);
-        } else {
-            model.addAttribute("title", "데이터 없음");
-            model.addAttribute("overview", "item 태그가 없습니다.");
-            model.addAttribute("addr1", "-");
-            model.addAttribute("firstImage", "");
-	    }
-	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        model.addAttribute("title", "API 오류");
-	        model.addAttribute("overview", "API 호출 중 문제가 발생했습니다.");
-	        model.addAttribute("addr1", "-");
-	        model.addAttribute("firstImage", "");
-	    }    
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("title", "API 오류");
+			model.addAttribute("overview", "API 호출 중 문제가 발생했습니다.");
+			model.addAttribute("addr1", "-");
+			model.addAttribute("firstImage", "");
+		}
 
-	    return "user/location/RestaurantDetail";
+		return "user/location/RestaurantDetail";
 	}
 
 	private String getTagValue(String tag, Element element) {
-	    NodeList nodeList = element.getElementsByTagName(tag);
-	    if (nodeList.getLength() > 0) {
-	        Node node = nodeList.item(0);
-	        return node.getTextContent();
-	    }
-	    return "";
+		NodeList nodeList = element.getElementsByTagName(tag);
+		if (nodeList.getLength() > 0) {
+			Node node = nodeList.item(0);
+			return node.getTextContent();
+		}
+		return "";
 	}
-	
 
-	//카카오
-	//카카오로그인 클릭시 불러오는 메서드
+	// 카카오
+	// 카카오로그인 클릭시 불러오는 메서드
 	@RequestMapping("/kakaoCallback")
-	public String kakaoCallback(@RequestParam("code") String code) throws JsonMappingException, JsonProcessingException {
+	public String kakaoCallback(@RequestParam("code") String code)
+			throws JsonMappingException, JsonProcessingException {
 		System.out.println("코드 한번 보자" + code);
-		 // 1. access token 요청 준비
-	    RestTemplate restTemplate = new RestTemplate();
+		// 1. access token 요청 준비
+		RestTemplate restTemplate = new RestTemplate();
 
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-	    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-	    params.add("grant_type", "authorization_code");
-	    params.add("client_id", "dd6ae05f675628e6a259a81bde3a53cb"); // ★카카오 앱 REST API 키
-	    params.add("redirect_uri", "http://localhost:8080/kakaoCallback"); // ★redirectUri와 일치해야 함
-	    params.add("code", code);
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", "dd6ae05f675628e6a259a81bde3a53cb"); // ★카카오 앱 REST API 키
+		params.add("redirect_uri", "http://localhost:8080/kakaoCallback"); // ★redirectUri와 일치해야 함
+		params.add("code", code);
 
-	    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-	    // 2. POST 요청 보내기
-	    ResponseEntity<String> response = restTemplate.postForEntity(
-	            "https://kauth.kakao.com/oauth/token",
-	            request,
-	            String.class
-	    );
+		// 2. POST 요청 보내기
+		ResponseEntity<String> response = restTemplate.postForEntity("https://kauth.kakao.com/oauth/token", request,
+				String.class);
 
-	    // 3. 응답 출력
-	    System.out.println("토큰 전체 응답: " + response.getBody());
-	    
-	    //전체응답에서 원하는 값만 출력하기
-	    ObjectMapper objectMapper = new ObjectMapper();
-	    JsonNode jsonNode = objectMapper.readTree(response.getBody());
+		// 3. 응답 출력
+		System.out.println("토큰 전체 응답: " + response.getBody());
 
-	    String accessToken = jsonNode.get("access_token").asText();
-	    String idToken = jsonNode.get("id_token").asText();
-	    System.out.println("액세스 토큰: " + accessToken);
-	    System.out.println("아이디 토큰: " + idToken);
+		// 전체응답에서 원하는 값만 출력하기
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode jsonNode = objectMapper.readTree(response.getBody());
+
+		String accessToken = jsonNode.get("access_token").asText();
+		String idToken = jsonNode.get("id_token").asText();
+		System.out.println("액세스 토큰: " + accessToken);
+		System.out.println("아이디 토큰: " + idToken);
 //	    String scope = jsonNode.get("scope").asText();
 //	    System.out.println("scope: " + scope);
-	    
-	    //4. 아이디 토큰으로 사용자 정보 불러오기
-	    
-	    
-	    
 
-	    return "redirect:/indexUser";
+		// 4. 아이디 토큰으로 사용자 정보 불러오기
+
+		return "redirect:/indexUser";
 	}
-	
-	
-
-	
-
-	
 
 }

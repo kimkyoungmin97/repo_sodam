@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -325,6 +328,16 @@ public class apiService {
 	    return "";
 	}
     
+	public String extractUrlFromHtml(String html) {
+	    if (html == null) return null;
+	    String unescaped = StringEscapeUtils.unescapeHtml4(html);
+	    Pattern pattern = Pattern.compile("href=\\\"(.*?)\\\"");
+	    Matcher matcher = pattern.matcher(unescaped);
+	    if (matcher.find()) {
+	        return matcher.group(1);
+	    }
+	    return null;
+	}
     
     
     

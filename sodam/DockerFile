@@ -1,5 +1,5 @@
-# alpine linux included openjdk 21
-FROM openjdk:21-jdk
+# alpine linux included openjdk 23
+FROM openjdk:23-jdk
 
 # project directory
 ENV project="sodam"

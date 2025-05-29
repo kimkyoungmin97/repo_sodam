@@ -454,7 +454,8 @@
 								<div class="col-lg-10 col-12" th:if="${zipcode != null and !zipcode.isEmpty()}">
 									<small>우편 번호<span style="color: red;"></span></small>
 									
-								<input type="text" class="form-control" th:value="${zipcode}" id="zipcode" name="zipcode"/> 
+								<input type="text" class="form-control" th:value="${zipcode}" id="zipcode" name="zipcode"
+       								style="background-color: white; color: #6c757d; pointer-events: none; user-select: none; cursor: not-allowed;" />
 								<div style="color: red;" id="checkInDateError"></div>
 									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
 									
@@ -463,9 +464,9 @@
 							
 							<div class="mb-5">
 								<div class="col-lg-10 col-12" th:if="${homepage != null and !homepage.isEmpty()}">
-									<small>우편 번호<span style="color: red;"></span></small>
+									<small>홈페이지<span style="color: red;"></span></small>
 									
-								<input type="text" class="form-control" th:href="${homepage}" id="homepage" name="homepage"/> 
+								<a th:href="${homepage}" target="_blank" class="form-control" th:text="${homepage}"></a>
 								<div style="color: red;" id="checkInDateError"></div>
 									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
 									
@@ -475,7 +476,8 @@
 								<div class="col-lg-10 col-12" th:if="${telname != null and !telname.isEmpty()}">
 									<small>전화명<span style="color: red;"></span></small>
 									
-								<input type="text" class="form-control" th:value="${telname}" id="telname" name="telname"/> 
+								<input type="text" class="form-control" th:value="${telname}" id="telname" name="telname"
+								style="background-color: white; color: #6c757d; pointer-events: none; user-select: none; cursor: not-allowed;"/> 
 								<div style="color: red;" id="checkOutDateError"></div>
 									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
 									
@@ -485,7 +487,8 @@
 								<div class="col-lg-10 col-12" th:if="${tel != null and !tel.isEmpty()}">
 									<small>전화번호<span style="color: red;"></span></small>
 									
-								<input type="text" class="form-control" th:value="${tel}" id="tel" name="tel"/> 
+								<input type="text" class="form-control" th:value="${tel}" id="tel" name="tel"
+								style="background-color: white; color: #6c757d; pointer-events: none; user-select: none; cursor: not-allowed;"/> 
 								<div style="color: red;" id="checkInNameError"></div>
 									<!--  <input type="text" class="form-control"  id="reservationDate" name="reservationDate" placeholder="날짜를 선택하세요"/>	 -->
 									
@@ -495,7 +498,8 @@
 								<div class="col-lg-10 col-12" th:if="${addr1 != null and !addr1.isEmpty()}">
 									<small>주소<span style="color: red;"></span></small>
 									
-								<input type="text" class="form-control" th:value="${addr1}" id="addr1" name="addr1"/> 
+								<input type="text" class="form-control" th:value="${addr1}" id="addr1" name="addr1"
+								style="background-color: white; color: #6c757d; pointer-events: none; user-select: none; cursor: not-allowed;"/> 
 								<div style="color: red;" id="checkInTelError"></div>
 									
 									
@@ -506,7 +510,8 @@
 								<div class="col-lg-10 col-12" th:if="${addr2 != null and !addr2.isEmpty()}">
 									<small>주소<span style="color: red;"></span></small>
 									
-								<input type="text" class="form-control" th:value="${addr2}" id="addr2" name="addr2"/> 
+								<input type="text" class="form-control" th:value="${addr2}" id="addr2" name="addr2"
+								style="background-color: white; color: #6c757d; pointer-events: none; user-select: none; cursor: not-allowed;"/> 
 								<div style="color: red;" id="checkInTelError"></div>
 									
 									
@@ -652,7 +657,7 @@
 								<div class="my-8">
 									<div class="mb-5">
 										<!-- text -->
-										<h4 class="mb-1">숙소 소개</h4>
+										<h4 class="mb-1"></h4>
 										<p class="mb-0" th:utext="${overview}">
 										</p>
 									</div>
