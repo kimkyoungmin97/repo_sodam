@@ -39,8 +39,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class apiController {
-
-	private final CodeController codeController;
+	@Autowired
+	CodeController codeController;
+	
 	@Autowired
 	apiService apiservice;
 	
