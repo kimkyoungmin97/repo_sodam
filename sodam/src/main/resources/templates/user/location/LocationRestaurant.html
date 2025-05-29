@@ -107,20 +107,16 @@
                               </div>
                            </div>
                            <!-- 날씨위젯 -->
-                           <div class="col-md-6 d-flex">
+<div class="col-md-6 d-flex">
     <div class="card shadow-sm w-100">
         <h5 class="px-6 py-4 bg-transparent mb-0">전국 날씨</h5>
         <ul class="list-group list-group-flush">
             <li class="list-group-item px-4 py-3">
-                <div class="row">
-                    <div class="col" style="padding: 0%; text-align: center;" th:each="weather : ${forecastList}">
+                <div class="row text-center">
+                    <div class="col" th:each="weather : ${forecastList}">
                         <div th:text="${#dates.format(weather.date, 'E')}"></div>
                         <div th:text="${#dates.format(weather.date, 'MM.dd')}"></div>
-                    </div>
-                </div>
-                <div class="row" style="padding: 10px;" th:each="weather : ${forecastList}">
-                    <div class="col" style="text-align: center;">
-                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.weatherIcon} + '@2x.png'}" />
+                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.weatherIcon} + '@2x.png'}" alt="날씨 아이콘" />
                         <div th:text="${weather.temperature + '℃'}"></div>
                     </div>
                 </div>
@@ -128,6 +124,7 @@
         </ul>
     </div>
 </div>
+
                         </div>
                         <div class="row card shadow-sm mb-4 p-4">
                            <!-- list icon -->
