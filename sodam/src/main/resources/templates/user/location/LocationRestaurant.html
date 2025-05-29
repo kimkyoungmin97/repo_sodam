@@ -108,40 +108,26 @@
                            </div>
                            <!-- 날씨위젯 -->
                            <div class="col-md-6 d-flex">
-                              <div class="card shadow-sm w-100">
-                                 <h5 class="px-6 py-4 bg-transparent mb-0">전국 날씨</h5>
-                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item px-4 py-3">
-                                       <div class="row">
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             월<br>오늘
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             화<br>4.30
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             수<br>5.01
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             목<br>5.02
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             금<br>5.03
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             토<br>5.04
-                                          </div>
-                                          <div class="col" style="padding: 0%; text-align: center;">
-                                             일<br>5.05
-                                          </div>
-                                       </div>
-                                       <div class="row" style="padding: 10px;">
-                                          <img src="/user/template/assets/images/날씨2.png"/>
-                                       </div>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
+    <div class="card shadow-sm w-100">
+        <h5 class="px-6 py-4 bg-transparent mb-0">전국 날씨</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-4 py-3">
+                <div class="row">
+                    <div class="col" style="padding: 0%; text-align: center;" th:each="weather : ${forecastList}">
+                        <div th:text="${#dates.format(weather.date, 'E')}"></div>
+                        <div th:text="${#dates.format(weather.date, 'MM.dd')}"></div>
+                    </div>
+                </div>
+                <div class="row" style="padding: 10px;" th:each="weather : ${forecastList}">
+                    <div class="col" style="text-align: center;">
+                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.weatherIcon} + '@2x.png'}" />
+                        <div th:text="${weather.temperature + '℃'}"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
                         </div>
                         <div class="row card shadow-sm mb-4 p-4">
                            <!-- list icon -->

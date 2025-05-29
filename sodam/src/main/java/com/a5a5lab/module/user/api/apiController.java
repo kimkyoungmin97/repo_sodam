@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -41,7 +43,10 @@ public class apiController {
 	private final CodeController codeController;
 	@Autowired
 	apiService apiservice;
-
+	
+	@Autowired
+	WeatherService weatherService;
+	
 	apiController(CodeController codeController) {
 		this.codeController = codeController;
 	}
@@ -112,28 +117,44 @@ public class apiController {
 //	}
 	@GetMapping("/getRestaurants")
 	public String getRestaurants(@RequestParam("areaCode") String areaCode,
-			@RequestParam(value = "page", defaultValue = "1") int page, Model model, BaseVo vo) {
+	        @RequestParam(value = "page", defaultValue = "1") int page, Model model, BaseVo vo) {
 
-		vo.setThisPage(page);
-		vo.setRowNumToShow(5);
-		vo.setPageNumToShow(5);
+	    vo.setThisPage(page);
+	    vo.setRowNumToShow(5);
+	    vo.setPageNumToShow(5);
 
-		// 데이터 조회 및 페이징 처리 통합
-		List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
+	    // 맛집 리스트 조회
+	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
 
-		model.addAttribute("restaurantList", list);
+	    model.addAttribute("restaurantList", list);
+	    model.addAttribute("vo", vo);
+	    model.addAttribute("areaCode", areaCode);
+	    model.addAttribute("areaName", getAreaNameByCode(areaCode));
 
-		model.addAttribute("vo", vo);
-		model.addAttribute("areaCode", areaCode);
-		model.addAttribute("areaName", getAreaNameByCode(areaCode));
+	    if (!list.isEmpty()) {
+	        apiDto first = list.get(0);  // 첫 번째 맛집 정보를 가져옴
 
-		// 위도 경도 디버깅용
-//	    for (apiDto dto : list) {
-//	        System.out.println("Title: " + dto.getTitle() + ", mapX: " + dto.getMapX() + ", mapY: " + dto.getMapY());
-//	    }
-		return "user/location/LocationRestaurant";
+	        if (first.getMapY() != null && first.getMapX() != null) {
+	            // 날씨 정보 가져오기
+	            List<WeatherDto> forecast = weatherService.get5DayForecast(first.getMapY(), first.getMapX());
 
+	            // 날짜 문자열(String)을 Date 객체로 변환
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	            for (WeatherDto weather : forecast) {
+	                try {
+	                    weather.setDate(sdf.parse(weather.getDateString()));
+	                } catch (ParseException e) {
+	                    e.printStackTrace(); // 예외 처리 필요시 로그 또는 에러 처리
+	                }
+	            }
+
+	            model.addAttribute("forecastList", forecast);
+	        }
+	    }
+
+	    return "user/location/LocationRestaurant";
 	}
+
 
 	// 총 개수 및 페이지 수
 //	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode); 
