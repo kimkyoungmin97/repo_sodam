@@ -326,15 +326,11 @@
 	}
 	
 </script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script>
-  Kakao.init('76e67f4c96cf4197b12d3891557023c9'); // 카카오 앱의 JavaScript 키
-</script>
+
 <script>
   document.getElementById('btnKakao').addEventListener('click', function () {
-    Kakao.Auth.authorize({
-      redirectUri: 'http://localhost:8080/kakaoCallback' // 백엔드 콜백 주소
-    });
+
+	window.location.href="https://kauth.kakao.com/oauth/authorize?client_id=dd6ae05f675628e6a259a81bde3a53cb&redirect_uri=http://localhost:8080/kakaoCallback&response_type=code";
   });
 </script>
   

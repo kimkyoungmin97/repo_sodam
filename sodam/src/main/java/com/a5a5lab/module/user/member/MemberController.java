@@ -68,6 +68,7 @@ public class MemberController {
 //			if (matchesBcrypt(memberDto.getMemPw(), rtt.getMemPw(), 10)) {
 				
 				returnMap.put("rt", "success");
+				httpSession.setAttribute("sessLoginType","local");
 				httpSession.setAttribute("sessSeqUser", rtt.getMemSeq()); //사용자Seq
 				httpSession.setAttribute("sessIdUser", rtt.getMemId()); // ID
 				httpSession.setAttribute("sessNameUser", rtt.getMemName());   //이름
@@ -89,7 +90,8 @@ public class MemberController {
 	public Map<String, Object> SignoutUser1(MemberDto memberDto,HttpSession httpSession) throws Exception {
 			
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-			
+		
+		httpSession.setAttribute("sessLoginType", null);
 		httpSession.setAttribute("sessSeqUser", null);
 		httpSession.setAttribute("sessIdUser", null);
 		httpSession.setAttribute("sessNameUser", null);
@@ -151,8 +153,7 @@ public class MemberController {
 	
 	//회원가입 유형 선택 보여주기
 	@RequestMapping(value="/SignupUserSelect")
-	public String SignupUserSelect(@RequestParam("code") String code) {
-		System.out.println("코드 한번 보자" + code);
+	public String SignupUserSelect() {
 		
 		return "user/signup/SignupUserSelect";
 	}
