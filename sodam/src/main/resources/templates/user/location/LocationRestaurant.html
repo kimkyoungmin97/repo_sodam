@@ -83,7 +83,29 @@
                </aside>
                <section class="col-lg-9 col-md-12">
                         <div class="row g-2 mb-4 ">
-                           <div class="col-md-6 d-flex">
+
+                           <!-- 날씨위젯 -->
+<div class="col-md-12">
+    <div class="card shadow-sm w-100">
+        <h5 class="px-6 py-4 bg-transparent mb-0">전국 날씨</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item px-4 py-3">
+                <div class="container">
+                    <div class="row text-center" 
+                         th:each="row : ${#numbers.sequence(0, forecastList.size() / 5)}">
+                        <div class="col" th:each="weather : ${forecastList.subList(row * 5, (row * 5 + 5) > forecastList.size() ? forecastList.size() : (row * 5 + 5))}">
+                            <div th:text="${#dates.format(weather.date, 'E')}"></div>
+                            <div th:text="${#dates.format(weather.date, 'MM.dd')}"></div>
+                            <img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.weatherIcon} + '@2x.png'}" alt="날씨 아이콘" />
+                            <div th:text="${weather.temperature + '℃'}"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+                           <div class="col-md-12">
                               <div class="card shadow-sm w-100">
                                  <h5 class="px-6 py-4 bg-transparent mb-0">지역 관광지</h5>
                                  <ul class="list-group list-group-flush">
@@ -106,24 +128,6 @@
                                  </ul>
                               </div>
                            </div>
-                           <!-- 날씨위젯 -->
-<div class="col-md-6 d-flex">
-    <div class="card shadow-sm w-100">
-        <h5 class="px-6 py-4 bg-transparent mb-0">전국 날씨</h5>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item px-4 py-3">
-                <div class="row text-center">
-                    <div class="col" th:each="weather : ${forecastList}">
-                        <div th:text="${#dates.format(weather.date, 'E')}"></div>
-                        <div th:text="${#dates.format(weather.date, 'MM.dd')}"></div>
-                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.weatherIcon} + '@2x.png'}" alt="날씨 아이콘" />
-                        <div th:text="${weather.temperature + '℃'}"></div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
 
                         </div>
                         <div class="row card shadow-sm mb-4 p-4">
