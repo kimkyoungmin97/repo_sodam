@@ -38,6 +38,7 @@ public class StayController {
 		vo.setParamsPaging(stayService.selectOneCount(vo));
 		
 		model.addAttribute("list", stayService.stayList(vo));
+		model.addAttribute("list1", stayService.stayList1());
 		
 		model.addAttribute("vo", vo);
 		
