@@ -31,19 +31,28 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import com.a5a5lab.module.common.BaseVo;
+import com.a5a5lab.module.user.member.MemberDto;
+import com.a5a5lab.module.user.member.MemberService;
 import com.a5a5lab.module.xdm.code.CodeController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpSession;
 @Controller
 public class apiController {
+	  @Autowired
+	  apiService apiservice;
+	  @Autowired
+	  MemberService memberService;
+	 
+	  
+	
 	@Autowired
 	CodeController codeController;
 	
-	@Autowired
-	apiService apiservice;
+	
 	
 	@Autowired
 	WeatherService weatherService;
@@ -147,7 +156,7 @@ public class apiController {
 	                try {
 	                    weather.setDate(sdf.parse(weather.getDateString()));
 	                } catch (ParseException e) {
-	                    e.printStackTrace(); // 예외 처리 필요시 로그 또는 에러 처리
+	                    e.printStackTrace();
 	                }
 	            }
 
@@ -298,16 +307,20 @@ public class apiController {
 		}
 		return "";
 	}
+	
+	//카카오
+	//카카오로그인 클릭시 불러오는 메서드
+	@RequestMapping("/kakaoLogin")
+	public void kakaoLogin() {
+		
+	}
 
 	// 카카오
 	// 카카오로그인 클릭시 불러오는 메서드
 	@RequestMapping("/kakaoCallback")
-	public String kakaoCallback(@RequestParam("code") String code)
-			throws JsonMappingException, JsonProcessingException {
-		System.out.println("코드 한번 보자" + code);
-		// 1. access token 요청 준비
-		RestTemplate restTemplate = new RestTemplate();
-
+	public String kakaoCallback(@RequestParam("code") String code,HttpSession httpSession,MemberDto dto) throws JsonMappingException, JsonProcessingException {
+		 // 1. access token 요청 준비
+	    RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -319,27 +332,72 @@ public class apiController {
 
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-		// 2. POST 요청 보내기
-		ResponseEntity<String> response = restTemplate.postForEntity("https://kauth.kakao.com/oauth/token", request,
-				String.class);
+	    // 2. POST 요청 보내기
+	    ResponseEntity<String> response = restTemplate.postForEntity(
+	            "https://kauth.kakao.com/oauth/token",
+	            request,
+	            String.class
+	    );
+	    
+	    //전체응답에서 원하는 값만 출력하기
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    JsonNode jsonNode = objectMapper.readTree(response.getBody());
+		
 
 		// 3. 응답 출력
 		System.out.println("토큰 전체 응답: " + response.getBody());
 
-		// 전체응답에서 원하는 값만 출력하기
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonNode jsonNode = objectMapper.readTree(response.getBody());
-
-		String accessToken = jsonNode.get("access_token").asText();
-		String idToken = jsonNode.get("id_token").asText();
-		System.out.println("액세스 토큰: " + accessToken);
-		System.out.println("아이디 토큰: " + idToken);
-//	    String scope = jsonNode.get("scope").asText();
-//	    System.out.println("scope: " + scope);
-
-		// 4. 아이디 토큰으로 사용자 정보 불러오기
-
-		return "redirect:/indexUser";
+	    String accessToken = jsonNode.get("access_token").asText();
+	    
+	    // 엑세스토큰으로 닉네임 불러오기
+	    dto.setMemName(getKakaoInfo(accessToken));
+	    //닉네임에 맞는 회원이 있나 확인
+	    MemberDto rtt = memberService.kakaoLogin(dto);
+	    if(rtt == null) {
+	    	//닉네임에 맞는 회원이 없을시 회원가입폼으로 이동
+	    	return"redirect:/SignupUserSelect";
+	    	
+	    }else {
+	    	//닉네임에 맞는 회원이 있을시 세션에 값저장하고 로그인처리
+	    	httpSession.setAttribute("sessLoginType","kakao");
+	    	httpSession.setAttribute("sessSeqUser", rtt.getMemSeq()); //사용자Seq
+	    	httpSession.setAttribute("sessIdUser", rtt.getMemId()); // ID
+	    	httpSession.setAttribute("sessNameUser", rtt.getMemName());   //이름
+	    	httpSession.setAttribute("sessMemTypeUser", rtt.getMemTypeCd());   //회원타입
+	    	
+	    	return "redirect:/indexUser";
+	    }
+	
 	}
+	
+	//악세스토큰으로 사용자정보가져오기
+	public String getKakaoInfo(String accessToken) throws JsonMappingException, JsonProcessingException {
+		  // 2. 사용자 정보 요청
+	    RestTemplate restTemplate = new RestTemplate();
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set("Authorization", "Bearer " + accessToken);
+	    HttpEntity<String> request = new HttpEntity<>(headers);
+	    // 2. POST 요청 보내기
+	    ResponseEntity<String> response = restTemplate.postForEntity(
+	    		"https://kapi.kakao.com/v2/user/me",
+	            request,
+	            String.class
+	    );
+	    // 3. 응답 출력
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    JsonNode userInfo = objectMapper.readTree(response.getBody());
+	    // 4. 원하는 정보 추출
+	    String nickname = userInfo.path("properties").path("nickname").asText();
+	    
+	    return nickname;
+	    
+	}
+	
+
+	
+	
+	
+
+	
 
 }

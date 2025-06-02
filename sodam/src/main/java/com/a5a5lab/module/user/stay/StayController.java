@@ -25,7 +25,13 @@ public class StayController {
 	FileUploadedService fileUploadedService;
 	//사용자 인덱스 화면 보여주기
 	@RequestMapping(value="/indexUser")
-	public String indexUser() {
+	public String indexUser(HttpSession httpSession) {
+		System.out.println("시작");
+		System.out.println(httpSession.getAttribute("sessLoginType"));
+		System.out.println(httpSession.getAttribute("sessSeqUser"));
+		System.out.println(httpSession.getAttribute("sessIdUser"));
+		System.out.println(httpSession.getAttribute("sessNameUser"));
+		System.out.println(httpSession.getAttribute("sessMemTypeUser"));
 		
 		return "user/index/IndexUser";
 	}

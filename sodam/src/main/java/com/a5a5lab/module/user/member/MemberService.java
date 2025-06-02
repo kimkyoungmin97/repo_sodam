@@ -38,5 +38,9 @@ public class MemberService {
 	public int userUpdate(MemberDto memberDto) {
 		return memberDao.userUpdate(memberDto);
 	}
+	//카카오 로그인
+	public MemberDto kakaoLogin(MemberDto memberDto) {
+		return memberDao.kakaoLogin(memberDto);
+	}
 	
 }
