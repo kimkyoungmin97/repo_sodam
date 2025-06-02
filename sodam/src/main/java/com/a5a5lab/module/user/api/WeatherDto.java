@@ -25,20 +25,20 @@ public class WeatherDto {
 		return currentTemperature;
 	}
 	 public void setDate(String dateString) {
-	        this.dateString = dateString;
-	    }
+        this.dateString = dateString;
+    }
 
-	    public void setDate(Date date) {
-	        this.date = date;
-	    }
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	    public String getDateString() {
-	        return dateString;
-	    }
+    public String getDateString() {
+        return dateString;
+    }
 
-	    public Date getDate() {
-	        return date;
-	    }
+    public Date getDate() {
+        return date;
+	}
 	
 	public double getTemperature() {
 		return temperature;
