@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div>
+
+
+<body>
+
+<div th:replace="~{xdm/include/header :: header}"></div>
+<div th:replace="~{xdm/include/sidebar :: sidebar}"></div>
+  
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>숙박 등록 요청 관리</h1>
+
+    </div>
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><strong>숙박요청 관리</strong></h5>
+
+<!--               <form  name="formList"  id="formList" method="post" autocomplete="OFF"> -->
+<!--               		<input type="hidden" id="thisPage" name="thisPage"  th:value="${vo.thisPage}" default="1"/> -->
+<!-- 					<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}" /> -->
+<!-- 					<input type="hidden" name="ifcgSeq"> -->
+					
+                <div class="row my-3">
+                  <div class="col-2">
+                    <select class="form-select" aria-label="Default select example" id="shDelNy" name="shDelNy">
+	                 	<option value="" >삭제여부</option>
+						<option value="1" >Y</option>
+						<option value="0" >N</option>     
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <select class="form-select" aria-label="Default select example" id="shUseNy" name="shUseNy">
+                      	<option value="" >사용여부</option>
+						<option value="1" >Y</option>
+						<option value="0" >N</option>
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <select class="form-select" aria-label="Default select example" id="shOptionDate" name="shOptionDate">
+                     	<option value="" >날짜</option>
+						<option value="1" >등록일</option>
+						<option value="2" >수정일</option>
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <div class="form-floating-2">
+                      <input type="text" class="form-control" id="shDateStart" name="shDateStart" >
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <div class="form-floating-2" >
+                      <input type="text" class="form-control" id="shDateEnd" name="shDateEnd" >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2">
+                    <select class="form-select" aria-label="Default select example" id="shOption" name="shOption">
+                      		<option value="" >검색구분</option>
+							<option value="1" >코드그룹 코드</option>
+							<option value="2" >코드그룹 이름</option>
+                    </select>
+                  </div>
+                  <div class="col-2">
+                    <div class="form-floating-2">
+                      <input type="search" class="form-control" id="shValue" name="shValue" placeholder="검색어" >
+                    </div>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-light btn btn-outline-dark" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button type="button" class="btn btn-light btn btn-outline-dark" id="btnReload"><i class="fa-solid fa-rotate-right"></i></button>
+                  </div>
+                </div>
+              
+                <div>
+                  <div class="row" style="margin-top: 2%;">
+                   <div class="col">
+                     <strong>Total:<span ></span></strong>
+                   </div>
+                   <div class="col-2">
+                     <select class="form-select" aria-label="Default select example" >
+						<option >5</option>
+						<option >10</option>
+						<option >15</option>
+                     </select>
+                   </div>
+                 </div>
+               
+                 <div class="row">
+                   <div class="col">
+                   
+                     <table class="table" style="text-align: center;">
+                      <thead>
+                        <tr>
+                          <th><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></th>
+                          <th>#</th>
+                          <th>숙박이름</th>
+                          <th>주소</th>
+                          <th>지역</th>
+                          <th>가격</th>                      
+                          <th>등록일</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	<tr  >
+                      		<td colspan="7" style="text-align:center;">
+                      		<p>There is no data!</p>
+                      		
+                      		</td>
+                      	</tr>
+                        <tr  th:each="list : ${list}" >
+                          <td><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></td>
+                          <td ></td>
+                          <td th:text="${list.stayName}"></td>
+                          <td th:text="${list.stayAddress}"></td>
+                          <td th:text="${list.regionCd}"></td>
+                          <td th:text="${list.stayPrice}"></td>
+                          <td th:text="${list.regDateTime}"></td>
+                      
+                        </tr>
+                      </tbody>
+                      </table>
+                   </div>
+                 </div>
+<!--                  <div class="row"> -->
+<!--                    <div class="col"> -->
+<!--                      <nav aria-label="Page navigation example" > -->
+<!--                        <ul class="pagination justify-content-center"> -->
+<!-- 	                         <li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;"> -->
+<!-- 							<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|"> -->
+<!-- 								<i class="fa-solid fa-angle-left"></i> -->
+<!-- 							</a> -->
+<!-- 						</li> -->
+<!-- 						<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;"> -->
+<!-- 							<a class="page-link"  th:attr="onclick=|goList('${num}')|" th:text="${num}">${i.index}</a> -->
+<!-- 						</li> -->
+<!-- 						<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;"> -->
+<!-- 							<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|"> -->
+<!-- 								<i class="fa-solid fa-angle-right"></i> -->
+<!-- 							</a> -->
+<!-- 						</li> -->
+<!--                        </ul> -->
+<!--                      </nav> -->
+<!--                    </div> -->
+<!--                  </div> -->
+                 <div class="row">
+                   <div class="col" style="text-align: right;">
+                     <div>
+                       
+                       <button type="button" id="btnForm" class="btn btn-primary"><i class="fa-solid fa-plus"></i></button>
+                       <button type="button" class="btn btn-success">등록하기</button>
+<!--                        <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button> -->
+<!--                        <button type="button" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></button> -->
+                    </div>
+                   </div>
+                 </div>
+              </div>
+<!--              </form> -->
+            
+           
+             
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  
+  <div th:replace="~{xdm/include/footer :: footer}"></div>
+ 
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+ <div th:replace="~{xdm/include/script :: script}"></div>
+ 
+ 
+  
+  <script type="text/javascript">
+  	
+  let formList = document.getElementById("formList");
+  let seq = document.querySelector("input[name=ifcgSeq]");	
+  
+   function goList(thisPage){ 
+	   formList.action ="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("thisPage").value=thisPage;
+	   document.getElementById("formList").submit(); 
+   }
+   function showList(value){
+	   document.getElementById("rowNumToShow").value=value;
+	   formList.action ="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("formList").submit(); 
+	   
+   }
+   document.getElementById("btnSearch").onclick=function() {
+	   formList.action="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("formList").submit(); 
+	   
+   }
+   document.getElementById("btnReload").onclick=function() {
+	   formList.action="/sodam/xdm/CodeGroupXdmList";
+	   document.getElementById("shDelNy").value=0;
+	   document.getElementById("shUseNy").value=1;
+	   document.getElementById("shOption").value="";
+	   document.getElementById("shValue").value="";
+	   document.getElementById("shOptionDate").value="";
+	   document.getElementById("shDateStart").value="";
+	   document.getElementById("shDateEnd").value="";
+	   document.getElementById("formList").submit(); 
+	   
+   }
+   document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	}
+	goForm = function (keyValue) {
+	    seq.value = keyValue;
+	    formList.action ="/sodam/xdm/CodeGroupXdmForm";
+	    formList.submit();
+	}
+  </script>
+
+</body>
+
+
+ 
+</html>

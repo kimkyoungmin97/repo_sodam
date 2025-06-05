@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.a5a5lab.module.xdm.stayXdm.StayXdmDao">
+	<resultMap id="resultMapObj" type="com.a5a5lab.module.xdm.stayXdm.StayXdmDto"></resultMap>
+	
+	
+		<!-- 숙바 리스트 -->
+	<select id="stayXdmList" resultMap="resultMapObj">
+SELECT 
+    a.staySeq,
+    a.stayName,
+    a.stayZipCode,
+    a.stayAddress,
+    a.stayAddressDetail,
+    a.stayLatitude,
+    a.stayHardness,
+    a.stayIntroMemo,
+    a.stayServiceMemo,
+    a.stayNoticeMemo,
+    a.regDateTime,
+    a.modDateTime,
+    a.regionCd,
+    a.activeCd,
+    a.member_memSeq,
+    a.stDeNy,
+    a.stayPrice,
+    
+    region.ifcdSeq AS regionCd,
+    region.ifcdName AS regionName,
+    active.ifcdSeq AS activeCd,
+    active.ifcdName AS activeName
+ 
+
+    
+   
+
+FROM stay a
+LEFT JOIN code region ON a.regionCd = region.ifcdSeq
+LEFT JOIN code active ON a.activeCd = active.ifcdSeq
+
+
+
+WHERE 1=1
+  <if test="shOption == 4 and shRegion != null and shRegion != ''">
+    AND a.regionCd IN
+    <foreach item="region" index="index" collection="shRegion.split(',')" open="(" separator="," close=")">
+      #{region}
+    </foreach>
+  </if>
+
+  <if test="shValue != null and shValue != ''">
+    AND (
+      a.stayName LIKE CONCAT('%', #{shValue}, '%')
+      OR a.stayAddress LIKE CONCAT('%', #{shValue}, '%')
+    )
+  </if>
+        <choose>
+            <when test="shOption == 1">
+                AND a.stayName LIKE CONCAT('%', #{shValue}, '%')
+            </when>
+         
+            <when test="shOption == 4">
+                AND a.futsalRegion = (
+                    CASE 
+                        WHEN #{shValue} = '서울' THEN 16
+                        WHEN #{shValue} = '인천' THEN 17
+                        WHEN #{shValue} = '대전' THEN 18
+                        WHEN #{shValue} = '대구' THEN 19
+                        WHEN #{shValue} = '광주' THEN 20
+                        WHEN #{shValue} = '울산' THEN 21
+                        WHEN #{shValue} = '부산' THEN 22
+                        ELSE -1
+                    END
+                )
+            </when>
+            
+        </choose>
+  AND a.stDeNy = 0
+  AND a.activeCd = 9
+  
+
+GROUP BY a.staySeq
+ORDER BY a.regDateTime DESC
+<!-- LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+</select>
+	
+	
+	
+	
+</mapper>

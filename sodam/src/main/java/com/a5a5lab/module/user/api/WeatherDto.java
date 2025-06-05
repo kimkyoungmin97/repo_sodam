@@ -8,9 +8,14 @@ public class WeatherDto {
 	private double temperature;
 	private String weatherIcon;
 	private String description;
+//	----
 	public String getDateString() {
 		return dateString;
 	}
+
+	 public void setDate(String dateString) {
+        this.dateString = dateString;
+    }
 	public void setDateString(String dateString) {
 		this.dateString = dateString;
 	}
@@ -20,6 +25,7 @@ public class WeatherDto {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	public double getTemperature() {
 		return temperature;
 	}

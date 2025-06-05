@@ -10,81 +10,49 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 	<script src="/user/template/assets/js/vendors/validation.js"></script>
-	<main >
-		<!-- section -->
-		<section>
-			<div class="container" >
-				<!-- row -->
-				<div class="row" >
-					<!-- col -->
-					
-					<!-- col -->
-					<!-- col -->
-					
-					
-					
-					
-					
-					
-					
-					<div class="col-lg-9 col-md-8 col-12">
-						<div class="py-6 p-md-6 p-lg-10">
-							<!-- heading -->
-							<h2 class="mb-6">공지 사항</h2>
+<main>
+  <section class="py-5">
+    <div class="container d-flex justify-content-center">
+      <div class="col-lg-9 col-md-10 col-12">
+        <div class="card shadow-sm p-4">
+          
+          <!-- Heading -->
+          <h2 class="mb-4 text-center">공지 사항</h2>
 
-							<div class="table-responsive-xxl border-0">
-								<!-- Table -->
-								<table class="table mb-0 text-nowrap table-centered">
-									<!-- Table Head -->
-									<thead class="bg-light">
-										<tr>
-											<th>
-												<input class="form-check-input" type="checkbox" id="select-all" />
-											</th>
-											<th>번호</th>
-											<th>공지제목</th>
-											
-											
-											<th>등록일</th>
-											
+          <!-- Table -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle">
+              <thead class="table-light">
+                <tr>
+                 
+                  <th>번호</th>
+                  <th>공지제목</th>
+                  <th>등록일</th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="list, listStat : ${list}">
+                 
+                  <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index) + 1}"></td>
+                  <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 560px;">
+                    <a href="javascript:void(0);"
+                       th:text="${list.infoTitle}"
+                       th:attr="onclick=|goForm('${list.infoSeq}')|"></a>
+                  </td>
+                  <td th:text="${list.regDate}">2025-04-25</td>
+              
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<!-- Table body -->
-										<tr th:each="list:${list}">
-											<td class="align-middle border-top-0 w-0">
-												<input class="form-check-input" type="checkbox" name="select-row" />
-											</td>
-											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}" class="align-middle border-top-0 w-0">
-												
-											</td>
-											<td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 560px;"><a href="javascript:void(0);" th:text=${list.infoTitle} th:attr="onclick=|goForm('${list.infoSeq}')|"></a></td>
-											
-											
-											
-											<td class="align-middle border-top-0">2025-04-25</td>
-											
-											
-										</tr>
-								
-										
-									</tbody>
-								</table>
-								
-							</div>
-							<div class="mt-3">
-								<button class="btn btn-danger">
-								  <i class="fas fa-trash-alt"></i> 
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
 	<br><br><br><br><br><br><br><br>
   
 	<!-- modal -->

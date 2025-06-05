@@ -136,8 +136,10 @@ public class apiController {
 
 	    // 맛집 리스트 조회
 	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
+	 
 
 	    model.addAttribute("restaurantList", list);
+
 	    model.addAttribute("vo", vo);
 	    model.addAttribute("areaCode", areaCode);
 	    model.addAttribute("areaName", getAreaNameByCode(areaCode));
