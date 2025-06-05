@@ -171,11 +171,6 @@
                 
                      </li>
                      <li class="nav-item dropdown">
-                        <a class="nav-link " href="#" role="button" 
-                           aria-expanded="false">지역 날씨</a>
-                
-                     </li>
-                     <li class="nav-item dropdown">
                         <a class="nav-link " th:href="@{infoUser}" role="button" 
                            aria-expanded="false">공지 사항</a>
                 
@@ -213,11 +208,9 @@
         	// 1. Kakao SDK에 로그인한 상태인지 확인
             if (loginType == "kakao") {
                 // 카카오 로그인 상태라면 브라우저 쿠키/세션 제거
-              alert("카카오로그아웃");
                logOut(); // 서버 세션도 정리
               
             }else if(loginType == "local") {
-               alert("그냥로그아웃");
                logOut();
             };
         });

@@ -6,6 +6,8 @@
 
 <!-- 	<input type="hidden" id="staySeq" name="staySeq" > -->
 	<input type="hidden" id="staySeq" name="staySeq" />
+	<input type="hidden" id="orderId" name="orderId" th:value="${orderId}"/>
+	<input type="hidden" id="TotalPrice" th:value="${reservationData.totalPrice}"/>
 	
 	
 	
@@ -476,13 +478,13 @@
 									  <!-- 성함 -->
 									  <div class="mb-2 d-flex">
 										<span class="fw-bold me-3" style="min-width: 100px; color: #000;">성함 :</span>
-										<span style="color: #000;" th:text="${reservationData.checkInName}">안세찬</span>
+										<span style="color: #000;" id="checkInName" th:text="${reservationData.checkInName}">안세찬</span>
 									  </div>
 								  
 									  <!-- 연락처 -->
 									  <div class="mb-2 d-flex">
 										<span class="fw-bold me-3" style="min-width: 100px; color: #000;">연락처 :</span>
-										<span style="color: #000;" th:text="${reservationData.checkInTel}">010-1111-1111</span>
+										<span style="color: #000;" id="checkInTel" th:text="${reservationData.checkInTel}">010-1111-1111</span>
 									  </div>
 
 									  <!-- 숙박이용 인원 -->
@@ -511,8 +513,8 @@
                     <img src="/user/template/assets/images/category/seoul-cityscape-twilight-south-korea.jpg"
                          alt="Ecommerce" class="img-fluid" />
                 </div>
-                <div class="col-5 col-md-5">
-                    <h6 class="mb-0">하회마을 지산고택 사랑방</h6>
+                <div class="col-5 col-md-5" id="stayName">
+                    <h6 class="mb-0"  th:text="${item.stayName}"></h6>
                 </div>
                 <div class="col-2 col-md-2 text-center text-muted">
                     1인
@@ -811,17 +813,22 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
-  <script>
+  <script >
       main();
 
       async function main() {
+        const amount = Number(document.getElementById("TotalPrice").value);
+    	const stayName= document.getElementById("stayName").innerText;
+    	const checkInName = document.getElementById("checkInName").innerText;
+    	const checkInTel = document.getElementById("checkInTel").innerText;
+    	const orderId = document.getElementById("orderId").value;
         const button = document.getElementById("payment-button");
         const coupon = document.getElementById("coupon-box");
         // ------  결제위젯 초기화 ------
         const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
         const tossPayments = TossPayments(clientKey);
         // 회원 결제
-        const customerKey = "K3et0n5wKJeS9J88SFWJF";
+        const customerKey = "LtpQ17EgXH6J3WHsq9NL8";
         const widgets = tossPayments.widgets({
           customerKey,
         });
@@ -831,7 +838,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // ------ 주문의 결제 금액 설정 ------
         await widgets.setAmount({
           currency: "KRW",
-          value: 50000,
+          value: amount,
         });
 
         await Promise.all([
@@ -844,33 +851,19 @@ document.addEventListener("DOMContentLoaded", function () {
           widgets.renderAgreement({ selector: "#agreement", variantKey: "AGREEMENT" }),
         ]);
 
-        // ------  주문서의 결제 금액이 변경되었을 경우 결제 금액 업데이트 ------
-        coupon.addEventListener("change", async function () {
-          if (coupon.checked) {
-            await widgets.setAmount({
-              currency: "KRW",
-              value: 50000 - 5000,
-            });
+ 
 
-            return;
-          }
-
-          await widgets.setAmount({
-            currency: "KRW",
-            value: 50000,
-          });
-        });
 
         // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
         button.addEventListener("click", async function () {
           await widgets.requestPayment({
-            orderId: "eZb-OgMTutZyd_Xmndf1c",
-            orderName: "토스 티셔츠 외 2건",
-            successUrl: window.location.origin + "/success.html",
-            failUrl: window.location.origin + "/fail.html",
+            orderId: orderId,
+            orderName: stayName,
+            successUrl: window.location.origin +"/successPayments",
+            failUrl: window.location.origin +"/failPayments",
             customerEmail: "customer123@gmail.com",
-            customerName: "김토스",
-            customerMobilePhone: "01012341234",
+            customerName: checkInName,
+            customerMobilePhone: checkInTel,
           });
         });
       }
