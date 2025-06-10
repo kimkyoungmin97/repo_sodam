@@ -12,73 +12,42 @@
    <!-- 카드 -->
    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-10 space-y-8">
  
-       <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center" th:text="${item?.infoTitle}"></h2>
+<!--        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center" th:text="${item?.infoTitle}"></h2> -->
 
-      <div class="row clearfix">
-         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-             <div class="card">
-                 <div class="body">
-                  <br>  
-                     
-                     <div class="table-responsive">
-                  <div class="col-sm-2" th:text="${item?.infoText}">
-                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                 
-                              </div>					
-                           
-                      
-                          
-  
-                          
-                      
-                      
-                    
-                      
-                      <br>
-                      <!-- 업데이트 삭제 -->
-                      
-                          <!-- 리스트 추가 버트 -->
-                      
-                                           
-                     
-                      
-                  </div>
-                 </div>
-                 <br>  
-             </div>
-         </div>
-     </div>
-     <br>
-     <div class="row clearfix">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="">
-              <div class="body">
-                  <div class="table-responsive">
-                  <div class="col-sm-2">
-                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                 
-                              </div>					<!-- js-basic-example 들어가면 페이징 가능-->
-                           
-                      
-                      
-                      
-                    
-                      
-                      <br>
-                      <!-- 업데이트 삭제 -->
-                      <button type="button" onclick="location.href='/infoUser'" class="btn btn-dark" id="btnUelete">
-                          돌아가기
-                          </button> 
-                          <!-- 리스트 추가 버트 -->
-                      
-                                           
-                     
-                      
-                  </div>
-              </div>
-          </div>
+<div class="row flex justify-center">
+  <div class="col-lg-9 col-md-8 col-12 mx-auto">
+    <div class="py-6 p-md-6 p-lg-10">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">공지사항</h2>
+
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="text-left text-lg font-semibold text-gray-700 px-4 py-3" th:text="${item?.infoTitle}">
+                [기본 제목]
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-4 py-4 whitespace-pre-line text-gray-800 border-t" th:text="${item?.infoText}">
+                공지사항 내용입니다.
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+
+      <div class="mt-6 text-center">
+        <a class="btn btn-success btn-lg" th:href="@{/infoUser}" role="button">
+          목록
+        </a>
+      </div>
+    </div>
   </div>
+</div>
+
+
  
        
  

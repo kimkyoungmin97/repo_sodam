@@ -329,8 +329,9 @@
 
 <script>
   document.getElementById('btnKakao').addEventListener('click', function () {
-
-	window.location.href="https://kauth.kakao.com/oauth/authorize?client_id=dd6ae05f675628e6a259a81bde3a53cb&redirect_uri=http://localhost:8080/kakaoCallback&response_type=code";
+	  const redirectUri = window.location.origin + "/kakaoCallback"; 
+	  const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=dd6ae05f675628e6a259a81bde3a53cb&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
+	  window.location.href = kakaoAuthUrl;
   });
 </script>
   

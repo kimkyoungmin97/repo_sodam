@@ -40,6 +40,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 @Controller
 public class apiController {
@@ -87,8 +88,10 @@ public class apiController {
 
 	    // 맛집 리스트 조회
 	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, vo);
+	 
 
 	    model.addAttribute("restaurantList", list);
+
 	    model.addAttribute("vo", vo);
 	    model.addAttribute("areaCode", areaCode);
 	    model.addAttribute("areaName", getAreaNameByCode(areaCode));
@@ -263,24 +266,29 @@ public class apiController {
 	// 카카오
 	// 카카오로그인 클릭시 불러오는 메서드
 	@RequestMapping("/kakaoCallback")
-	public String kakaoCallback(@RequestParam("code") String code,HttpSession httpSession,MemberDto dto) throws JsonMappingException, JsonProcessingException {
+	public String kakaoCallback(@RequestParam("code") String code,HttpSession httpSession,MemberDto dto, HttpServletRequest request) throws JsonMappingException, JsonProcessingException {
+		
 		 // 1. access token 요청 준비
 	    RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		// 현재 서버 도메인을 기준으로 redirect_uri를 동적으로 설정
+		String redirectUri = request.getRequestURL().toString().replace(request.getRequestURI(), "") + "/kakaoCallback";
+
+
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "dd6ae05f675628e6a259a81bde3a53cb"); // ★카카오 앱 REST API 키
-		params.add("redirect_uri", "http://localhost:8080/kakaoCallback"); // ★redirectUri와 일치해야 함
+		params.add("redirect_uri", redirectUri); // ★redirectUri와 일치해야 함
 		params.add("code", code);
-
-		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+		
+		HttpEntity<MultiValueMap<String, String>> request1 = new HttpEntity<>(params, headers);
 
 	    // 2. POST 요청 보내기
 	    ResponseEntity<String> response = restTemplate.postForEntity(
 	            "https://kauth.kakao.com/oauth/token",
-	            request,
+	            request1,
 	            String.class
 	    );
 	    
@@ -290,7 +298,7 @@ public class apiController {
 		
 
 		// 3. 응답 출력
-		System.out.println("토큰 전체 응답: " + response.getBody());
+//		System.out.println("토큰 전체 응답: " + response.getBody());
 
 	    String accessToken = jsonNode.get("access_token").asText();
 	    

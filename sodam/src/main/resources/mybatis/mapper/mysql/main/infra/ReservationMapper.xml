@@ -5,6 +5,54 @@
 <mapper namespace="com.a5a5lab.module.user.reservation.ReservationDao">
 	<resultMap id="resultMapObj" type="com.a5a5lab.module.user.reservation.ReservationDto"></resultMap>
 	
+<select id="selectList" resultMap="resultMapObj">
+		SELECT
+			  c.path,
+			  b.stayName,
+			  b.stayAddress,
+			  a.checkInDate,
+			  a.checkOutDate,
+			  a.totalPrice,
+			  a.member_memSeq,
+			  b.staySeq
+		FROM
+			reservation AS a
+		left join stay As b ON b.staySeq = a.stay_staySeq
+		left join uploaded AS c ON b.staySeq= c.pSeq
+		WHERE
+			c.defaultNy = 1
+		AND a.member_memSeq = #{member_memSeq}
+</select>
+<select id="selectOneCount">
+	SELECT
+		COUNT(*)
+	FROM
+		reservation
+	WHERE
+		member_memSeq = #{member_memSeq}
+</select>
+<insert id="insert">
+	INSERT INTO reservation(
+		checkInDate,
+		checkOutDate,
+		checkInName,
+		checkInTel,
+		checkInPeoNum,
+		member_memSeq,
+		stay_staySeq,
+		totalPrice
+	)VALUES(
+		#{checkInDate},
+		#{checkOutDate},
+		#{checkInName},
+		#{checkInTel},
+		#{checkInPeoNum},
+		#{member_memSeq},
+		#{stay_staySeq},
+		#{totalPrice}
+	)
+</insert>
+	
 	
 	
 	
