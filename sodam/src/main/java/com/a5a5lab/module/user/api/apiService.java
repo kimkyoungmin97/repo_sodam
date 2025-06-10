@@ -97,7 +97,8 @@ public class apiService {
 	            e.printStackTrace();
 	        }
 	    }
-
+	   
+	    
 	    // 검색 필터 적용
 	    List<apiDto> filteredList = fullList.stream()
 	            .filter(dto -> {
@@ -113,6 +114,7 @@ public class apiService {
 	    int end = Math.min(start + vo.getRowNumToShow(), filteredList.size());
 
 	    if (start >= filteredList.size()) return new ArrayList<>();
+	   
 	    return filteredList.subList(start, end);
 	}
 

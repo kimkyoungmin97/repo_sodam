@@ -74,58 +74,7 @@ public class apiController {
 
 	}
 
-//	 @GetMapping("/getRestaurants")
-//	    public String getRestaurants(@RequestParam("areaCode") String areaCode, Model model) {
-//	        List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode);
-//	        model.addAttribute("restaurantList", list);
-//	        return "user/location/LocationRestaurant"; 
-//	    }
 
-//	@GetMapping("/getRestaurants")
-//	public String getRestaurants(@RequestParam("areaCode") String areaCode,
-//	                             @RequestParam(value = "page", defaultValue = "1") int page,
-//	                             Model model) {
-//	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
-//	    model.addAttribute("restaurantList", list);
-//
-//	    // 여기 추가
-//	    model.addAttribute("nextPage", page + 1);
-//
-//	    return "user/location/LocationRestaurant";
-//	}
-
-//	@GetMapping("/getRestaurants")
-//	public String getRestaurants(@RequestParam("areaCode") String areaCode,
-//	                             @RequestParam(value = "page", defaultValue = "1") int page,
-//	                             Model model, BaseVo vo) {
-//
-////	    BaseVo vo = new BaseVo();
-//	    vo.setThisPage(page);
-//	    vo.setRowNumToShow(5);
-//	    vo.setPageNumToShow(5);
-//
-//	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode);
-//	    vo.setParamsPaging(totalCount);
-//
-//	    
-//	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
-//	    
-//	    String areaName = getAreaNameByCode(areaCode);
-//
-//	    model.addAttribute("restaurantList", list);
-//	    model.addAttribute("vo", vo);
-//	    model.addAttribute("areaCode", areaCode);
-//	    model.addAttribute("areaName", areaName);
-//	    
-//	    System.out.println(totalCount);
-//	    
-//	    System.out.println("Total Count: " + totalCount);
-//	    System.out.println("Total Pages: " + vo.getTotalPages());
-//	    System.out.println("Start Page: " + vo.getStartPage());
-//	    System.out.println("End Page: " + vo.getEndPage());
-//
-//	    return "user/location/LocationRestaurant";
-//	}
 	@GetMapping("/getRestaurants")
 	public String getRestaurants(@RequestParam("areaCode") String areaCode,
 	        @RequestParam(value = "page", defaultValue = "1") int page, Model model, BaseVo vo) {

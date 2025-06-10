@@ -68,4 +68,5 @@ public class apiDto extends BaseVo{
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+   
 }
