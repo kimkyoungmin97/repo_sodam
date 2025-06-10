@@ -28,13 +28,14 @@ import com.a5a5lab.module.common.BaseVo;
 
 // 맛집 api 셋팅
 @Service
-public class apiService {
+public class tourService {
 	private final String serviceKey = "ypV%2BIc0IdKPrc0ARu5HqM%2B1vQGs5eCO6y8g1AxfMBEKmaltQYGhonU4ivnxsDAwCu6LSbrI1FjCDA8L5s5OkIA%3D%3D";
 	
 	private final Map<String, List<apiDto>> cache = new ConcurrentHashMap<>();
 	
-	public List<apiDto> getRestaurantsByAreaCode(String areaCode, BaseVo vo) {
-	    List<apiDto> fullList = cache.get(areaCode);
+	
+	public List<apiDto> getToursByAreaCode(String areaCodeTour, BaseVo vo) {
+	    List<apiDto> fullList = cache.get(areaCodeTour);
 
 	    if (fullList == null) {
 	        fullList = new ArrayList<>();
@@ -50,9 +51,9 @@ public class apiService {
 	                urlBuilder.append("&" + URLEncoder.encode("MobileOS", "UTF-8") + "=ETC");
 	                urlBuilder.append("&" + URLEncoder.encode("MobileApp", "UTF-8") + "=testApp");
 	                urlBuilder.append("&" + URLEncoder.encode("arrange", "UTF-8") + "=B");
-	                urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=39");
-	                if (areaCode != null && !areaCode.trim().isEmpty() && !"0".equals(areaCode)) {
-	                    urlBuilder.append("&" + URLEncoder.encode("areaCode", "UTF-8") + "=" + areaCode);
+	                urlBuilder.append("&" + URLEncoder.encode("contentTypeId", "UTF-8") + "=12");
+	                if (areaCodeTour != null && !areaCodeTour.trim().isEmpty() && !"0".equals(areaCodeTour)) {
+	                    urlBuilder.append("&" + URLEncoder.encode("areaCode", "UTF-8") + "=" + areaCodeTour);
 	                }
 	                urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=xml");
 
@@ -72,33 +73,31 @@ public class apiService {
 	                    for (int i = 0; i < itemList.getLength(); i++) {
 	                        Element e = (Element) itemList.item(i);
 	                        apiDto dto = new apiDto();
-	                        dto.setTitle(getTagValue("title", e));
-	                        dto.setAddress(getTagValue("addr1", e));
-	                        dto.setImageUrl(getTagValue("firstimage", e));
-	                        dto.setContentId(getTagValue("contentid", e));
+	                        dto.setTitle(getTagValueTour("title", e));
+	                        dto.setAddress(getTagValueTour("addr1", e));
+	                        dto.setImageUrl(getTagValueTour("firstimage", e));
+	                        dto.setContentId(getTagValueTour("contentid", e));
 	                        
-	                        // 이미지 비어있으면 api 안불러옴
+	                        // 이미지 없으면 api 안불러옴
 	                        if (dto.getImageUrl() == null || dto.getImageUrl().trim().isEmpty()) {
 	                            continue;
 	                        }
-
+	                        
 	                        try {
-	                            dto.setMapX(parseDoubleSafe(getTagValue("mapx", e)));
-	                            dto.setMapY(parseDoubleSafe(getTagValue("mapy", e)));
+	                            dto.setMapX(parseDoubleSafeTour(getTagValueTour("mapx", e)));
+	                            dto.setMapY(parseDoubleSafeTour(getTagValueTour("mapy", e)));
 	                        } catch (Exception ex) {
 	                            dto.setMapX(null);
 	                            dto.setMapY(null);
 	                        }
-
 	                        fullList.add(dto);
 	                    }
-
 
 	                    if (itemList.getLength() < numOfRows) break; // 마지막 페이지
 	                    pageNo++;
 	                }
 	            }
-	            cache.put(areaCode, fullList);
+	            cache.put(areaCodeTour, fullList);
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
@@ -106,15 +105,22 @@ public class apiService {
 
 	    // 검색 필터 처리 (공백/특수문자 제거, 대소문자 무시)
 	    List<apiDto> filteredList = fullList.stream()
-	        .filter(dto -> {
-	            if (vo.getShOption() != null && vo.getShOption() == 1 && vo.getShValue() != null) {
-	                String cleanedTitle = cleanString(dto.getTitle());
-	                String cleanedSearch = cleanString(vo.getShValue());
-	                return cleanedTitle.contains(cleanedSearch);
-	            }
-	            return true;
-	        })
-	        .collect(Collectors.toList());
+	    	    .filter(dto -> {
+	    	        // 검색어가 있을 때 필터
+	    	        if (vo.getShOption() != null && vo.getShOption() == 1 && vo.getShValue() != null) {
+	    	            String cleanedTitle = cleanStringTour(dto.getTitle());
+	    	            String cleanedSearch = cleanStringTour(vo.getShValue());
+	    	            return cleanedTitle.contains(cleanedSearch);
+	    	        }
+	    	        return true;
+	    	    })
+	    	    .collect(Collectors.toList());
+	    
+	    System.out.println("areaCodeTour = " + areaCodeTour);
+	    System.out.println("검색어 = " + vo.getShValue());
+	    System.out.println("전체 데이터 개수 = " + fullList.size());
+	    System.out.println("필터링 후 개수 = " + filteredList.size());
+
 
 	    vo.setParamsPaging(filteredList.size());
 
@@ -126,7 +132,7 @@ public class apiService {
 	}
 
 
-	private String getTagValue(String tag, Element e) {
+	private String getTagValueTour(String tag, Element e) {
 	    NodeList nlList = e.getElementsByTagName(tag);
 	    if (nlList.getLength() > 0) {
 	        Node nValue = nlList.item(0).getFirstChild();
@@ -135,7 +141,7 @@ public class apiService {
 	    return "";
 	}
     
-	public String extractUrlFromHtml(String html) {
+	public String extractUrlFromHtmlTour(String html) {
 	    if (html == null) return null;
 	    String unescaped = StringEscapeUtils.unescapeHtml4(html);
 	    Pattern pattern = Pattern.compile("href=\\\"(.*?)\\\"");
@@ -146,7 +152,7 @@ public class apiService {
 	    return null;
 	}
 	
-	private Double parseDoubleSafe(String str) {
+	private Double parseDoubleSafeTour(String str) {
 	    try {
 	        return (str != null && !str.isEmpty()) ? Double.parseDouble(str) : null;
 	    } catch (NumberFormatException e) {
@@ -154,7 +160,7 @@ public class apiService {
 	    }
 	}
 
-	private String cleanString(String input) {
+	private String cleanStringTour(String input) {
 	    if (input == null) return "";
 	    return input.toLowerCase()
 	                .replaceAll("\\s+", "")           // 공백 제거

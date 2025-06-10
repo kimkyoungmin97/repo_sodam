@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -61,73 +62,24 @@ public class apiController {
 		this.codeController = codeController;
 	}
 
-//	@RequestMapping(value="/LocationRestaurant")
-//	public String LocationRestaurant(Model model) {
-//		 
-//		return "user/location/LocationRestaurant";
-//	}
 
 	@RequestMapping("/LocationRestaurant")
 	public String redirectToDefaultArea() {
 		return "redirect:/getRestaurants?areaCode=1";
 
 	}
-
-//	 @GetMapping("/getRestaurants")
-//	    public String getRestaurants(@RequestParam("areaCode") String areaCode, Model model) {
-//	        List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode);
-//	        model.addAttribute("restaurantList", list);
-//	        return "user/location/LocationRestaurant"; 
-//	    }
-
-//	@GetMapping("/getRestaurants")
-//	public String getRestaurants(@RequestParam("areaCode") String areaCode,
-//	                             @RequestParam(value = "page", defaultValue = "1") int page,
-//	                             Model model) {
-//	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
-//	    model.addAttribute("restaurantList", list);
+	
+//	@RequestMapping("/LocationTour")
+//	public String redirectToDefaultAreaTour() {
+//		return "redirect:/getRestaurants?areaCode=1";
 //
-//	    // 여기 추가
-//	    model.addAttribute("nextPage", page + 1);
-//
-//	    return "user/location/LocationRestaurant";
 //	}
 
-//	@GetMapping("/getRestaurants")
-//	public String getRestaurants(@RequestParam("areaCode") String areaCode,
-//	                             @RequestParam(value = "page", defaultValue = "1") int page,
-//	                             Model model, BaseVo vo) {
-//
-////	    BaseVo vo = new BaseVo();
-//	    vo.setThisPage(page);
-//	    vo.setRowNumToShow(5);
-//	    vo.setPageNumToShow(5);
-//
-//	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode);
-//	    vo.setParamsPaging(totalCount);
-//
-//	    
-//	    List<apiDto> list = apiservice.getRestaurantsByAreaCode(areaCode, page);
-//	    
-//	    String areaName = getAreaNameByCode(areaCode);
-//
-//	    model.addAttribute("restaurantList", list);
-//	    model.addAttribute("vo", vo);
-//	    model.addAttribute("areaCode", areaCode);
-//	    model.addAttribute("areaName", areaName);
-//	    
-//	    System.out.println(totalCount);
-//	    
-//	    System.out.println("Total Count: " + totalCount);
-//	    System.out.println("Total Pages: " + vo.getTotalPages());
-//	    System.out.println("Start Page: " + vo.getStartPage());
-//	    System.out.println("End Page: " + vo.getEndPage());
-//
-//	    return "user/location/LocationRestaurant";
-//	}
+	// 맛집 api
 	@GetMapping("/getRestaurants")
 	public String getRestaurants(@RequestParam("areaCode") String areaCode,
-	        @RequestParam(value = "page", defaultValue = "1") int page, Model model, BaseVo vo) {
+	                             @RequestParam(value = "page", defaultValue = "1") int page,
+	                             Model model, BaseVo vo) {
 
 	    vo.setThisPage(page);
 	    vo.setRowNumToShow(5);
@@ -142,13 +94,12 @@ public class apiController {
 	    model.addAttribute("areaName", getAreaNameByCode(areaCode));
 
 	    if (!list.isEmpty()) {
-	        apiDto first = list.get(0);  // 첫 번째 맛집 정보를 가져옴
+	        apiDto first = list.get(0);  // 첫 번째 맛집 위치 기반 날씨 예보
 
 	        if (first.getMapY() != null && first.getMapX() != null) {
-	            // 날씨 정보 가져오기
 	            List<WeatherDto> forecast = weatherService.get5DayForecast(first.getMapY(), first.getMapX());
 
-	            // 날짜 문자열(String)을 Date 객체로 변환
+	            // 문자열 날짜를 Date 객체로 변환
 	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	            for (WeatherDto weather : forecast) {
 	                try {
@@ -158,25 +109,21 @@ public class apiController {
 	                }
 	            }
 
-	            model.addAttribute("forecastList", forecast);
+	            // forecast를 5개씩 끊어서 나누기
+	            List<List<WeatherDto>> chunkedForecast = new ArrayList<>();
+	            int chunkSize = 5;
+	            for (int i = 0; i < forecast.size(); i += chunkSize) {
+	                int end = Math.min(forecast.size(), i + chunkSize);
+	                chunkedForecast.add(forecast.subList(i, end));
+	            }
+
+	            model.addAttribute("chunkedForecastList", chunkedForecast);
 	        }
 	    }
 
 	    return "user/location/LocationRestaurant";
 	}
 
-
-	// 총 개수 및 페이지 수
-//	    int totalCount = apiservice.getTotalCountByAreaCode(areaCode); 
-//	    int totalPages = (int) Math.ceil(totalCount / 10.0);
-//
-//	    // 현재 페이지와 총 페이지 수
-//	    model.addAttribute("page", page);
-//	    model.addAttribute("totalPages", totalPages);
-//
-//	    return "user/location/LocationRestaurant";
-//
-//	}
 
 	private String getAreaNameByCode(String areaCode) {
 		switch (areaCode) {
@@ -195,11 +142,11 @@ public class apiController {
 		case "7":
 			return "울산";
 		case "8":
-			return "세종";
+			return "세종특별자치시";
 		case "31":
 			return "경기";
 		case "32":
-			return "강원";
+			return "강원특별자치도";
 		case "33":
 			return "충북";
 		case "34":
