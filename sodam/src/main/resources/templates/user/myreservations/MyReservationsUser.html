@@ -76,7 +76,8 @@
 											<td class="align-middle border-top-0" th:text="${#dates.format(list.checkInDate, 'yyyy-MM-dd')}"></td>
 											<td class="align-middle border-top-0" th:text="${#dates.format(list.checkOutDate, 'yyyy-MM-dd')}"></td>
 											<td class="align-middle border-top-0" th:text="${list.totalPrice}+원"></td>
-											<td class="align-middle border-top-0"></td>
+											<td class="align-middle border-top-0" 
+    th:text="${list.ReservationDelNy == 0 ? '예약중' : '예약 취소'}"></td>
 										</tr>
 									</tbody>
 								</table>

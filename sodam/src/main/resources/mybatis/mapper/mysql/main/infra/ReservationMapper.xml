@@ -23,7 +23,7 @@
 		WHERE
 			c.defaultNy = 1
 		AND a.member_memSeq = #{member_memSeq}
-		AND a.ReservationDelNy = 0
+		
 </select>
 
 <!-- 스테이 관리자 스테이 예약 관리 리스트  -->
