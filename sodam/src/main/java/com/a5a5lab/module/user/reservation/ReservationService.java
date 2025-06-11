@@ -20,5 +20,15 @@ public class ReservationService {
 	public int selectOneCount(ReservationDto Dto) {
 		return reservationDao.selectOneCount(Dto);
 	}
+	
+	//스테이 관리자 스테이 예약 고나리 리스트
+	public List<ReservationDto> ReservationList(ReservationVo vo){
+		return reservationDao.ReservationList(vo);
+	}
+	//스테이 관리자 스테이 예약 리스트 취소하기
+	public int ReservationUelet(int resSeq) {
+		return reservationDao.ReservationUelet(resSeq);
+	}
+	
 
 }

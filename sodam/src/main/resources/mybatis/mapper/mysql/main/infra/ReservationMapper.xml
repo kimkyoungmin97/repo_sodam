@@ -14,6 +14,7 @@
 			  a.checkOutDate,
 			  a.totalPrice,
 			  a.member_memSeq,
+			  a.ReservationDelNy,
 			  b.staySeq
 		FROM
 			reservation AS a
@@ -22,7 +23,42 @@
 		WHERE
 			c.defaultNy = 1
 		AND a.member_memSeq = #{member_memSeq}
+		AND a.ReservationDelNy = 0
 </select>
+
+<!-- 스테이 관리자 스테이 예약 관리 리스트  -->
+<select id="ReservationList" resultMap="resultMapObj">
+	select 
+	a.resSeq,
+    a.checkInDate,
+    a.checkOutDate,
+    a.checkInName,
+    a.checkInTel,
+    a.member_memSeq,
+    a.stay_staySeq,
+    a.ReservationDelNy,
+    a.totalPrice,
+    b.staySeq,
+    b.stayName,
+    b.stayAddress
+FROM
+	reservation a
+    LEFT JOIN stay b ON b.staySeq = a.stay_staySeq
+WHERE 1=1
+	AND a.ReservationDelNy = 0
+
+
+
+<!-- LIMIT #{startRnumForMysql},#{rowNumToShow} -->
+
+
+
+</select>
+
+
+
+
+
 <select id="selectOneCount">
 	SELECT
 		COUNT(*)
@@ -40,7 +76,8 @@
 		checkInPeoNum,
 		member_memSeq,
 		stay_staySeq,
-		totalPrice
+		totalPrice,
+		ReservationDelNy
 	)VALUES(
 		#{checkInDate},
 		#{checkOutDate},
@@ -49,9 +86,26 @@
 		#{checkInPeoNum},
 		#{member_memSeq},
 		#{stay_staySeq},
-		#{totalPrice}
+		#{totalPrice},
+		0
 	)
 </insert>
+
+
+<!-- 호스트가 숙소 예약 취소 업데이트 삭제 버튼 -->
+<update id="ReservationUelet">
+	UPDATE reservation SET 
+		
+		ReservationDelNy = 1
+	
+	WHERE 
+		resSeq = #{resSeq}
+</update>
+
+
+
+
+
 	
 	
 	

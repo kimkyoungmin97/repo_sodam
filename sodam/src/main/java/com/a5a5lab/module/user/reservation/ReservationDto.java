@@ -24,7 +24,9 @@ public class ReservationDto extends BaseVo{
 	private String stayName;  // 숙박 이름
 	private String stayAddress; //숙박 주소
 	private String stayPrice; // 숙박 가격
+	private Integer ReservationDelNy;
 //	----
+	
 	private String path; //숙소대표이미지
 	
 	public String getPath() {
@@ -111,6 +113,12 @@ public class ReservationDto extends BaseVo{
 	}
 	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	public Integer getReservationDelNy() {
+		return ReservationDelNy;
+	}
+	public void setReservationDelNy(Integer reservationDelNy) {
+		ReservationDelNy = reservationDelNy;
 	}
 	
 }

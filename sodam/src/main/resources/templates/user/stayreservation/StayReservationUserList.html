@@ -130,8 +130,8 @@
                                   <th>체크인 고객 이름</th>
                                   
                                   <th>체크인 고객 연락처</th>
-                                  <th>숙박 일</th>
-                                  <th>예약일</th>
+                                  <th>체크인</th>
+                                  <th>체크 아웃</th>
                                   <th>예약 취소 버튼</th>
                                  
                                  
@@ -146,32 +146,66 @@
                                    <p class="fs-0" style="padding-top: 12px">데이터가 없습니다</p>
                                 </td> 
                              </tr> -->
-                              <tr >
+                              <tr th:each="list : ${list}">
                                   <th>
                                     <input class="form-check-input row-checkbox" type="checkbox" >
                                     <label class="form-check-label" ></label>
 
                                  </th> 
-                                 <td >1</td>
-                                 <td>한옥 스테이</td>
-                                 <td>종로구 어딘가</td>
-                                 <td>80,000<samp>원</samp></td>
+                            <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+
+
+
+                                 <td th:text="${list.stayName}">한옥 스테이</td>
+                                 <td th:text="${list.stayAddress}">종로구 어딘가</td>
+                                 <td><span th:text="${#numbers.formatDecimal(list.totalPrice, 0, 'COMMA', 0, 'POINT')} + 원"></span></td>
                                   
-                                 <td>안세찬</td>
+                                 <td th:text="${list.checkInName}">안세찬</td>
                                  
-                                 <td>010-1111-1111</td>
-                                 <td>2박 3일</td>
-                                 <td >2025-04-29</td>
+								 <td th:text="${#strings.substring(list.checkInTel, 0, 3) + '-' 
+					              + #strings.substring(list.checkInTel, 3, 7) + '-' 
+					              + #strings.substring(list.checkInTel, 7)}">010-0000-0000</td>
+					              
+								 <td th:text="${#dates.format(list.checkInDate, 'yyyy-MM-dd')}"></td>
+							     <td th:text="${#dates.format(list.checkOutDate, 'yyyy-MM-dd')}"></td>
                                  <td>
-                                    <button type="button" class="btn btn-outline-primary px-3 py-1 rounded-pill" style="color: darkblue; border-color: darkblue;">
-                                      취소하기
-                                    </button>
+      <button 
+        type="button" 
+        class="btn btn-outline-primary px-3 py-1 rounded-pill"
+        style="color: darkblue; border-color: darkblue;"
+        data-bs-toggle="modal" 
+        data-bs-target="#cancelModal"
+        th:attr="data-resseq=${list.resSeq}">
+        취소하기
+      </button>
                                   </td>
                               </tr>
                               
                               
                           </tbody>
+
                       </table>
+                      <!-- ✅ 모달 -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cancelModalLabel">예약 취소</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        예약을 취소 하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <form id="cancelForm" method="post" th:action="@{/ReservationUelet}">
+          <input type="hidden" name="resSeq" id="resSeqInput" />
+          <button type="submit" class="btn btn-danger">확인</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
                       <!-- 페이지 네이션 -->
                       <div class="d-flex justify-content-center">
                         <ul class="pagination">
@@ -336,6 +370,18 @@
 <script src="/user/template/assets/js/vendors/editor.js"></script>
 <script src="/user/template/assets/libs/dropzone/dist/min/dropzone.min.js"></script>
 <script src="/user/template/assets/js/vendors/dropzone.js"></script>
+
+
+<script type="text/javascript">
+  const cancelModal = document.getElementById('cancelModal');
+  cancelModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const resSeq = button.getAttribute('data-resseq');
+    document.getElementById('resSeqInput').value = resSeq;
+  });
+</script>
+
+
 </body>
 
 </html>

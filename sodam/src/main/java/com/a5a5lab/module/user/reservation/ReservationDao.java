@@ -12,5 +12,11 @@ public interface ReservationDao {
 	public List<ReservationDto> selectList(ReservationDto Dto);
 	public int selectOneCount(ReservationDto Dto);
 	
+	
+	//스테이 관리자 스테이 예약 관리 리스트
+	public List<ReservationDto> ReservationList(ReservationVo vo);
+	
+	//스테이 관리자 예약 취소 버튼
+	public int ReservationUelet(int resSeq);
 
 }

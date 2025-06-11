@@ -48,10 +48,26 @@ public class ReservationController {
 	
 	//호스트 스테이 예약 리스트
 	@RequestMapping(value="/StayReservationUserList")
-	public String StayReservationUserList() {
+	public String StayReservationUserList(HttpSession session,ReservationDto Dto,Model model, ReservationVo vo) {
+		Dto.setMember_memSeq((String)session.getAttribute("sessSeqUser"));
+		
+		vo.setParamsPaging(reservationService.selectOneCount(Dto));
+		
+		model.addAttribute("list", reservationService.ReservationList(vo));
+		model.addAttribute("vo", vo);
+		
 		
 		return "user/stayreservation/StayReservationUserList";
 	}
+	
+	// 호스트 스테이 예약 취소 여부
+	@RequestMapping(value="/ReservationUelet")
+	public String ReservationUelet(@RequestParam("resSeq") int resSeq){
+		reservationService.ReservationUelet(resSeq);
+		return "redirect:/StayReservationUserList";
+	}
+	
+	
 	
 	//숙소 예약 정보 아작스 담기
 	@ResponseBody
@@ -151,6 +167,7 @@ public class ReservationController {
 		dto.setMember_memSeq((String)session.getAttribute("sessSeqUser"));
 		dto.setStay_staySeq(reservationData.getStaySeq());
 		dto.setTotalPrice(reservationData.getTotalPrice());
+		dto.setReservationDelNy(reservationData.getReservationDelNy());
 
 		reservationService.insert(dto);
 		
