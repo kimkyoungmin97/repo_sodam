@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
 <form name="formList" id="formList" method="post" autocomplete="off">
@@ -112,7 +113,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="5" id="ratingFive" />
+                                 <input class="form-check-input rating-filter" type="checkbox" value="5" id="ratingFive" />
                                  <label class="form-check-label" for="ratingFive">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -124,7 +125,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="4" id="ratingFour" />
+                                 <input class="form-check-input rating-filter" type="checkbox" value="4" id="ratingFour" />
                                  <label class="form-check-label" for="ratingFour">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -136,7 +137,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="3"id="ratingThree" />
+                                 <input class="form-check-input rating-filter" type="checkbox" value="3"id="ratingThree" />
                                  <label class="form-check-label" for="ratingThree">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -148,7 +149,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="2" id="ratingTwo" />
+                                 <input class="form-check-input rating-filter" type="checkbox" value="2" id="ratingTwo" />
                                  <label class="form-check-label" for="ratingTwo">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star-fill text-warning"></i>
@@ -160,7 +161,7 @@
                               <!-- form check -->
                               <div class="form-check mb-2">
                                  <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="1" id="ratingOne" />
+                                 <input class="form-check-input rating-filter" type="checkbox" value="1" id="ratingOne" />
                                  <label class="form-check-label" for="ratingOne">
                                     <i class="bi bi-star-fill text-warning"></i>
                                     <i class="bi bi-star text-warning"></i>
@@ -278,6 +279,7 @@
                      </div>
                   </div>
                   <!-- row -->
+                  
                   <div id="futsalList">
                   <div class="row g-4 row-cols-1 mt-2">
 <!--                      <div class="col stay-item" th:each="list : ${list}" th:data-region="${@codeService.selectOneCachedCode(list.regionCd)}"> -->
@@ -318,11 +320,12 @@
                                     </div> -->
                                     <h2 class="fs-6"><a th:href="@{/DetailedPageUserForm(staySeq=${list.staySeq})}" class="text-inherit text-decoration-none stay-name" th:text="${list.stayName}">한옥 게스트 하우스</a></h2>
                                     <div>
-									    <small class="text-warning">
-									        <span th:each="i : ${#numbers.sequence(1, T(java.lang.Math).floor(list.averageRating))}">
-									            <i class="bi bi-star-fill"></i>
-									        </span>
-									    </small>
+<small class="text-warning" 
+       th:if="${list.averageRating != null and list.averageRating > 0}">
+    <span th:each="i : ${#numbers.sequence(1, T(java.lang.Math).floor(list.averageRating))}">
+        <i class="bi bi-star-fill"></i>
+    </span>
+</small>
 									    <span class="text-muted small" th:text="${#numbers.formatDecimal(list.averageRating, 1, 1)} + '점'"></span>
 									</div>
                                     <div class="mt-6">
@@ -639,55 +642,7 @@
   }
     </script>
     
-    
-    
-    
-    
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const regionCheckboxes = document.querySelectorAll(".region-filter");
-    const ratingCheckboxes = document.querySelectorAll("input[type='checkbox'][id^='rating']");
-    const stayItems = document.querySelectorAll(".stay-item");
-    const searchButton = document.getElementById("btnSearch");
-    const searchInput = document.getElementById("shValue");
 
-    // 체크박스 초기화 (선택 사항)
-    regionCheckboxes.forEach(cb => cb.checked = false);
-    ratingCheckboxes.forEach(cb => cb.checked = false);
-
-    function stayList() {
-        const selectedRegions = Array.from(regionCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => cb.value);
-
-        const selectedRatings = Array.from(ratingCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => parseInt(cb.value)); // 1 ~ 5
-
-        const searchText = searchInput.value.trim().toLowerCase();
-
-        stayItems.forEach(item => {
-            const itemRegion = item.getAttribute("data-region") || "";
-            const itemRating = parseFloat(item.getAttribute("data-rating")) || 0;
-            const itemNameElem = item.querySelector(".stay-name");
-            const itemName = itemNameElem ? itemNameElem.textContent.toLowerCase() : "";
-
-            const matchesRegion = selectedRegions.length === 0 || selectedRegions.includes(itemRegion);
-            const matchesSearch = searchText === "" || itemName.includes(searchText);
-            const matchesRating = selectedRatings.length === 0 || selectedRatings.some(r => Math.floor(itemRating) === r);
-
-            item.style.display = (matchesRegion && matchesSearch && matchesRating) ? "block" : "none";
-        });
-    }
-
-    regionCheckboxes.forEach(cb => cb.addEventListener("change", stayList));
-    ratingCheckboxes.forEach(cb => cb.addEventListener("change", stayList));
-    searchInput.addEventListener("keyup", stayList);
-    if (searchButton) searchButton.addEventListener("click", stayList);
-
-    stayList(); // 초기 렌더링
-});
-</script>
 <script type="text/javascript">
   window.onload = function () {
     const mapContainer = document.getElementById('map');

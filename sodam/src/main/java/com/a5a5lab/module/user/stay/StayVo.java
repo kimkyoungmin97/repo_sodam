@@ -46,6 +46,9 @@ public class StayVo {
 	  private String shStar;
 //	----
 	
+	    private List<String> ratings;
+	    private String keyword;
+	
 	
 	public int getThisPage() {
 		return thisPage;
@@ -278,6 +281,18 @@ public class StayVo {
 	}
 	public void setShStar(String shStar) {
 		this.shStar = shStar;
+	}
+	public List<String> getRatings() {
+		return ratings;
+	}
+	public void setRatings(List<String> ratings) {
+		this.ratings = ratings;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 
 
